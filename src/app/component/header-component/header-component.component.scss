@@ -1,0 +1,32 @@
+header{
+  background-color: #37BBED;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  color: white;
+  padding: 20px 20px 20px 16px;
+  .logo-container{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    img{
+      height: 60px;
+      width: auto;
+    }
+  }
+}
+a{
+  color: white;
+}
+.menu-container{
+
+ svg{
+  color: white;
+  width: 26px;
+  height: auto;
+  }
+}
+
+.end-pisition{
+  display: grid;
+  justify-content: center;
+}
