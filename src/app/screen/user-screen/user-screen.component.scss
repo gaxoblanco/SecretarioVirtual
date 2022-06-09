@@ -1,0 +1,43 @@
+
+.userCard-containter{
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  max-width: 1300px;
+  margin: 0 auto;
+  .plus-sign{
+    display: grid;
+    place-items: center;
+    .plus-sign-button{
+      border: none;
+      background-color: white;
+    }
+    svg{
+      width: 200px;
+      height: auto;
+      color: #37BBED;
+    }
+  }
+}
+.suscrip-container{
+  margin-left: 20px;
+  border: 1px solid #4e84a5;
+  border-radius: 16px;
+  margin: 0 auto;
+  .imgSub img{
+    border-radius: 16px 0px 0px 16px;
+  }
+  .sub-text{
+    display: grid;
+    grid-template-rows: auto 1fr auto 1fr;
+    h3, p{
+    margin: 0 auto;
+    }
+    div{
+      display: grid;
+      justify-items: center;
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}

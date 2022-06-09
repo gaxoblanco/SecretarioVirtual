@@ -14,6 +14,7 @@ import { MenuComponentComponent } from './component/menu-component/menu-componen
 import { CarouselComponentComponent } from './component/carousel-component/carousel-component.component';
 import { FrequentQuestionsComponenComponent } from './component/frequent-questions-componen/frequent-questions-componen.component';
 import { SubcribeCardComponentComponent } from './component/subcribe-card-component/subcribe-card-component.component';
+import { UserComponenetComponent } from './component/user-componenet/user-componenet.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SubcribeCardComponentComponent } from './component/subcribe-card-compon
     MenuComponentComponent,
     CarouselComponentComponent,
     FrequentQuestionsComponenComponent,
-    SubcribeCardComponentComponent
+    SubcribeCardComponentComponent,
+    UserComponenetComponent
   ],
   imports: [
     BrowserModule,
