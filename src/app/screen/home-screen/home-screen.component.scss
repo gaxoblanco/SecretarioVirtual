@@ -18,17 +18,21 @@ article{
     margin-top: 20px;
     margin-left: 20px;
     background-color: white;
-    color: black;
+    color: #333333;
     border-radius: 16px;
-    border-bottom: 15px solid #37BBED;;
+    border-bottom: 15px solid #37BBED;
   }
   img{
     width: 100%;
   }
+  .card-link{
+    width: 140px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+  }
 }
 .subcribe-card-container{
-  display: grid;
-  justify-items: center;
-  grid-template-columns: 1fr auto 1fr;
+  margin: 0 auto;
 }
 

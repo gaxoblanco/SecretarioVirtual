@@ -1,10 +1,13 @@
-
-.userCard-containter{
-  display: grid;
-  place-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  max-width: 1300px;
+.moreEmail-container{
+  position: absolute;
   margin: 0 auto;
+}
+article{
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+}
   .plus-sign{
     display: grid;
     place-items: center;
@@ -18,18 +21,17 @@
       color: #37BBED;
     }
   }
-}
+
 .suscrip-container{
-  margin-left: 20px;
   border: 1px solid #4e84a5;
   border-radius: 16px;
-  margin: 0 auto;
   .imgSub img{
+    width: 300px;
     border-radius: 16px 0px 0px 16px;
   }
   .sub-text{
     display: grid;
-    grid-template-rows: auto 1fr auto 1fr;
+    grid-template-rows: auto 1fr auto auto;
     h3, p{
     margin: 0 auto;
     }
@@ -39,5 +41,61 @@
       grid-template-rows: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
     }
+    .data-master{
+      display: grid;
+      padding-top: 10px;
+      grid-template-columns: auto auto auto auto;
+      height: 40px;
+      background-color: #37BBED;
+      border-radius: 0px 0px 16px 0px;
+      color: white;
+      button{
+        border: none;
+        background-color: white;
+        color: #4e84a5;
+        border-radius: 16px;
+        padding: 4px 10px;
+        margin-top: -6px;
+      }
+    }
   }
 }
+
+  .button-user-container{
+    border: none;
+    border-radius: 16px;
+    background-color: white;
+  }
+
+.moreEmail-state{
+  display: none;
+  &.active{
+    width: 100%;
+    z-index: 1;
+    display: inline;
+    position: absolute;
+    margin-top: -24px;
+  }
+}
+.editUser-state{
+  display: none;
+  &.active{
+    width: 100%;
+    z-index: 1;
+    display: inline;
+    position: absolute;
+    margin-top: -24px;
+  }
+}
+.editEmail-state{
+  display: none;
+  &.active{
+    width: 100%;
+    z-index: 1;
+    display: inline;
+    position: absolute;
+    margin-top: -24px;
+  }
+}
+
+

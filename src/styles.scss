@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500;600;700&display=swap');
 
 body{
   font-family: 'Encode Sans', sans-serif;
+  font-weight: 500;
+  color: #333333;
   width: 100%;
 }
 .card-link{
@@ -12,6 +13,27 @@ body{
   color: white;
   font-size: 16px;
   border: none;
-  background-color: #2e7d33;
+  background-color: #1BBB1F;
   border: 3px solid transparent;
+}
+.button-delete{
+  text-decoration: none;
+  padding: 6px 18px;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  border: none;
+  background-color: #782222;
+  border: 3px solid transparent;
+}
+.button-blue{
+  text-decoration: none;
+  padding: 6px 18px;
+  border-radius: 30px;
+  color: white;
+  font-size: 16px;
+  border: none;
+  background-color: #37BBED;
+  border: 3px solid transparent;
+  font-weight: 600;
 }

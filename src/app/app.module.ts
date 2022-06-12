@@ -15,6 +15,13 @@ import { CarouselComponentComponent } from './component/carousel-component/carou
 import { FrequentQuestionsComponenComponent } from './component/frequent-questions-componen/frequent-questions-componen.component';
 import { SubcribeCardComponentComponent } from './component/subcribe-card-component/subcribe-card-component.component';
 import { UserComponenetComponent } from './component/user-componenet/user-componenet.component';
+import { NewUserComponentComponent } from './component/new-user-component/new-user-component.component';
+import { EditUserComponentComponent } from './component/edit-user-component/edit-user-component.component';
+import { EditEmailComponentComponent } from './component/edit-email-component/edit-email-component.component';
+import { LoginComponenetComponent } from './component/login-componenet/login-componenet.component';
+import { RegisterComponenetComponent } from './component/register-componenet/register-componenet.component';
+import { LoginScreenComponent } from './screen/login-screen/login-screen.component';
+import { RegisterScreenComponent } from './screen/register-screen/register-screen.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +37,14 @@ import { UserComponenetComponent } from './component/user-componenet/user-compon
     CarouselComponentComponent,
     FrequentQuestionsComponenComponent,
     SubcribeCardComponentComponent,
-    UserComponenetComponent
+    UserComponenetComponent,
+    NewUserComponentComponent,
+    EditUserComponentComponent,
+    EditEmailComponentComponent,
+    LoginComponenetComponent,
+    RegisterComponenetComponent,
+    LoginScreenComponent,
+    RegisterScreenComponent
   ],
   imports: [
     BrowserModule,
