@@ -5,6 +5,8 @@ import { HomeScreenComponent } from './screen/home-screen/home-screen.component'
 import { LoginScreenComponent } from './screen/login-screen/login-screen.component';
 import { PendingListScreenComponent } from './screen/pending-list-screen/pending-list-screen.component';
 import { RegisterScreenComponent } from './screen/register-screen/register-screen.component';
+import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen.component';
+import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-screen.component';
 import { UserScreenComponent } from './screen/user-screen/user-screen.component';
 
 const routes: Routes = [
@@ -14,6 +16,8 @@ const routes: Routes = [
   {path: 'usuario', component: UserScreenComponent},
   {path: 'login', component: LoginScreenComponent},
   {path: 'register', component: RegisterScreenComponent},
+  {path: 'resetpw', component: ResetPwScreenComponent},
+  {path: 'subcribe', component: SubcribeScreenComponent},
 ];
 
 @NgModule({

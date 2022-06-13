@@ -1,13 +1,33 @@
-<section>
-  <article>
+<section class="container">
+  <article class="mb-4">
     <div class="card bg-dark text-white card-img">
       <img src="../../../assets/SecretarioVirtual.png" class="card-img" alt="Demo">
-      <button class="card-link" [routerLink]="['/login']">Login</button><div class="card-img-overlay card-text-container">
+      <button class="card-link" [routerLink]="['/login']">Login</button>
+      <div class="card-img-overlay card-text-container">
         <h4 class="card-title">La tecnologia llego a tu despacho</h4>
         <p class="card-text">Somo un servicio listo para ayudarte a dar el siguienta gran paso en tu carrera profecional</p>
       </div>
     </div>
   </article>
+
+  <article class="mb-4">
+    <div class="row">
+      <div class="col-lg-6 border-container">
+        <p class="card-text">
+          Secretario virtual le avisará mediante correo electrónico y/o whatsapp en cuanto salga uno de sus expedientes, agilizando su trabajo y aumentando su productividad.
+        </p>
+      </div>
+
+      <div class="col"></div>
+
+      <div class="col col-lg-5 border-container">
+        <p class="card-text">
+          El correo cuenta con la información sobre la sentencia del expediente solicitado. Y el whatsapp le notificará cada informando el número del expediente que tuvo sentencia.
+        </p>
+      </div>
+    </div>
+  </article>
+
   <article class="row row-cols-1 row-cols-md-3 g-4 mb-4 subcribe-card-container">
     <app-subcribe-card-component></app-subcribe-card-component>
     <app-subcribe-card-component></app-subcribe-card-component>

@@ -7,7 +7,7 @@
 <span>
   <app-edit-email-component class="editEmail-state" [class.active]="editEmail"></app-edit-email-component>
 </span>
-<article>
+<section class="container">
   <div class="card mb-4 suscrip-container">
     <div class="row g-0">
       <div class="col-md-4 imgSub">
@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <div class="row row-cols-1 row-cols-md-3 g-4">
+  <div class="row row-cols-1 row-cols-md-3 g-5">
     <button (click)="editionEmail()" class="col button-user-container">
       <app-user-componenet></app-user-componenet>
     </button>
@@ -48,7 +48,23 @@
     </div>
   </div>
 
-  <div>
-    glosario del cobro
-  </div>
-</article>
+  <article>
+    <div class="frequent-questions-container">
+      <h3>Agregar un Correo</h3>
+      <p>Para agregar un correo oprime sobre el + y se abrira una nueva ventana. Ingresa un nombre para que puedas asocialor a una perona, y el mail que deseas este asociado. </p>
+    </div>
+    <div class="frequent-questions-container">
+      <h3>Actualizar un Correo</h3>
+      <p>Una vez agregado el nuevo correo, se enviara un mail de para que puedas confirmar que fue registrado corectamente.</p>
+    </div>
+    <div class="frequent-questions-container">
+      <h3>Al borrar un Correo</h3>
+      <p>Cuenado borres un correo asociado, este se elimina de la pantalla, pero no afecta en nada a los expedientes ya cargados.</p>
+    </div>
+    <div class="frequent-questions-container">
+      <h3>Como me avisan cuando salio el expediente</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi vitae porro, impedit labore tempore ullam nam explicabo quas doloremque ratione voluptate adipisci tenetur repellat! Minima in aliquid modi perspiciatis. Dicta!</p>
+    </div>
+  </article>
+
+</section>

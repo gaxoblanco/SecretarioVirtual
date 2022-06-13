@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeScreenComponent } from './screen/home-screen/home-screen.component';
@@ -22,6 +24,9 @@ import { LoginComponenetComponent } from './component/login-componenet/login-com
 import { RegisterComponenetComponent } from './component/register-componenet/register-componenet.component';
 import { LoginScreenComponent } from './screen/login-screen/login-screen.component';
 import { RegisterScreenComponent } from './screen/register-screen/register-screen.component';
+import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen.component';
+import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-screen.component';
+import { SubcribeOptionComponentComponent } from './component/subcribe-option-component/subcribe-option-component.component';
 
 @NgModule({
   declarations: [
@@ -44,11 +49,16 @@ import { RegisterScreenComponent } from './screen/register-screen/register-scree
     LoginComponenetComponent,
     RegisterComponenetComponent,
     LoginScreenComponent,
-    RegisterScreenComponent
+    RegisterScreenComponent,
+    ResetPwScreenComponent,
+    SubcribeScreenComponent,
+    SubcribeOptionComponentComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

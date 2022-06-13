@@ -1,7 +1,17 @@
-span{
+article{
+  height: 77vh;
+}
+label, option{
+  color:#707070;
+  font-weight: 600;
+}
+input, select{
+  border-radius: 10px;
+  font-weight: 500;
+}
+.container{
   display: grid;
   place-items: center;
-  padding-top: 20px;
 }
 .add-container-form{
   width: 520px;

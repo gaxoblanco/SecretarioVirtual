@@ -1,6 +1,14 @@
+label{
+  color:#707070;
+  font-weight: 600;
+}
+input{
+  border-radius: 10px;
+  font-weight: 500;
+}
 .background-new-user{
   width: 100%;
-  height: 100vh;
+  height: 89vh;
   background-color:#4e84a588;
   display: grid;
   place-items: center;
@@ -14,7 +22,7 @@
   svg{
     width: 26px;
     height: auto;
-    color:#4e84a5;
+    color:#b40e0e;
   }
 }
 .new-user-container{
@@ -35,7 +43,7 @@
   }
   .card-link{
     margin-top: 20px;
-    margin-left: 50px;
+    margin-left: 40px;
     margin-bottom: -10px;
   }
 }

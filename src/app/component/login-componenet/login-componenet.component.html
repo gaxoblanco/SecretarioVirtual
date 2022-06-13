@@ -1,25 +1,50 @@
 
 <div class="conextion-container">
-  <form>
+  <form [formGroup]="form" (ngSubmit)="LogCheckin($event)">
     <h4 class="mb-4">Ingresá a tu cuenta</h4>
     <div class="form-group">
-      <label for="exampleInputEmail1" class="mb-2">Email</label>
-      <input type="email" class="form-control mb-4" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su email">
-  </div>
+      <label for="InputEmail1" class="mb-2">Email</label>
+      <input
+        formControlName="InputEmail1"
+        type="email"
+        class="form-control mb-4"
+        id="InputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Ingrese su email"
+        [ngClass]="{
+          'is-invalid':Email?.errors && Email?.touched,
+          'is-valid': !Email?.errors && Email?.touched}">
+      <div *ngIf="Email?.errors && Email?.touched">
+        <p *ngIf="Email?.hasError('required')" class="text-danger">
+          El Email es requerido
+        </p>
+        <p *ngIf="Email?.hasError('email')" class="text-danger">
+          El Email esta mal
+        </p>
+      </div>
+    </div>
     <div class="form-group">
-      <label for="exampleInputPassword1" class="mb-2">Contraseña</label>
-      <input type="password" class="form-control mb-4" id="exampleInputPassword1" placeholder="Contraseña">
+      <label for="InputPassword" class="mb-2">Contraseña</label>
+      <input formControlName="InputPassword" type="password" class="form-control mb-4" id="InputPassword" placeholder="Contraseña">
     </div>
     <div class="form-group mb-4">
-      <a href="#" class="">
+      <a [routerLink]="['/resetpw']" class="">
         ¿Olvidaste tu contraseña?
       </a>
     </div>
-    <button type="submit" class="btn card-link mb-4">Ingresar</button>
+    <button
+      type="submit"
+      class="btn card-link mb-4"
+
+      >Ingresar</button>
   </form>
 
   <div class="createUser-container">
     <h5 class="mb-3">¿No tenés cuenta?</h5>
-    <button type="submit" class="btn button-blue" [routerLink]="['/register']">Creá tu cuenta</button>
+    <button
+      type="submit"
+      class="btn button-blue"
+      [routerLink]="['/register']"
+      >Creá tu cuenta</button>
   </div>
 </div>
