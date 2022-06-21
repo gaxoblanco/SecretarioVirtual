@@ -34,7 +34,6 @@ export class LoginComponenetComponent implements OnInit {
   LogCheckin(event:Event){
     let log: LoginModel = this.form.value;
     event.preventDefault;
-
     this.autenticacionService.login(log);
   }
 

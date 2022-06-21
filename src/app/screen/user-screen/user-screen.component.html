@@ -20,7 +20,7 @@
           <h4>N Expedientes</h4>
           <h4>N Emails</h4>
           <h5> 250 </h5>
-          <h5> 5 </h5>
+          <h5> {{adsitionalN()}} </h5>
         </div>
         <div class="data-master">
           <p>Gaston Blanco.</p>
@@ -32,12 +32,15 @@
     </div>
   </div>
   <div class="row row-cols-1 row-cols-md-3 g-5">
-    <button (click)="editionEmail()" class="col button-user-container">
-      <app-user-componenet></app-user-componenet>
+
+    <button
+      (click)="editionEmail()"
+      class="col button-user-container"
+      *ngFor="let additional of list"
+      >
+      <app-user-componenet [additional]="additional"></app-user-componenet>
     </button>
-    <button (click)="editionEmail()" class="col button-user-container">
-      <app-user-componenet></app-user-componenet>
-    </button>
+
     <div class="plus-sign">
       <button class="plus-sign-button" (click)="more()">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">

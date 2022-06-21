@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
+import { UserServiceService } from '../../services/user-service.service';
+import {newAdditionalDTO} from '../../models/additional-model';
 
 @Component({
   selector: 'app-new-user-component',
@@ -8,14 +11,31 @@ import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.comp
 })
 export class NewUserComponentComponent implements OnInit {
 
+  newAdditionalDTO: FormGroup;
+
   constructor(
+    private userServ: UserServiceService,
     private userScreen : UserScreenComponent
-  ) { }
+  ) {
+    this.newAdditionalDTO = new FormGroup({
+      name: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+    })
+  }
 
   ngOnInit(): void {
+  }
+
+  saveNewAdditional(){
+    let sabeAdditionl: newAdditionalDTO = this.newAdditionalDTO.value;
+    this.userServ.addNewAdditional(sabeAdditionl);
+    console.log('new user component', this.newAdditionalDTO.value)
   }
 
   cancelClick(){
     this.userScreen.moreEmail = false;
   }
+
+  get Name(){return this.newAdditionalDTO.get('name');}
+  get Email(){return this.newAdditionalDTO.get('email');}
 }

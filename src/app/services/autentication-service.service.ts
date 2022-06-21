@@ -19,12 +19,14 @@ export class AutenticationServiceService {
   ) { }
 
   login(credentials:LoginModel) {
-    if(credentials.InputEmail1 == this.user.InputEmail1 ){
+    if(
+      credentials.InputEmail1 == this.user.InputEmail1 &&
+      credentials.InputPassword == this.user.InputPassword){
       this.LogState = true;
-      console.log("logeado");
+      console.log("logeado creo que ya estaba ");
       this.routerModul ="['/listaExpediente']"
     }
-    console.log(credentials, this.user)
+    console.log('email o password mal')
 
   }
   logOut(){

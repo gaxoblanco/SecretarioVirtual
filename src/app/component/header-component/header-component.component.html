@@ -3,17 +3,12 @@
     <img src="../../../assets/logo.png" alt="logo">
   </div>
   <ul class="nav justify-content-end">
-    <li class="nav-item">
-      <a [routerLink]="['/agregarExpediente']" class="nav-link active" aria-current="page" href="#">Agregar</a>
-    </li>
-    <li class="nav-item">
-      <a [routerLink]="['/listaExpediente']" class="nav-link" href="#">Lista</a>
-    </li>
-    <li class="nav-item">
-      <a [routerLink]="['/usuario']" class="nav-link" href="#">Usuario</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link">Desconectar</a>
+    <li
+      class="nav-item"
+      *ngFor="let page of pages"
+      [routerLink]="page.route">
+      <a class="nav-link active" aria-current="page"> {{page.name}} </a>
     </li>
   </ul>
 </header>
+

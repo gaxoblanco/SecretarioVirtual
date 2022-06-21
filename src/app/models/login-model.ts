@@ -5,8 +5,6 @@ export interface User{
     DIN: number;
     adders: string;
     city: string;
-    municipio: string;
-    localidad: string;
     InputEmail1: string;
     InputPassword: string;
     Check: boolean;
