@@ -22,6 +22,8 @@ export class UserServiceService {
 
   @Output() newAdd = new EventEmitter<newAdditionalDTO>();
 
+  constructor() { }
+
   getAllAdditional():Observable<Additional[]>{
     return this.list
   }
@@ -35,13 +37,20 @@ export class UserServiceService {
 
   upAdditional(edition: UpAdditionalDTO){
 
-   // const edit = this.list.findIndex((item: UpAdditionalDTO) => item.id === edition.id);
-    console.log('filtrado', edition.id);
+    const edit = this.list.find((item: UpAdditionalDTO) => item.id === edition.id);
+    if (edition.id == edit.id){
+      edit.name = edition.name;
+      edit.email = edition.email;
+    }
 
-    this.list.push(edition);
-    console.log('user service', this.list)
+    // this.list.push(edition);
+    // console.log('user service', this.list)
     return this.list;
   }
 
-  constructor() { }
+  deletAdditional(delet: Number){
+    const edit = this.list.findIndex((item: UpAdditionalDTO) => item.id === delet);
+    this.list.splice(edit, (edit+1))
+  }
+
 }

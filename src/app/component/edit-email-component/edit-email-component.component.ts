@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import {newAdditionalDTO} from '../../models/additional-model';
+import { UserComponenetComponent } from '../user-componenet/user-componenet.component';
 
 @Component({
   selector: 'app-edit-email-component',
@@ -13,7 +13,7 @@ export class EditEmailComponentComponent implements OnInit {
   edditAdi: FormGroup;
 
   constructor(
-    private userScreen : UserScreenComponent
+    private userComp :UserComponenetComponent,
   ) {
     this.edditAdi = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -25,11 +25,17 @@ export class EditEmailComponentComponent implements OnInit {
   }
 
   cancelClick(){
-    this.userScreen.editEmail = false;
+    this.userComp.editEmail = false;
   }
   save(){
     let edition:newAdditionalDTO = this.edditAdi.value;
-    this.userScreen.editionAdditional(edition);
-    this.userScreen.editEmail = false;
+    this.userComp.editionAdditional(edition);
+    this.userComp.editEmail = false;
+  }
+  delet(){
+    this.userComp.deleteAdditional();
+    this.userComp.editEmail = false;
+    console.log();
+
   }
 }

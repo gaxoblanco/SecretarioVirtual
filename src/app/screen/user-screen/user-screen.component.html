@@ -4,9 +4,7 @@
 <span>
   <app-edit-user-component class="editUser-state" [class.active]="editUser"></app-edit-user-component>
 </span>
-<span>
-  <app-edit-email-component class="editEmail-state" [class.active]="editEmail"></app-edit-email-component>
-</span>
+
 <section class="container">
   <div class="card mb-4 suscrip-container">
     <div class="row g-0">
@@ -33,13 +31,11 @@
   </div>
   <div class="row row-cols-1 row-cols-md-3 g-5">
 
-    <button
-      (click)="editionEmail()"
-      class="col button-user-container"
+    <div
       *ngFor="let additional of list"
       >
       <app-user-componenet [additional]="additional"></app-user-componenet>
-    </button>
+  </div>
 
     <div class="plus-sign">
       <button class="plus-sign-button" (click)="more()">

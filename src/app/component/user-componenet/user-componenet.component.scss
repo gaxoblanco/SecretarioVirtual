@@ -1,3 +1,11 @@
+.button-user-container{
+  border: none;
+  border-radius: 16px;
+  background-color: white;
+  text-decoration: none;
+  text-align: center;
+  color: #333333;
+}
 .user-container{
   display: grid;
   grid-template-rows: auto 1fr;
@@ -9,5 +17,17 @@
   img{
     width: 180px;
     height: auto;
+  }
+}
+
+.editEmail-state{
+  display: none;
+  &.active{
+    width: 100%;
+    left:0;
+    bottom: 0;
+    z-index: 1;
+    display: inline;
+    position: absolute;
   }
 }

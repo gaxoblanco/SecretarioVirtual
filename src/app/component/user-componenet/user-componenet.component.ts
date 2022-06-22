@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Additional, newAdditionalDTO } from 'src/app/models/additional-model';
+import { Additional, newAdditionalDTO, UpAdditionalDTO } from 'src/app/models/additional-model';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
@@ -10,30 +10,50 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 })
 export class UserComponenetComponent implements OnInit {
   list: any [] = [];
-  aditionals: Additional[] = [
-    {  id: 0,
-      name: '',
-      email: '',}
-  ];
+  editEmail: boolean = false;
+
+
 
   @Input() additional: Additional  ={
+    id: 0,
     name: '',
     email: '',
-    id: 0
   }
   //@Output() newAdd = new EventEmitter<newAdditionalDTO>();
 
 
   constructor(
-    private userScreen : UserScreenComponent,
-    private users : UserServiceService,
+   // private userScreen : UserScreenComponent,
+    private usersServ : UserServiceService,
   ) { }
 
   ngOnInit(): void {
-    this.users.list
+    this.usersServ.list
   }
   editionEmail(){
-    this.userScreen.editEmail = true;
+    if (this.editEmail == false){
+      this.editEmail =! this.editEmail;
+    }
   }
+
+    //additional
+    editionAdditional(editionValue: UpAdditionalDTO){
+      editionValue.id = this.additional.id;
+
+       if(editionValue.name == ''){
+         editionValue.name = this.additional.name;
+       }
+       if(editionValue.email == ''){
+         editionValue.email = this.additional.email;
+       }
+
+       //console.log('userCompo ', this.additional.id)
+       this.usersServ.upAdditional(editionValue)
+    }
+
+     deleteAdditional(){
+       const delet = this.additional.id;
+       this.usersServ.deletAdditional(delet);
+     }
 
 }

@@ -38,12 +38,9 @@ export class UserScreenComponent implements OnInit {
       this.editUser =! this.editUser;
     }
   };
-  editionEmail(){
-    if (this.editEmail == false){
-      this.
-      this.editEmail =! this.editEmail;
-    }
-  };
+  // editionEmail(){
+  //   this.editionEmail()
+  // };
   adsitionalN(){
     const number = this.userServ.list.length;
     return number;
@@ -52,19 +49,19 @@ export class UserScreenComponent implements OnInit {
 
   //additional
   editionAdditional(editionValue: UpAdditionalDTO){
-    editionValue.id = this.additionals.id;
+   // editionValue.id = this.additionals.id;
 
-    if(editionValue.name == ''){
-      editionValue.name = this.additionals.name;
-    }
-    if(editionValue.email == ''){
-      editionValue.email = this.additionals.email;
-    }
+    // if(editionValue.name == ''){
+    //   editionValue.name = this.additionals.name;
+    // }
+    // if(editionValue.email == ''){
+    //   editionValue.email = this.additionals.email;
+    // }
 
-    console.log('userScreen ', this.additionals.name)
-    // this.userServ.upAdditional(edition)
-    // .subscribe(()=>{
-    //   this.ngOnInit();
-    // });
+    console.log('userScreen ', editionValue.name)
+    this.userServ.upAdditional(editionValue)
+    .subscribe(()=>{
+      this.ngOnInit();
+    });
   }
 }

@@ -1,4 +1,10 @@
-  <div class="col ">
+<span>
+  <app-edit-email-component class="editEmail-state" [class.active]="editEmail"></app-edit-email-component>
+</span>
+
+<a
+  (click)="editionEmail()"
+  class="col button-user-container">
     <div class="card user-container mb-4">
       <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png" class="card-img-top" alt="...">
       <div class="card-body">
@@ -6,6 +12,5 @@
         <p> {{additional.email}} </p>
       </div>
     </div>
-  </div>
-
+</a>
 
