@@ -10,6 +10,11 @@ import { UserComponenetComponent } from '../user-componenet/user-componenet.comp
 })
 export class EditEmailComponentComponent implements OnInit {
 
+  placeOlder: any = {
+    name: '',
+    email: '',
+  }
+
   edditAdi: FormGroup;
 
   constructor(
@@ -22,6 +27,9 @@ export class EditEmailComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.placeOlder.name = this.userComp.additional.name;
+    this.placeOlder.email = this.userComp.additional.email;
+
   }
 
   cancelClick(){
@@ -38,4 +46,7 @@ export class EditEmailComponentComponent implements OnInit {
     console.log();
 
   }
+
+  get name () {return this.edditAdi.get('name')};
+  get email () {return this.edditAdi.get('email')};
 }

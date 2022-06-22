@@ -23,7 +23,6 @@ export class UserComponenetComponent implements OnInit {
 
 
   constructor(
-   // private userScreen : UserScreenComponent,
     private usersServ : UserServiceService,
   ) { }
 
@@ -34,6 +33,7 @@ export class UserComponenetComponent implements OnInit {
     if (this.editEmail == false){
       this.editEmail =! this.editEmail;
     }
+
   }
 
     //additional
@@ -51,9 +51,8 @@ export class UserComponenetComponent implements OnInit {
        this.usersServ.upAdditional(editionValue)
     }
 
-     deleteAdditional(){
-       const delet = this.additional.id;
-       this.usersServ.deletAdditional(delet);
-     }
-
+    deleteAdditional(){
+      const delet = this.additional.id;
+      this.usersServ.deletAdditional(delet);
+    }
 }

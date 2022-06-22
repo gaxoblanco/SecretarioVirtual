@@ -36,6 +36,6 @@ export class NewUserComponentComponent implements OnInit {
     this.userScreen.moreEmail = false;
   }
 
-  get Name(){return this.newAdditionalDTO.get('name');}
-  get Email(){return this.newAdditionalDTO.get('email');}
+  get name () {return this.newAdditionalDTO.get('name')};
+  get email () {return this.newAdditionalDTO.get('email')};
 }
