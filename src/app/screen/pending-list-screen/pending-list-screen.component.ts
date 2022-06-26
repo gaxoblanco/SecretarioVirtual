@@ -10,6 +10,13 @@ import { FilesService } from 'src/app/services/files.service';
 })
 export class PendingListScreenComponent implements OnInit {
 
+  filsArrowDownStyle: Boolean =  false;
+  filsArrowUpStyle: Boolean =  false;
+  coursArrowDownStyle: Boolean =  false;
+  coursArrowUpStyle: Boolean =  false;
+  StateArrowDownStyle: Boolean =  false;
+  StateArrowUpStyle: Boolean =  false;
+
   searchFile: FormGroup;
   fileList:FileModel[] = [
     {
@@ -42,13 +49,25 @@ export class PendingListScreenComponent implements OnInit {
     this.FileSer.filter(filNumber)
 
   }
+
+  arrowOff(){
+    this.filsArrowDownStyle =  false;
+    this.filsArrowUpStyle =  false;
+    this.coursArrowDownStyle =  false;
+    this.coursArrowUpStyle =  false;
+    this.StateArrowDownStyle =  false;
+    this.StateArrowUpStyle =  false;
+  }
+
   filsArrowDown(){
     this.fileList.sort((a,b )=> a.fileNumber - b.fileNumber);
-    console.log(this.fileList);
+    this.arrowOff();
+    this.filsArrowDownStyle = true;
   }
   filsArrowUp(){
     this.fileList.sort((a,b )=> b.fileNumber - a.fileNumber);
-    console.log(this.fileList);
+    this.arrowOff();
+    this.filsArrowUpStyle = true;
   }
   coursArrowDown(){
     this.fileList.sort((a,b)=>{
@@ -56,6 +75,8 @@ export class PendingListScreenComponent implements OnInit {
       if (b.department < a.department){ return -1};
       return 0;
     });
+    this.arrowOff();
+    this.coursArrowDownStyle = true;
   }
   coursArrowUp(){
     this.fileList.sort((a,b)=>{
@@ -63,13 +84,17 @@ export class PendingListScreenComponent implements OnInit {
       if (a.department < b.department){ return -1};
       return 0;
     });
+    this.arrowOff();
+    this.coursArrowUpStyle = true;
   }
   StateArrowDown(){
     this.fileList.sort((a,b )=> Number(b.state) - Number(a.state));
-    console.log(this.fileList);
+    this.arrowOff();
+    this.StateArrowDownStyle = true;
   }
   StateArrowUp(){
     this.fileList.sort((a,b )=> Number(a.state) - Number(b.state));
-    console.log(this.fileList);
+    this.arrowOff();
+    this.StateArrowUpStyle = true;
   }
 }

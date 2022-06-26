@@ -1,5 +1,6 @@
 import { Injectable, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
+import { HeaderComponentComponent } from '../component/header-component/header-component.component';
 import { Additional, newAdditionalDTO, UpAdditionalDTO } from '../models/additional-model';
 
 @Injectable({
@@ -22,7 +23,7 @@ export class UserServiceService {
 
   @Output() newAdd = new EventEmitter<newAdditionalDTO>();
 
-  constructor() { }
+  constructor(  ) { }
 
   getAllAdditional():Observable<Additional[]>{
     return this.list
@@ -52,5 +53,4 @@ export class UserServiceService {
     const edit = this.list.findIndex((item: UpAdditionalDTO) => item.id === delet);
     this.list.splice(edit, (edit+1))
   }
-
 }

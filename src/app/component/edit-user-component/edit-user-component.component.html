@@ -1,6 +1,6 @@
 
-  <div class="background-new-user changePassword" [class.active]="statePassword">
-  <form class="card changPass-form mb-4" >
+<div class="background-new-user changePassword" [class.active]="statePassword">
+  <form class="card changPass-form mb-4" [formGroup]="passwordDTO">
     <div class="form-group mb-2 ">
       <label for="password">Contraseña</label>
       <input
@@ -8,7 +8,9 @@
         class="form-control"
         id="password"
         placeholder="Contraseña"
-        formControlName="password">
+        formControlName="password"
+        [ngClass]="{'is-invalid':password?.errors && password?.touched,
+        'is-valid': !password?.errors && password?.touched}">
     </div>
     <div class="form-group mb-4 ">
       <label for="password">Repita la Contraseña</label>
@@ -17,10 +19,15 @@
         class="form-control"
         id="password"
         placeholder="Contraseña"
-        formControlName="confirmPassword">
+        formControlName="confirmPassword"
+        [ngClass]="{'is-invalid':confirmPassword?.errors && confirmPassword?.touched,
+        'is-valid': !confirmPassword?.errors && confirmPassword?.touched}">
+        <div *ngIf="passwordMatchError">
+          Password does not match
+        </div>
     </div>
-    <div class="button-container">
-      <button type="submit" class="btn card-link ">Confirmar</button>
+    <div class="button-container" [class.disabled]="!passwordDTO.valid">
+      <button type="submit" class="btn card-link" (click)="change()">Confirmar</button>
     </div>
     <button class="cancel-container" (click)="cancelChange()">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">

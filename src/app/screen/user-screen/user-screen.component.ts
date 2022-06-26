@@ -49,16 +49,7 @@ export class UserScreenComponent implements OnInit {
 
   //additional
   editionAdditional(editionValue: UpAdditionalDTO){
-   // editionValue.id = this.additionals.id;
 
-    // if(editionValue.name == ''){
-    //   editionValue.name = this.additionals.name;
-    // }
-    // if(editionValue.email == ''){
-    //   editionValue.email = this.additionals.email;
-    // }
-
-    console.log('userScreen ', editionValue.name)
     this.userServ.upAdditional(editionValue)
     .subscribe(()=>{
       this.ngOnInit();

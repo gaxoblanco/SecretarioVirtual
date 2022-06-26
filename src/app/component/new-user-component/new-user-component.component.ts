@@ -29,7 +29,7 @@ export class NewUserComponentComponent implements OnInit {
   saveNewAdditional(){
     let sabeAdditionl: newAdditionalDTO = this.newAdditionalDTO.value;
     this.userServ.addNewAdditional(sabeAdditionl);
-    console.log('new user component', this.newAdditionalDTO.value)
+    this.userScreen.moreEmail = false;
   }
 
   cancelClick(){

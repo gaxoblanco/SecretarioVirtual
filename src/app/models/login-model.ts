@@ -5,14 +5,14 @@ export interface User{
     DIN: number;
     adders: string;
     city: string;
-    InputEmail1: string;
-    InputPassword: string;
+    emailP: string;
+    password: string;
     Check: boolean;
   }
 
   export interface CreateUserDTO extends Omit<User, 'id'>{}
 
   export interface LoginModel{
-    InputEmail1: string;
-    InputPassword: string;
+    emailP: string;
+    password: string;
   }

@@ -9,8 +9,18 @@
 .search{
   width: 300px;
   padding-left: 20px;
-  .input-group-append{
-    border: none;
+  .form{
+    position: relative;
+    input{
+      width: 250px;
+      border-radius: 10px 20px 20px 10px;
+    }
+  }
+  .input-group-text{
+    position: absolute;
+    height: 38px;
+    margin-top: -38px;
+    margin-left: 190px;
   }
   button{
     display:grid;
@@ -23,7 +33,7 @@
     svg{
       width: 20px;
       height: auto;
-      color: #4e84a5;
+      color: #1f3442;
     }
   }
 }
@@ -36,10 +46,17 @@ table{
     border-width: none;
   }
   .arrow-button{
-    border: none;
+    border: 1px solid #37BBED;
     color: white;
     background-color: #37BBED;
     margin-left: 6px;
+    svg{
+      margin-top: -4px;
+    }
+    &.active{
+      border: 1px solid rgb(244, 244, 244);
+      border-radius: 6px;
+    }
   }
   .deleteFile{
     border: none;

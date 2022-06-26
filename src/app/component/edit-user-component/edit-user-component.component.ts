@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
+import { AutenticationServiceService } from 'src/app/services/autentication-service.service';
+import { StrengthValidatorService } from 'src/app/services/strength-validator.service';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-edit-user-component',
@@ -12,26 +15,24 @@ export class EditUserComponentComponent implements OnInit {
   passwordDTO: FormGroup;
 
   statePassword: Boolean = false;
+  profileForm: any;
 
   constructor(
+    private autServ : AutenticationServiceService,
     private userScreen : UserScreenComponent
   ) {
     this.passwordDTO = new FormGroup({
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    //   confirmPassword: new FormControl('', [acceptTerms: [false, Validators.requiredTrue]])
-    // },      {
-    //   validators: [Validators.match('password', 'confirmPassword')]
-    });
+      confirmPassword: new FormControl('', [Validators.required]),
+    },
+      [StrengthValidatorService.MatchValidator('password', 'confirmPassword')]
+    );
   }
 
 
   ngOnInit(): void {
   }
-  password(formGroup: FormGroup) {
-    const  value  = formGroup.get('password');
-    const  value1 = formGroup.get('confirmpassword');
-    return value === value1 ? null : { passwordNotMatch: true };
-  }
+
   changePassword(){
       this.statePassword = true;
   }
@@ -43,6 +44,21 @@ export class EditUserComponentComponent implements OnInit {
   }
   cancelClick(){
     this.userScreen.editUser = false;
+  }
+
+  change(){
+    const pass = this.passwordDTO.value;
+    this.autServ.changePassword(pass);
+    console.log(pass);
+  }
+
+  get password() {return this.passwordDTO.get ('password')};
+  get confirmPassword() {return this.passwordDTO.get ('confirmPassword')};
+  get passwordMatchError() {
+    return (
+      this.profileForm.getError('mismatch') &&
+      this.profileForm.get('confirmPassword')?.touched
+    );
   }
 
 

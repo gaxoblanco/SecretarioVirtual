@@ -9,45 +9,26 @@ import {Route} from '../../models/route';
 })
 export class HeaderComponentComponent implements OnInit {
 
-  @Input() page: Route={
-    route: '',
-    name: '',
-    acess: false,
-  };
-  @Output() addedPage = new EventEmitter<Route>();
+  // @Input() page: Route={
+  //   route: '',
+  //   name: '',
+  //   acess: false,
+  // };
+  // @Output() addedPage = new EventEmitter<Route>();
 
 
-  pages: Route[] =[
-    {
-      route: "/agregarExpediente",
-      name: 'Agregar',
-      acess: false,
-    },
-    {
-      route: "/listaExpediente",
-      name: 'Lista',
-      acess: false,
-    },
-    {
-      route: "/usuario",
-      name: 'Usuario',
-      acess: false,
-    },
-    {
-      route: "/",
-      name: 'Desconectar',
-      acess: false,
-    },
-  ];
+  pages: Route[] =[];
 
   constructor(
-    private autenticacionService: AutenticationServiceService,
+    private autServ: AutenticationServiceService,
   ) { }
 
   ngOnInit(): void {
-    // if (this.autenticacionService.LogState =! this.autenticacionService.LogState){
+   // this.pages = this.autServ.pageFilter;
+    this.pages = this.autServ.pages;
+    console.log("llama mas veces");
 
-    // }
   }
+
 
 }
