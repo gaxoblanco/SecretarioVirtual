@@ -45,9 +45,9 @@ export class HeaderComponentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.autenticacionService.LogState =! this.autenticacionService.LogState){
+    // if (this.autenticacionService.LogState =! this.autenticacionService.LogState){
 
-    }
+    // }
   }
 
 }

@@ -27,6 +27,7 @@ import { RegisterScreenComponent } from './screen/register-screen/register-scree
 import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen.component';
 import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-screen.component';
 import { SubcribeOptionComponentComponent } from './component/subcribe-option-component/subcribe-option-component.component';
+import { PendingFileComponenetComponent } from './component/pending-file-componenet/pending-file-componenet.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { SubcribeOptionComponentComponent } from './component/subcribe-option-co
     RegisterScreenComponent,
     ResetPwScreenComponent,
     SubcribeScreenComponent,
-    SubcribeOptionComponentComponent
+    SubcribeOptionComponentComponent,
+    PendingFileComponenetComponent
   ],
   imports: [
     BrowserModule,

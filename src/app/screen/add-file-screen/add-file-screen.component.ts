@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class AddFileScreenComponent implements OnInit {
   ngOnInit(): void {
   }
   addFile(){
-    let File = this.files.value;
+    let File: FileModel = this.files.value;
+    File.state = false;
     this.FileSer.addFiles(File);
   }
   get FileNumber() {return this.files.get('fileNumber')}

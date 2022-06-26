@@ -28,7 +28,6 @@
   }
 }
 
-
 table{
   margin-top: 20px;
   .thead-container{
@@ -36,5 +35,17 @@ table{
     color: white;
     border-width: none;
   }
+  .arrow-button{
+    border: none;
+    color: white;
+    background-color: #37BBED;
+    margin-left: 6px;
+  }
+  .deleteFile{
+    border: none;
+    width: 100%;
+    border-bottom: 1px solid #dee2e6;
+  }
 }
+
 
