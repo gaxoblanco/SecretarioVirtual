@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, OnChanges  } from '@angular/core';
 import { Additional, newAdditionalDTO, UpAdditionalDTO } from 'src/app/models/additional-model';
+import { AutenticationServiceService } from 'src/app/services/autentication-service.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
@@ -10,6 +11,13 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 export class UserScreenComponent implements OnInit {
 
   list: any [] = [];
+  user ={
+    emailP: "",
+    password: "",
+    name: "",
+    surname: "",
+    subscribe: ''
+  };
 
 
   moreEmail: boolean = false;
@@ -18,6 +26,7 @@ export class UserScreenComponent implements OnInit {
 
 
   constructor(
+    private autServ : AutenticationServiceService,
     private userServ : UserServiceService,
   ) { };
 
@@ -25,6 +34,7 @@ export class UserScreenComponent implements OnInit {
 
   ngOnInit(): void {
       this.list = this.userServ.list;
+      this.user = this.autServ.user
   };
 
   more(){

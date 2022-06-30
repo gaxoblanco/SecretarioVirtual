@@ -22,9 +22,6 @@
         formControlName="confirmPassword"
         [ngClass]="{'is-invalid':confirmPassword?.errors && confirmPassword?.touched,
         'is-valid': !confirmPassword?.errors && confirmPassword?.touched}">
-        <div *ngIf="passwordMatchError">
-          Password does not match
-        </div>
     </div>
     <div class="button-container" [class.disabled]="!passwordDTO.valid">
       <button type="submit" class="btn card-link" (click)="change()">Confirmar</button>
@@ -47,28 +44,28 @@
     <form class="row row-cols-1 row-cols-md-3 g-4">
       <div class="form-group mb-2 ">
         <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" placeholder="Nombre">
+        <input type="text" class="form-control" id="name" placeholder="{{user.name}}">
       </div>
       <div class="form-group mb-2">
         <label for="exampleInputEmail1">Email</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nuevo Email">
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{user.emailP}}">
       </div>
 
       <div class="form-group mb-2">
         <label for="Surname">Apellido</label>
-        <input type="text" class="form-control" id="Surname" placeholder="Apellido">
+        <input type="text" class="form-control" id="Surname" placeholder="{{user.surname}}">
       </div>
 
       <div class="form-group ">
         <label for="exampleInputPassword1">Contraseña</label>
-        <button class="form-control" (click)="changePassword()">Cambiar contraseña</button>
+        <button class="form-control inputStyle" (click)="changePassword()">Cambiar contraseña</button>
       </div>
 
       <div class="form-group mb-2">
         <label>Subcripcion</label>
-        <select id="inputCity" class="form-control">
-          <option selected>Anual</option>
-          <option>Mensual</option>
+        <select id="inputCity" class="form-control inputStyle">
+          <option selected>{{user.subscribe}}</option>
+          <option>Anual</option>
         </select>
       </div>
       <div class="button-container">

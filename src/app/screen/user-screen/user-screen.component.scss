@@ -6,6 +6,7 @@ article{
   margin: 0 auto;
   display: grid;
 }
+
   .plus-sign{
     display: grid;
     place-items: center;
@@ -23,9 +24,21 @@ article{
 .suscrip-container{
   border: 1px solid #4e84a5;
   border-radius: 16px;
-  .imgSub img{
-    width: 300px;
+  .imgSub{
+    height: 200px;
+    overflow: hidden;
+    position: relative;
     border-radius: 16px 0px 0px 16px;
+    img{
+      position:absolute;
+      left: -100%;
+      right: -100%;
+      top: -100%;
+      bottom: -100%;
+      margin: auto;
+      min-height: 100%;
+      min-width: 100%;
+    }
   }
   .sub-text{
     display: grid;

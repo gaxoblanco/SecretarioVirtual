@@ -24,9 +24,12 @@ export class AutenticationServiceService {
     },
   ];
 
-  user: LoginModel = {
+  user = {
     emailP: "a",
     password: "a",
+    name: "Juan",
+    surname: "Manuel",
+    subscribe: 'Mensual'
   }
 
   pages: Route[] =[

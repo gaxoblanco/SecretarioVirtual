@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoginModel } from 'src/app/models/login-model';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { AutenticationServiceService } from 'src/app/services/autentication-service.service';
 import { StrengthValidatorService } from 'src/app/services/strength-validator.service';
-import { UserServiceService } from 'src/app/services/user-service.service';
+
 
 @Component({
   selector: 'app-edit-user-component',
@@ -13,6 +14,13 @@ import { UserServiceService } from 'src/app/services/user-service.service';
 export class EditUserComponentComponent implements OnInit {
 
   passwordDTO: FormGroup;
+  user ={
+    emailP: "",
+    password: "",
+    name: "",
+    surname: "",
+    subscribe: ''
+  };
 
   statePassword: Boolean = false;
   profileForm: any;
@@ -31,6 +39,7 @@ export class EditUserComponentComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.user = this.autServ.user
   }
 
   changePassword(){

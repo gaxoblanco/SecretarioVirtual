@@ -1,13 +1,14 @@
 export interface User{
-    id: string;
+    id?: string;
     name: string;
     surname: string;
-    DIN: number;
-    adders: string;
-    city: string;
+    DIN?: number;
+    adders?: string;
+    city?: string;
     emailP: string;
     password: string;
-    Check: boolean;
+    Check?: boolean;
+    subscribe: string;
   }
 
   export interface CreateUserDTO extends Omit<User, 'id'>{}

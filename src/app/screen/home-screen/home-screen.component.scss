@@ -11,17 +11,19 @@ section{
 .card-img{
   border-radius: 20px;
   border:none;
+  position: relative;
   .card-text-container{
     width: 400px;
     height: 120px;
-    margin-top: 20px;
-    margin-left: 20px;
+    margin: 0 auto;
+    margin-top: 8rem;
     background-color: white;
     color: #333333;
     border-radius: 16px;
     border-bottom: 15px solid #37BBED;
   }
   img{
+    //display: none;
     width: 100%;
   }
   .card-link{
@@ -39,3 +41,19 @@ section{
   padding: 20px;
 }
 
+
+@media (min-width: 600px) {
+  img{
+    display:flex;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1000px) {
+  .card-img{
+    .card-text-container {
+      margin-top: 20px;
+      margin-left: 20px;
+    }
+  }
+}
