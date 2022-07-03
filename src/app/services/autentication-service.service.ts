@@ -25,8 +25,8 @@ export class AutenticationServiceService {
   ];
 
   user = {
-    emailP: "a",
-    password: "a",
+    emailP: "user@admin.com",
+    password: "admin123",
     name: "Juan",
     surname: "Manuel",
     subscribe: 'Mensual'

@@ -14,7 +14,7 @@ input, select{
   place-items: center;
 }
 .add-container-form{
-  width: 520px;
+  width: auto;
   height: auto;
   display: grid;
   place-items: center;
@@ -32,5 +32,11 @@ input, select{
     .card-link{
       margin-left: 46px;
     }
+  }
+}
+
+@media (min-width: 500){
+  .add-container-form{
+    width: 520px;
   }
 }

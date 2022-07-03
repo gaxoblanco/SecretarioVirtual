@@ -28,6 +28,7 @@ import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen
 import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-screen.component';
 import { SubcribeOptionComponentComponent } from './component/subcribe-option-component/subcribe-option-component.component';
 import { PendingFileComponenetComponent } from './component/pending-file-componenet/pending-file-componenet.component';
+import { NavigationMenuComponenetComponent } from './component/navigation-menu-componenet/navigation-menu-componenet.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { PendingFileComponenetComponent } from './component/pending-file-compone
     ResetPwScreenComponent,
     SubcribeScreenComponent,
     SubcribeOptionComponentComponent,
-    PendingFileComponenetComponent
+    PendingFileComponenetComponent,
+    NavigationMenuComponenetComponent
   ],
   imports: [
     BrowserModule,

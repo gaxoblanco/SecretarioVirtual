@@ -13,13 +13,14 @@ section{
   border:none;
   position: relative;
   .card-text-container{
-    width: 400px;
-    height: 120px;
+    width: 350px;
+    height: 170px;
     margin: 0 auto;
-    margin-top: 8rem;
+    margin-top: 6rem;
     background-color: white;
     color: #333333;
     border-radius: 16px;
+    border: 1px solid #4e84a5;
     border-bottom: 15px solid #37BBED;
   }
   img{
@@ -29,8 +30,7 @@ section{
   .card-link{
     width: 140px;
     position: absolute;
-    right: 20px;
-    bottom: 20px;
+    margin: 20px;
   }
 }
 .border-container{
@@ -40,12 +40,45 @@ section{
   border-radius: 16px;
   padding: 20px;
 }
+.row{
+  //justify-items: center;
+}
 
+@media(max-width:800px){
+  .row{
+    display: inline-block;
+  }
+  .col-lg-6{
+    width: auto;
+    margin-top: 10rem;
+  }
 
-@media (min-width: 600px) {
+  .col-lg-5{
+    width: auto;
+
+    margin-top: 20px
+  }
+
+}
+@media (min-width: 800px) {
   img{
     display:flex;
     width: 100%;
+  }
+  .card-link{
+    margin: 20px;
+  }
+  .card-img{
+    .card-text-container {
+      width: 400px;
+      height: 120px;
+      margin-top: 10rem;
+     // border: none;
+    }
+  }
+  .col-lg-6{
+    margin-top: 6rem;
+    margin-bottom: 20px;
   }
 }
 
@@ -55,5 +88,13 @@ section{
       margin-top: 20px;
       margin-left: 20px;
     }
+    .card-link{
+      right: 20px;
+      bottom: 20px;
+    }
+  }
+  .col-lg-6{
+    margin-top: 0;
+    margin-bottom: 20px;
   }
 }

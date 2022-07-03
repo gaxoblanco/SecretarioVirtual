@@ -16,18 +16,5 @@ export class StrengthValidatorService {
 //---------------
   constructor() { }
 
-//   mustMatch(){
-//     return (form: FormGroup): ValidationErrors | null =>{
 
-//       const pass: string = form.get("password").value;
-//       const passMatch: string = form.get("confirmPassword").value;
-
-//       if (pass === passMatch) {
-//         const match = true;
-
-//         return match ? null : {data: true};
-//       };
-//       return null;
-//     }
-//   }
  }

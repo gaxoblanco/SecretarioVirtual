@@ -1,0 +1,48 @@
+a{
+  color: white;
+}
+svg{
+  color: white;
+  width: 26px;
+  height: auto;
+}
+header{
+  background-color: #37BBED;
+  display: grid;
+  justify-items: right;
+  grid-template-columns: auto 1fr;
+  color: white;
+  padding: 20px 20px 10px 20px;
+  .logo-container{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-right: 20px;
+    img{
+      height: 36px;
+      width: auto;
+    }
+  }
+  .menu-container{
+    right: 20px;
+    width: 40px;
+    border: none;
+    background-color: #37BBED;
+  }
+}
+
+.menu-option-container{
+  background-color: #37bcedf0;
+  border-radius: 16px;
+  border: 1px solid rgb(226, 226, 226);
+  width: 140px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  top: 80px;
+
+  display:none;
+  &.active{
+    display: inline-block;
+  }
+}

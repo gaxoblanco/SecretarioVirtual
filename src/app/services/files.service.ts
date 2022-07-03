@@ -10,13 +10,13 @@ export class FilesService {
   files: FileModel[] = [
     {
       id: 4456,
-      fileNumber: 56461215,
+      fileNumber: 5461215,
       department: 'Penal',
       state: false,
     },
     {
       id: 453,
-      fileNumber: 65421651,
+      fileNumber: 6542165,
       department: 'Penal',
       state: true,
     },
@@ -34,7 +34,7 @@ export class FilesService {
     },
     {
       id: 14564,
-      fileNumber: 515620,
+      fileNumber: 5156200,
       department: 'Familia',
       state: false,
     },

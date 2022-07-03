@@ -28,7 +28,7 @@ article{
     height: 200px;
     overflow: hidden;
     position: relative;
-    border-radius: 16px 0px 0px 16px;
+    border-radius: 16px 16px 16px 16px;
     img{
       position:absolute;
       left: -100%;
@@ -97,4 +97,14 @@ article{
   border-radius: 16px;
   padding: 20px;
   margin-top: 20px;
+}
+
+@media (min-width: 700){
+  .suscrip-container{
+    .imgSub{
+      height: 500px;
+      border-radius: 16px 0px 0px 16px;
+    }
+  }
+
 }
