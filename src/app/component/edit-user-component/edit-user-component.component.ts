@@ -15,7 +15,7 @@ export class EditUserComponentComponent implements OnInit {
 
   passwordDTO: FormGroup;
   user ={
-    emailP: "",
+    email: "",
     password: "",
     name: "",
     surname: "",
@@ -39,7 +39,7 @@ export class EditUserComponentComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.user = this.autServ.user
+    // this.user = this.autServ.user
   }
 
   changePassword(){

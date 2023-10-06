@@ -1,0 +1,35 @@
+
+
+header{
+  width: 100%;
+  background-color: $color-primary;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr;
+  color: $color-secondary;
+  padding: 20px 20px 20px 20px;
+  .logo-container{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    img{
+      height: 60px;
+      width: auto;
+    }
+  }
+}
+a{
+  color: $color-secondary;
+}
+.menu-container{
+
+ svg{
+  color: $color-secondary;
+  width: 26px;
+  height: auto;
+  }
+}
+
+.end-pisition{
+  display: grid;
+  justify-content: center;
+}

@@ -29,7 +29,7 @@ import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-scree
 import { SubcribeOptionComponentComponent } from './component/subcribe-option-component/subcribe-option-component.component';
 import { PendingFileComponenetComponent } from './component/pending-file-componenet/pending-file-componenet.component';
 import { NavigationMenuComponenetComponent } from './component/navigation-menu-componenet/navigation-menu-componenet.component';
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +63,7 @@ import { NavigationMenuComponenetComponent } from './component/navigation-menu-c
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

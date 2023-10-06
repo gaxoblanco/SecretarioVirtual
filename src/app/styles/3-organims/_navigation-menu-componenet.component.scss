@@ -1,0 +1,50 @@
+
+
+a{
+  color: $color-secondary;
+}
+svg{
+  color: $color-secondary;
+  width: 26px;
+  height: auto;
+}
+header{
+  background-color: $color-primary;
+  display: grid;
+  justify-items: right;
+  grid-template-columns: auto 1fr;
+  color: $color-secondary;
+  padding: 20px 20px 10px 20px;
+  .logo-container{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-right: 20px;
+    img{
+      height: 36px;
+      width: auto;
+    }
+  }
+  .menu-container{
+    right: 20px;
+    width: 40px;
+    border: none;
+    background-color: $color-primary;
+  }
+}
+
+.menu-option-container{
+  background-color: $color-primary;
+  border-radius: 16px;
+  border: 1px solid $color-secondary;
+  width: 140px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  top: 80px;
+
+  display:none;
+  &.active{
+    display: inline-block;
+  }
+}

@@ -1,0 +1,73 @@
+
+.article{
+  height: 77vh;
+  &--auto{
+    height: auto;
+  }
+}
+label, option{
+  color:#707070;
+  font-weight: 600;
+}
+input, select{
+  border-radius: 10px;
+  font-weight: 500;
+}
+.container{
+  display: grid;
+  place-items: center;
+}
+.add-container-form{
+  width: auto;
+  height: auto;
+  display: grid;
+  place-items: center;
+  border: solid 1px #4e84a5;
+  border-radius: 20px;
+  border-bottom: 15px solid #37BBED;
+  padding: 10px;
+  form{
+    label{
+      margin-top: 10px;
+    }
+    select{
+      margin-bottom: 10px;
+    }
+    .card-link{
+      margin-left: 46px;
+    }
+  }
+}
+
+.table{
+  margin-top: 20px;
+  .thead-container{
+    background-color: $color-primary;
+    color: $color-secondary;
+    border-width: none;
+  }
+  .arrow-button{
+    border: 1px solid $color-primary;
+    color: $color-secondary;
+    background-color: $color-primary;
+    margin-left: 6px;
+    svg{
+      margin-top: -4px;
+    }
+    &.active{
+      border: 1px solid $color-secondary;
+      border-radius: 6px;
+    }
+  }
+  .deleteFile{
+    border: none;
+    width: 100%;
+    border-bottom: 1px solid $color-secondary-dark
+  }
+}
+
+@media (min-width: 500){
+  .add-container-form{
+    width: 520px;
+  }
+}

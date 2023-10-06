@@ -5,7 +5,7 @@ export interface User{
     DIN?: number;
     adders?: string;
     city?: string;
-    emailP: string;
+    email: string;
     password: string;
     Check?: boolean;
     subscribe: string;
@@ -14,6 +14,6 @@ export interface User{
   export interface CreateUserDTO extends Omit<User, 'id'>{}
 
   export interface LoginModel{
-    emailP: string;
+    email: string;
     password: string;
   }

@@ -16,7 +16,7 @@ export class UserScreenComponent implements OnInit {
   NumberFile = 0;
   list: any [] = [];
   user ={
-    emailP: "",
+    email: "",
     password: "",
     name: "",
     surname: "",
@@ -39,7 +39,7 @@ export class UserScreenComponent implements OnInit {
 
   ngOnInit(): void {
       this.list = this.userServ.list;
-      this.user = this.autServ.user
+      // this.user = this.autServ.user
 
       this.filList = this.fileSer.files;
       this.NumberFile = this.filList.length;

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, catchError, tap} from 'rxjs';
 import { LoginModel } from '../models/login-model';
-import { RouterLink, RouterModule, Routes } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
-import {Route} from '../models/route';
-import { HeaderComponentComponent } from '../component/header-component/header-component.component';
+import { Router } from '@angular/router';
+import {Route} from '@models/route';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +24,6 @@ export class AutenticationServiceService {
       acess: true,
     },
   ];
-
-  user = {
-    emailP: "user@admin.com",
-    password: "admin123",
-    name: "Juan",
-    surname: "Manuel",
-    subscribe: 'Mensual'
-  }
 
   pages: Route[] =[
     {
@@ -62,23 +55,38 @@ export class AutenticationServiceService {
 
   constructor(
     private routerModul : AppRoutingModule,
+    private http: HttpClient,
+    private router: Router
   ) { }
 
+  // url de trabajo
+  apiUrl = environment.API_URL;
+
   login(value: LoginModel){
+    // configuro el hader para enviar email y password
+    const headers = new HttpHeaders({
+      // authorization: 'Basic ' + btoa(value.email + ':' + value.password),
+      'email': value.email, // Agregar el email en las cabeceras
+      'password': value.password // Agregar la contraseña en las cabeceras
+    });
+    console.log('header',headers);
 
-    if (value.emailP == this.user.emailP && value.password == this.user.password){
-     // this.pages[0].acess = true;
-      this.pages.forEach(item => item.acess = true);
-      this.filterPages(true)
-      console.log(this.pages);
-    }
-    console.log("mal", value);
-
+    // Realiza la solicitud POST a la API para el inicio de sesión
+    return this.http.post(`${this.apiUrl}/user/login`, null, { headers })
+      .pipe(
+        // procesamos la respeusta
+        tap(response => {
+          // guardamos el token en el localstorage
+          localStorage.setItem('token', JSON.stringify(response));
+          // cambiamos el estado del login
+          this.LogState = true;
+          // navego a la pagina principal
+          this.router.navigate(['/']);
+        }
+      ))
   }
 
   changePassword(value: LoginModel){
-    this.user.password = value.password;
-    console.log(this.user);
 
   }
 
