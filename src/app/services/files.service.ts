@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FileModel } from '../models/file.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FileModel, NewFile } from '@models/file.model';
+import { environment } from '@env/environment';
+import { AppRoutingModule } from '../app-routing.module';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FilesService {
-
   files: FileModel[] = [
     {
       id: 4456,
@@ -21,7 +24,7 @@ export class FilesService {
       state: true,
     },
     {
-      id:4656,
+      id: 4656,
       fileNumber: 5641651,
       department: 'Familia',
       state: true,
@@ -39,28 +42,32 @@ export class FilesService {
       state: false,
     },
   ];
+  // url de API
+  apiUrl = environment.API_URL;
 
-
-  constructor() { }
+  constructor(
+    private routerModul: AppRoutingModule,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   // getAllFiles():Observable<FileModel[]>{
 
   // }
 
-  addFiles(file:FileModel){
-    this.files.push(file)
-    //console.log(this.files);
+  addFiles(value: NewFile) {
+    // this.files.push(file);
+    console.log(value);
+    return this.http.post(`${this.apiUrl}/dispatch/create`, value).pipe();
   }
-  deleteFiles(fileId: Number){
-    const position = this.files.findIndex(item => item.id === fileId);
-    this.files.splice(position, (1))
+
+  deleteFiles(fileId: Number) {
+    const position = this.files.findIndex((item) => item.id === fileId);
+    this.files.splice(position, 1);
     console.log(position);
   }
-  filter(number: Number){
-    this.files.find((item: FileModel) => item.fileNumber === number)
+  filter(number: Number) {
+    this.files.find((item: FileModel) => item.fileNumber === number);
     console.log(this.files);
-
   }
-
-
 }

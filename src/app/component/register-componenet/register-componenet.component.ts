@@ -35,8 +35,6 @@ export class RegisterComponenetComponent implements OnInit {
 
   // registro el usuario
   create() {
-    console.log('hola', this.form.value);
-
     this.status = 'loading';
     if (this.form.valid) {
       this.status = 'loading';
@@ -44,7 +42,7 @@ export class RegisterComponenetComponent implements OnInit {
       const user = this.form.value;
       this.authService.register(user).subscribe({
         next: () => {
-          console.log('success');
+          // console.log('success');
           this.status = 'success';
           this.router.navigate(['/login']);
         },

@@ -1,33 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FileModel } from 'src/app/models/file.model';
-import { FilesService } from 'src/app/services/files.service';
+import { NewFile } from '@models/file.model';
+import { RequestStatus } from '@models/request-status.model';
+import { FilesService } from '@services/files.service';
 
 @Component({
   selector: 'app-add-file-screen',
   templateUrl: './add-file-screen.component.html',
-  styleUrls: ['./add-file-screen.component.scss']
+  styleUrls: ['./add-file-screen.component.scss'],
 })
 export class AddFileScreenComponent implements OnInit {
+  files: FormGroup;
+  status: RequestStatus = 'init';
 
-  files : FormGroup;
-
-  constructor(
-    private FileSer : FilesService,
-  ) {
+  constructor(private fileSer: FilesService) {
     this.files = new FormGroup({
-      fileNumber: new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(7)]),
-      department: new FormControl('', Validators.required),
-    })
+      fileNumber: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(6),
+      ]),
+    });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+  addFile() {
+    // tomo el valor fileNumber del formulario y hago split para separar los numeros
+    let fileNumber = this.files.value.fileNumber;
+    // consulto si el filNumber tiene / para separar los numeros
+    if (fileNumber.includes('/')) {
+      // separo los numeros en un array
+      let fileNumberSplit = fileNumber.split('/');
+      // creo un objeto de tipo NewFile para enviarlo al servicio
+      let newFile: NewFile = {
+        fileNumber: Number(fileNumberSplit[0]),
+        yearNumber: Number(fileNumberSplit[1]),
+      };
+      // envio el objeto al servicio
+      this.fileSer.addFiles(newFile).subscribe({
+        next: () => {
+          this.status = 'success';
+        },
+        error: (error) => {
+          this.status = 'failed';
+          console.log(error);
+        },
+      });
+    } else {
+      // creo un objeto de tipo NewFile separando los ultimos 2 numeros del fileNumber asignandolos al yearNumber
+      let newFile: NewFile = {
+        fileNumber: Number(fileNumber.slice(0, -2)),
+        yearNumber: Number(fileNumber.slice(-2)),
+      };
+      // envio el objeto al servicio
+      this.fileSer.addFiles(newFile).subscribe({
+        next: () => {
+          this.status = 'success';
+        },
+        error: (error) => {
+          this.status = 'failed';
+          console.log(error);
+        },
+      });
+    }
   }
-  addFile(){
-    let File: FileModel = this.files.value;
-    File.state = false;
-    this.FileSer.addFiles(File);
+
+  get FileNumber() {
+    return this.files.get('fileNumber');
   }
-  get FileNumber() {return this.files.get('fileNumber')}
-  get Department() {return this.files.get('department')}
 }

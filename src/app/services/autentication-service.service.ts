@@ -5,7 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
 import { Router } from '@angular/router';
 import { Route } from '@models/route';
+import { ResponseLogin } from '@models/auth.model';
 import { environment } from '@env/environment';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +58,8 @@ export class AutenticationServiceService {
   constructor(
     private routerModul: AppRoutingModule,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) {}
 
   // url de trabajo
@@ -71,22 +74,26 @@ export class AutenticationServiceService {
     console.log('header', headers);
 
     // Realiza la solicitud POST a la API para el inicio de sesión
-    return this.http.post(`${this.apiUrl}/user/login`, null, { headers }).pipe(
-      // procesamos la respeusta
-      tap((response) => {
-        // guardamos el token en el localstorage
-        localStorage.setItem('token', JSON.stringify(response));
-        // cambiamos el estado del login
-        this.LogState = true;
-        // navego a la pagina principal
-        this.router.navigate(['/']);
-      })
-    );
+    return this.http
+      .post<ResponseLogin>(`${this.apiUrl}/user/login`, null, { headers })
+      .pipe(
+        // procesamos la respeusta
+        tap((response) => {
+          console.log(response);
+          // guardamos el response.token y response.id en una cookie
+          this.tokenService.saveToken(response);
+
+          // cambiamos el estado del login
+          this.LogState = true;
+          // navego a la pagina principal
+          this.router.navigate(['/']);
+        })
+      );
   }
 
   register(value: any) {
     //envio el formulario de registro en un post
-    console.log('envio registro', value);
+    // console.log('envio registro', value);
     return this.http.post(`${this.apiUrl}/user/create`, value).pipe();
   }
 

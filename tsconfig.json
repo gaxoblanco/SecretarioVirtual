@@ -41,6 +41,9 @@
       "@assets/*": [
         "./src/assets/*"
       ],
+      "@guards": [
+        "./src/app/guards/*"
+      ],
       "@env": [
         "./src/environments/environment"
       ]

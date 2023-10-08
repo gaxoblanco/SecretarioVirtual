@@ -9,20 +9,30 @@ import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen
 import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-screen.component';
 import { UserScreenComponent } from './screen/user-screen/user-screen.component';
 
+import { AuthGuard } from './guards/auth.guard';
+
 const routes: Routes = [
-  {path:'', component: HomeScreenComponent},
-  {path:'agregarExpediente', component: AddFileScreenComponent},
-  {path:'listaExpediente', component: PendingListScreenComponent},
-  {path: 'usuario', component: UserScreenComponent},
-  {path: 'login', component: LoginScreenComponent},
-  {path: 'register', component: RegisterScreenComponent},
-  {path: 'resetpw', component: ResetPwScreenComponent},
-  {path: 'subcribe', component: SubcribeScreenComponent},
+  { path: '', component: HomeScreenComponent },
+  {
+    path: 'agregarExpediente',
+    component: AddFileScreenComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'listaExpediente',
+    component: PendingListScreenComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'usuario', component: UserScreenComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginScreenComponent },
+  { path: 'register', component: RegisterScreenComponent },
+  // {path: 'resetpw', component: ResetPwScreenComponent},
+  { path: 'subcribe', component: SubcribeScreenComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
   [x: string]: any;
