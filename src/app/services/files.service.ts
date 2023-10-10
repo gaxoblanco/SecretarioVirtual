@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FileModel, NewFile } from '@models/file.model';
 import { environment } from '@env/environment';
 import { AppRoutingModule } from '../app-routing.module';
-import { Router } from '@angular/router';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root',
@@ -48,17 +49,45 @@ export class FilesService {
   constructor(
     private routerModul: AppRoutingModule,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) {}
 
   // getAllFiles():Observable<FileModel[]>{
 
   // }
 
-  addFiles(value: NewFile) {
-    // this.files.push(file);
-    console.log(value);
-    return this.http.post(`${this.apiUrl}/dispatch/create`, value).pipe();
+  addFiles(data: NewFile) {
+    // Obtengo el token y id
+    const token = this.tokenService.getToken();
+    console.log(token.id);
+    console.log(data);
+
+    // Agrego el token y el userId al header
+    if (token) {
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        token: token!.token!,
+        userId: token!.id!,
+      });
+      console.log(headers);
+
+      return this.http
+        .post(`${this.apiUrl}/dispatch/create`, data, { headers })
+        .pipe(
+          // Manejar la respuesta aquí
+          catchError((error) => {
+            // Manejar errores de la solicitud HTTP
+            console.error('Error en la solicitud:', error);
+            throw error; // Puedes manejar el error según tus necesidades
+          })
+        );
+    } else {
+      // Manejo de error si no se pudo obtener el token
+      console.error('No se pudo obtener el token');
+      // Puedes lanzar una excepción o manejarlo de acuerdo a tus necesidades.
+      return throwError('No se pudo obtener el token');
+    }
   }
 
   deleteFiles(fileId: Number) {

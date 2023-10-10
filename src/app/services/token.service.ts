@@ -11,18 +11,18 @@ export class TokenService {
   saveToken(token: ResponseLogin) {
     // guardamos el response.token y response.id en una cookie
     // document.cookie = `token=${token.token}; id=${token.id}`;
-    setCookie('token-secret', token.token, { expires: 30, path: '/' });
-    setCookie('id', token.id, { expires: 30, path: '/' });
+    setCookie('token', token.token, { expires: 30, path: '/' });
+    setCookie('userId', token.id, { expires: 30, path: '/' });
   }
 
   getToken() {
-    const token = getCookie('token-secret');
-    const id = getCookie('id');
+    const token = getCookie('token');
+    const id = getCookie('userId');
     return { token, id };
   }
 
   removeToken() {
-    removeCookie('token-secret');
-    removeCookie('id');
+    removeCookie('token');
+    removeCookie('userId');
   }
 }
