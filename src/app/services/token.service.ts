@@ -18,6 +18,11 @@ export class TokenService {
   getToken() {
     const token = getCookie('token');
     const id = getCookie('userId');
+
+    if (!token || !id) {
+      return null; // O puedes devolver undefined si lo prefieres
+    }
+
     return { token, id };
   }
 

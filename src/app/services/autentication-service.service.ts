@@ -64,6 +64,7 @@ export class AutenticationServiceService {
 
   // url de trabajo
   apiUrl = environment.API_URL;
+  tokenTrue = this.tokenService.getToken();
 
   login(value: LoginModel) {
     // configuro el hader para enviar email y password
@@ -86,7 +87,7 @@ export class AutenticationServiceService {
           // cambiamos el estado del login
           this.LogState = true;
           // navego a la pagina principal
-          this.router.navigate(['/']);
+          this.router.navigate(['/login']);
         })
       );
   }
@@ -99,12 +100,24 @@ export class AutenticationServiceService {
 
   changePassword(value: LoginModel) {}
 
-  filterPages(value: Boolean) {
-    if (value == true) {
-      const array = this.pages;
-      const filter = array.filter((item) => item.acess);
-      this.pageFilter = filter;
-      console.log(filter, 'hola');
+  filterPages() {
+    console.log(this.tokenTrue!.token);
+
+    //si token existe  devuelvoel array pages
+    if (this.tokenTrue!.token) {
+      return this.pages;
+    } else {
+      // si no existe devuelvo el array pageFilter
+      return this.pageFilter;
     }
+  }
+
+  logout() {
+    // borro la cookie
+    this.tokenService.removeToken();
+    // cambio el estado del login
+    this.LogState = false;
+    console.log(this.tokenService.getToken());
+    // navego home
   }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FileModel, NewFile } from '@models/file.model';
@@ -60,7 +60,7 @@ export class FilesService {
   addFiles(data: NewFile) {
     // Obtengo el token y id
     const token = this.tokenService.getToken();
-    console.log(token.id);
+    console.log(token!.id);
     console.log(data);
 
     // Agrego el token y el userId al header
@@ -75,11 +75,19 @@ export class FilesService {
       return this.http
         .post(`${this.apiUrl}/dispatch/create`, data, { headers })
         .pipe(
-          // Manejar la respuesta aquí
-          catchError((error) => {
-            // Manejar errores de la solicitud HTTP
-            console.error('Error en la solicitud:', error);
-            throw error; // Puedes manejar el error según tus necesidades
+          // si es un success devuelvo el body
+          tap((response) => {
+            console.log(response);
+            // si la respuesta es Expediente creado con exito. devuelvo un true
+            if (response === 'Expediente creado con exito.') {
+              return true;
+            }
+            // si la respuesta es "El expediente ya existe." devuelvo false
+            if (response === 'El expediente ya existe.') {
+              return false;
+            }
+            // si es distinto devuelvo un error
+            return throwError(response);
           })
         );
     } else {
