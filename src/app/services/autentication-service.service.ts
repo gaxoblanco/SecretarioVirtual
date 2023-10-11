@@ -8,6 +8,7 @@ import { Route } from '@models/route';
 import { ResponseLogin } from '@models/auth.model';
 import { environment } from '@env/environment';
 import { TokenService } from './token.service';
+import { PermissionsService } from './permissions.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,11 @@ export class AutenticationServiceService {
     {
       route: '/',
       name: 'Home',
+      acess: true,
+    },
+    {
+      route: '/login',
+      name: 'Login',
       acess: true,
     },
     {
@@ -59,12 +65,13 @@ export class AutenticationServiceService {
     private routerModul: AppRoutingModule,
     private http: HttpClient,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private permissions: PermissionsService
   ) {}
 
   // url de trabajo
   apiUrl = environment.API_URL;
-  tokenTrue = this.tokenService.getToken();
+  tokenTrue = this.tokenService.getToken() || null;
 
   login(value: LoginModel) {
     // configuro el hader para enviar email y password
@@ -83,7 +90,8 @@ export class AutenticationServiceService {
           console.log(response);
           // guardamos el response.token y response.id en una cookie
           this.tokenService.saveToken(response);
-
+          // actualizo las rutas
+          this.permissions.updatePermissions();
           // cambiamos el estado del login
           this.LogState = true;
           // navego a la pagina principal
@@ -101,7 +109,7 @@ export class AutenticationServiceService {
   changePassword(value: LoginModel) {}
 
   filterPages() {
-    console.log(this.tokenTrue!.token);
+    // console.log(this.tokenTrue!.token);
 
     //si token existe  devuelvoel array pages
     if (this.tokenTrue!.token) {
@@ -118,6 +126,9 @@ export class AutenticationServiceService {
     // cambio el estado del login
     this.LogState = false;
     console.log(this.tokenService.getToken());
-    // navego home
+    // actualizo las rutas
+    this.permissions.updatePermissions();
+    // navego a la pagina principal
+    this.router.navigate(['/']);
   }
 }

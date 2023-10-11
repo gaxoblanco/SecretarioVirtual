@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AutenticationServiceService } from 'src/app/services/autentication-service.service';
+import { PermissionsService } from 'src/app/services/permissions.service';
 import { Route } from '../../models/route';
 
 @Component({
@@ -17,11 +18,17 @@ export class HeaderComponentComponent implements OnInit {
 
   pages: Route[] = [];
 
-  constructor(private autServ: AutenticationServiceService) {}
+  constructor(
+    private autServ: AutenticationServiceService,
+    private permissions: PermissionsService
+  ) {}
 
   ngOnInit(): void {
     // me susbribo al observable filterPages
-    this.pages = this.autServ.filterPages();
+    // this.pages = this.autServ.filterPages();
+    this.permissions.filterPages().subscribe((permissions) => {
+      this.pages = permissions;
+    });
   }
 
   logout() {
