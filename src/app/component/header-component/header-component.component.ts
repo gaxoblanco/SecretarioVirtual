@@ -16,7 +16,7 @@ export class HeaderComponentComponent implements OnInit {
   // };
   // @Output() addedPage = new EventEmitter<Route>();
 
-  pages: Route[] = [];
+  pages$: Route[] = []; // el estado inicial obligatorio es un array vacio
 
   constructor(
     private autServ: AutenticationServiceService,
@@ -27,7 +27,7 @@ export class HeaderComponentComponent implements OnInit {
     // me susbribo al observable filterPages
     // this.pages = this.autServ.filterPages();
     this.permissions.filterPages().subscribe((permissions) => {
-      this.pages = permissions;
+      this.pages$ = permissions;
     });
   }
 

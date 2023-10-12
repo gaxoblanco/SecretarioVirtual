@@ -43,7 +43,7 @@ export class AddFileScreenComponent implements OnInit {
         },
         error: (error) => {
           this.status = 'failed';
-          console.log(error);
+          console.log('er1', error);
         },
       });
     } else {
@@ -60,6 +60,7 @@ export class AddFileScreenComponent implements OnInit {
         error: (error) => {
           this.status = 'failed';
           console.log(error);
+          console.log('er2', error);
         },
       });
     }

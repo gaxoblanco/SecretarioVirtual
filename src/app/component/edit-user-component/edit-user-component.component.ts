@@ -1,74 +1,83 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserServiceService } from '@services/user-service.service';
 import { LoginModel } from 'src/app/models/login-model';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { AutenticationServiceService } from 'src/app/services/autentication-service.service';
 import { StrengthValidatorService } from 'src/app/services/strength-validator.service';
-
+import { User } from '@models/login-model';
+import { Observable, defaultIfEmpty } from 'rxjs';
 
 @Component({
   selector: 'app-edit-user-component',
   templateUrl: './edit-user-component.component.html',
-  styleUrls: ['./edit-user-component.component.scss']
+  styleUrls: ['./edit-user-component.component.scss'],
 })
 export class EditUserComponentComponent implements OnInit {
-
   passwordDTO: FormGroup;
-  user ={
-    email: "",
-    password: "",
-    name: "",
-    surname: "",
-    subscribe: ''
+  user$ = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    subscribe: '',
   };
 
   statePassword: Boolean = false;
   profileForm: any;
 
   constructor(
-    private autServ : AutenticationServiceService,
-    private userScreen : UserScreenComponent
+    private autServ: AutenticationServiceService,
+    private userScreen: UserScreenComponent,
+    private userServ: UserServiceService
   ) {
-    this.passwordDTO = new FormGroup({
-      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      confirmPassword: new FormControl('', [Validators.required]),
-    },
+    this.passwordDTO = new FormGroup(
+      {
+        password: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        confirmPassword: new FormControl('', [Validators.required]),
+      },
       [StrengthValidatorService.MatchValidator('password', 'confirmPassword')]
     );
   }
 
-
   ngOnInit(): void {
-    // this.user = this.autServ.user
+    this.userServ.user$.subscribe((user) => {
+      this.user$ = user;
+    });
   }
 
-  changePassword(){
-      this.statePassword = true;
+  changePassword() {
+    this.statePassword = true;
   }
-  cancelChange(){
+  cancelChange() {
     this.statePassword = false;
   }
-  cancelPassword(){
+  cancelPassword() {
     this.statePassword != this.statePassword;
   }
-  cancelClick(){
+  cancelClick() {
     this.userScreen.editUser = false;
   }
 
-  change(){
+  change() {
     const pass = this.passwordDTO.value;
     this.autServ.changePassword(pass);
     console.log(pass);
   }
 
-  get password() {return this.passwordDTO.get ('password')};
-  get confirmPassword() {return this.passwordDTO.get ('confirmPassword')};
+  get password() {
+    return this.passwordDTO.get('password');
+  }
+  get confirmPassword() {
+    return this.passwordDTO.get('confirmPassword');
+  }
   get passwordMatchError() {
     return (
       this.profileForm.getError('mismatch') &&
       this.profileForm.get('confirmPassword')?.touched
     );
   }
-
-
 }
