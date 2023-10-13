@@ -6,6 +6,7 @@ import { FileModel, NewFile } from '@models/file.model';
 import { environment } from '@env/environment';
 import { AppRoutingModule } from '../app-routing.module';
 import { TokenService } from './token.service';
+import { checkToken } from '../interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -73,7 +74,7 @@ export class FilesService {
       console.log(headers);
 
       return this.http
-        .post(`${this.apiUrl}/dispatch/create`, data, { headers })
+        .post(`${this.apiUrl}/dispatch/create`, data, { context: checkToken() })
         .pipe(
           // si es un success devuelvo el body
           tap((response) => {

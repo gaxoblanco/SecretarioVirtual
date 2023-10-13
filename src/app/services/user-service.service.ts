@@ -10,6 +10,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { Router } from '@angular/router';
 import { TokenService } from './token.service';
+import { checkToken } from '../interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -47,22 +48,13 @@ export class UserServiceService {
     lastName: '',
     subscribe: '',
   });
+  // variable listAditional
+  listAditional$ = new BehaviorSubject<Additional[]>([]);
 
   // obtengo los datos del usuario
   getProfile() {
-    // Obtengo el token y id
-    const token = this.tokenService.getToken();
-    // Agrego el token y el userId al header
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      token: token?.token!,
-      userId: token?.id!,
-    });
-
     return this.http
-      .get<User>(`${this.apiUrl}/user/get`, {
-        headers: headers,
-      })
+      .get<User>(`${this.apiUrl}/user/get`, { context: checkToken() })
       .pipe(
         tap((user) => {
           console.log('user', user);
@@ -73,7 +65,12 @@ export class UserServiceService {
   }
 
   getAllAdditional(): Observable<Additional[]> {
-    return this.list;
+    return this.http
+      .get<any>(`${this.apiUrl}/user/secretary/get`, { context: checkToken() })
+      .pipe(
+        // devuelvo el contenido de data del response
+        map((response) => response.data)
+      );
   }
 
   addNewAdditional(addEmail: UpAdditionalDTO) {
@@ -88,8 +85,8 @@ export class UserServiceService {
       (item: UpAdditionalDTO) => item.id === edition.id
     );
     if (edition.id == edit.id) {
-      edit.name = edition.name;
-      edit.email = edition.email;
+      edit.name = edition.firstName;
+      edit.email = edition.Semail;
     }
 
     // this.list.push(edition);

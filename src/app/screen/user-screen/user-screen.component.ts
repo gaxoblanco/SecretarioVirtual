@@ -52,6 +52,11 @@ export class UserScreenComponent implements OnInit {
     this.userServ.getProfile().subscribe((response) => {
       this.user = response;
     });
+    //obtengo los secretarios
+    this.userServ.getAllAdditional().subscribe((response) => {
+      this.list = response;
+      // console.log('list', this.list[0]);
+    });
   }
 
   more() {

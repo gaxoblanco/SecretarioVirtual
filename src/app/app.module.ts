@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeScreenComponent } from './screen/home-screen/home-screen.component';
@@ -29,7 +29,8 @@ import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-scree
 import { SubcribeOptionComponentComponent } from './component/subcribe-option-component/subcribe-option-component.component';
 import { PendingFileComponenetComponent } from './component/pending-file-componenet/pending-file-componenet.component';
 import { NavigationMenuComponenetComponent } from './component/navigation-menu-componenet/navigation-menu-componenet.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './interceptors/token.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,16 +57,18 @@ import { HttpClientModule } from '@angular/common/http';
     SubcribeScreenComponent,
     SubcribeOptionComponentComponent,
     PendingFileComponenetComponent,
-    NavigationMenuComponenetComponent
+    NavigationMenuComponenetComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

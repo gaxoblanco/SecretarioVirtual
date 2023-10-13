@@ -1,11 +1,11 @@
-export interface Additional{
+export interface Additional {
   id: Number;
-  name: String;
-  email: String;
+  firstName: String;
+  Semail: String;
 }
 
-export interface newAdditionalDTO extends Omit <Additional, 'id'>{}
+export interface newAdditionalDTO extends Omit<Additional, 'id'> {}
 
-export interface UpAdditionalDTO extends newAdditionalDTO{
+export interface UpAdditionalDTO extends newAdditionalDTO {
   id?: Number;
 }
