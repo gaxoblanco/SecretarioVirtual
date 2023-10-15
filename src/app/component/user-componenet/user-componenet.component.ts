@@ -24,10 +24,10 @@ export class UserComponenetComponent implements OnInit {
   };
   //@Output() newAdd = new EventEmitter<newAdditionalDTO>();
 
-  constructor(private usersServ: UserServiceService) {}
+  constructor(private userServ: UserServiceService) {}
 
   ngOnInit(): void {
-    this.usersServ.list;
+    this.userServ.list;
   }
   editionEmail() {
     if (this.editEmail == false) {
@@ -37,7 +37,7 @@ export class UserComponenetComponent implements OnInit {
 
   //additional
   editionAdditional(editionValue: UpAdditionalDTO) {
-    editionValue.id = this.additional.id;
+    editionValue.secreataryId = this.additional.secreataryId;
 
     if (editionValue.firstName == '') {
       editionValue.firstName = this.additional.firstName;
@@ -51,7 +51,15 @@ export class UserComponenetComponent implements OnInit {
   }
 
   deleteAdditional() {
-    const delet = this.additional.id;
-    this.usersServ.deletAdditional(delet);
+    const data = {
+      secreataryId: this.additional.secreataryId,
+      Semail: this.additional.Semail,
+    };
+    console.log('data', data);
+
+    // A deletAdditional le envia el idUser y el semail
+    this.userServ.deletAdditional(data).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

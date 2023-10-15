@@ -24,7 +24,7 @@ import { FileModel } from '../../models/file.model';
 export class UserScreenComponent implements OnInit {
   filList: FileModel[] = [];
   NumberFile = 0;
-  list: any[] = [];
+  list$: any[] = [];
   user = {
     email: '',
     password: '',
@@ -54,8 +54,7 @@ export class UserScreenComponent implements OnInit {
     });
     //obtengo los secretarios
     this.userServ.getAllAdditional().subscribe((response) => {
-      this.list = response;
-      // console.log('list', this.list[0]);
+      this.list$ = response;
     });
   }
 

@@ -48,6 +48,8 @@ export class UserServiceService {
     lastName: '',
     subscribe: '',
   });
+  // varaible listSecreataryes
+  listSecreataryes$ = new BehaviorSubject<Additional[]>([]);
 
   // obtengo los datos del usuario
   getProfile() {
@@ -66,8 +68,8 @@ export class UserServiceService {
     return this.http
       .get<any>(`${this.apiUrl}/user/secretary/get`, { context: checkToken() })
       .pipe(
-        // devuelvo el contenido de data del response
-        map((response) => response.data)
+        map((response) => response.data), // Aquí obtenemos directamente el arreglo 'data'
+        tap((data) => this.listSecreataryes$.next(data))
       );
   }
 
@@ -98,10 +100,19 @@ export class UserServiceService {
       );
   }
 
-  deletAdditional(delet: Number) {
-    const edit = this.list.findIndex(
-      (item: UpAdditionalDTO) => item.id === delet
-    );
-    this.list.splice(edit, edit + 1);
+  deletAdditional(delet: any) {
+    // post a la apiUrl/user/secretary/delete y procesamos si fue exitoso o no la respuesta
+    console.log('delet', delet);
+
+    return this.http
+      .post<any>(`${this.apiUrl}/user/secretary/delete`, delet, {
+        context: checkToken(),
+      })
+      .pipe(
+        // Si actualizo listSecreataryes$
+        tap(() => {
+          this.getAllAdditional(), console.log('delet', delet);
+        })
+      );
   }
 }

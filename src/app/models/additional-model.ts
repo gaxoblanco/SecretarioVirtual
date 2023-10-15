@@ -1,8 +1,9 @@
 export interface Additional {
-  id: Number;
+  id?: Number;
   firstName: String;
   Semail: String;
   secreataryId?: String;
+  data?: any;
 }
 
 export interface newAdditionalDTO extends Omit<Additional, 'id'> {}
