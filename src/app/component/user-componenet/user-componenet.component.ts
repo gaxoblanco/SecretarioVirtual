@@ -20,6 +20,7 @@ export class UserComponenetComponent implements OnInit {
     id: 0,
     firstName: '',
     Semail: '',
+    secreataryId: '',
   };
   //@Output() newAdd = new EventEmitter<newAdditionalDTO>();
 
@@ -45,8 +46,8 @@ export class UserComponenetComponent implements OnInit {
       editionValue.Semail = this.additional.Semail;
     }
 
-    //console.log('userCompo ', this.additional.id)
-    this.usersServ.upAdditional(editionValue);
+    // //console.log('userCompo ', this.additional.id)
+    // this.usersServ.upAdditional(editionValue);
   }
 
   deleteAdditional() {

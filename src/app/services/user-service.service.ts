@@ -48,8 +48,6 @@ export class UserServiceService {
     lastName: '',
     subscribe: '',
   });
-  // variable listAditional
-  listAditional$ = new BehaviorSubject<Additional[]>([]);
 
   // obtengo los datos del usuario
   getProfile() {
@@ -74,24 +72,30 @@ export class UserServiceService {
   }
 
   addNewAdditional(addEmail: UpAdditionalDTO) {
-    addEmail.id = this.list.length + 1;
-    this.list.push(addEmail);
-    console.log('user service', this.list);
-    return this.list;
+    // solicitud post a la API
+    console.log('addEmail', addEmail);
+
+    return this.http
+      .post<any>(`${this.apiUrl}/user/secretary/create`, addEmail, {
+        context: checkToken(),
+      })
+      .pipe(
+        // devuelvo el contenido de data del response
+        map((response) => response.data)
+      );
   }
 
   upAdditional(edition: UpAdditionalDTO) {
-    const edit = this.list.find(
-      (item: UpAdditionalDTO) => item.id === edition.id
-    );
-    if (edition.id == edit.id) {
-      edit.name = edition.firstName;
-      edit.email = edition.Semail;
-    }
+    console.log('edition', edition);
 
-    // this.list.push(edition);
-    // console.log('user service', this.list)
-    return this.list;
+    return this.http
+      .post<any>(`${this.apiUrl}/user/secretary/update`, edition, {
+        context: checkToken(),
+      })
+      .pipe(
+        // Si la respuesta es exitosa getAllAdditional
+        tap(() => this.getAllAdditional())
+      );
   }
 
   deletAdditional(delet: Number) {

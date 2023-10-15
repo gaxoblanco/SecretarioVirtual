@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { newAdditionalDTO } from '../../models/additional-model';
 import { UserComponenetComponent } from '../user-componenet/user-componenet.component';
+import { RequestStatus } from '@models/request-status.model';
+import { UserServiceService } from '@services/user-service.service';
 
 @Component({
   selector: 'app-edit-email-component',
@@ -9,23 +11,36 @@ import { UserComponenetComponent } from '../user-componenet/user-componenet.comp
   styleUrls: ['./edit-email-component.component.scss'],
 })
 export class EditEmailComponentComponent implements OnInit {
+  status: RequestStatus = 'init';
   placeOlder: any = {
     name: '',
-    email: '',
+    newSemail: '',
   };
+  oldSemail: any = '';
+  secreataryId: any = '';
 
   edditAdi: FormGroup;
 
-  constructor(private userComp: UserComponenetComponent) {
+  constructor(
+    private userComp: UserComponenetComponent,
+    private userServ: UserServiceService
+  ) {
     this.edditAdi = new FormGroup({
       name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      newSemail: new FormControl('', [Validators.required, Validators.email]),
+      Spass: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
   ngOnInit(): void {
     this.placeOlder.name = this.userComp.additional.firstName;
     this.placeOlder.email = this.userComp.additional.Semail;
+    this.oldSemail = this.userComp.additional.Semail;
+    this.secreataryId = this.userComp.additional.secreataryId;
+    // console.log(this.userComp.additional);
   }
 
   cancelClick() {
@@ -42,10 +57,39 @@ export class EditEmailComponentComponent implements OnInit {
     console.log();
   }
 
+  editAdditional() {
+    this.status = 'loading';
+    // console.log(this.edditAdi.value);
+
+    //consulto si algun campo del formulario tiene contenido
+    if (this.edditAdi.value.name !== '') {
+      this.status = 'loading';
+      const sData = this.edditAdi.value;
+      //agrego el campo oldSemail al objeto sData
+      sData.oldSemail = this.oldSemail;
+      //agrego el secreataryId al objeto sData
+      sData.secreataryId = this.secreataryId;
+      console.log(sData);
+
+      this.userServ.upAdditional(sData).subscribe({
+        next: () => {
+          this.status = 'success';
+          this.userComp.editEmail = false;
+          this.userServ.getAllAdditional();
+          console.log('success');
+        },
+        error: (error) => {
+          this.status = 'failed';
+          console.log(error);
+        },
+      });
+    }
+  }
+
   get name() {
     return this.edditAdi.get('name');
   }
-  get email() {
+  get newSemail() {
     return this.edditAdi.get('email');
   }
 }

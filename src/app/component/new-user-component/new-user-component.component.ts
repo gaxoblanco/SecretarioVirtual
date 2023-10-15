@@ -2,40 +2,65 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { UserServiceService } from '../../services/user-service.service';
-import {newAdditionalDTO} from '../../models/additional-model';
+import { newAdditionalDTO } from '../../models/additional-model';
+import { RequestStatus } from '@models/request-status.model';
+import { min } from 'rxjs';
 
 @Component({
   selector: 'app-new-user-component',
   templateUrl: './new-user-component.component.html',
-  styleUrls: ['./new-user-component.component.scss']
+  styleUrls: ['./new-user-component.component.scss'],
 })
 export class NewUserComponentComponent implements OnInit {
-
+  status: RequestStatus = 'init';
   newAdditionalDTO: FormGroup;
 
   constructor(
     private userServ: UserServiceService,
-    private userScreen : UserScreenComponent
+    private userScreen: UserScreenComponent
   ) {
     this.newAdditionalDTO = new FormGroup({
       name: new FormControl('', Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-    })
+      Semail: new FormControl('', [Validators.required, Validators.email]),
+      Spass: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+    });
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  saveNewAdditional() {
+    // llama al addNewAdditional del servicio y le pasa el newAdditionalDTO
+    this.status = 'loading';
+    console.log(this.newAdditionalDTO.value);
+
+    if (this.newAdditionalDTO.valid) {
+      this.status = 'loading';
+      const sData = this.newAdditionalDTO.value;
+      this.userServ.addNewAdditional(sData).subscribe({
+        next: () => {
+          this.status = 'success';
+          this.userScreen.moreEmail = false;
+          console.log('success');
+        },
+        error: (error) => {
+          this.status = 'failed';
+          console.log(error);
+        },
+      });
+    }
   }
 
-  saveNewAdditional(){
-    let sabeAdditionl: newAdditionalDTO = this.newAdditionalDTO.value;
-    this.userServ.addNewAdditional(sabeAdditionl);
+  cancelClick() {
     this.userScreen.moreEmail = false;
   }
 
-  cancelClick(){
-    this.userScreen.moreEmail = false;
+  get name() {
+    return this.newAdditionalDTO.get('name');
   }
-
-  get name () {return this.newAdditionalDTO.get('name')};
-  get email () {return this.newAdditionalDTO.get('email')};
+  get email() {
+    return this.newAdditionalDTO.get('email');
+  }
 }
