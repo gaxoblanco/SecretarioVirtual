@@ -5,4 +5,4 @@ This proyect is in Angular.
 npm install
 npm start
 
-# correr API-sv en un entorno virtual
+# Correr API-sv en entorno virutal
