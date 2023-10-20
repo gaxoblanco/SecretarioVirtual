@@ -45,6 +45,7 @@ Thumbs.db
 API-sv/config.php
 # Ignora el directorio vendor en el submódulo
 API-sv/vendor/
+API-sv/phpmailer/
 # Ignora el archivo write_mail.php en la carpeta scrapper del submódulo
 API-sv/scrapper/write_mail.php
 # Ignora el archivo config.php en el submódulo
