@@ -37,13 +37,17 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const token = this.tokenServices.getToken();
+    // console.log('token2', token);
+
     if (token) {
       const authRequest = request.clone({
         setHeaders: {
           token: `${token.token}`,
-          UserId: token.id, // Aquí puedes definir el nombre de la cabecera según tu API
+          userId: `${token.id}`,
         },
       });
+      console.log('authRequest', authRequest.headers);
+
       return next.handle(authRequest);
     } else {
       return next.handle(request);

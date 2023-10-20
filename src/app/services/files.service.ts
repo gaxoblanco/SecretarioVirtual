@@ -64,39 +64,24 @@ export class FilesService {
     console.log(token!.id);
     console.log(data);
 
-    // Agrego el token y el userId al header
-    if (token) {
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        token: token!.token!,
-        userId: token!.id!,
-      });
-      console.log(headers);
-
-      return this.http
-        .post(`${this.apiUrl}/dispatch/create`, data, { context: checkToken() })
-        .pipe(
-          // si es un success devuelvo el body
-          tap((response) => {
-            console.log(response);
-            // si la respuesta es Expediente creado con exito. devuelvo un true
-            if (response === 'Expediente creado con exito.') {
-              return true;
-            }
-            // si la respuesta es "El expediente ya existe." devuelvo false
-            if (response === 'El expediente ya existe.') {
-              return false;
-            }
-            // si es distinto devuelvo un error
-            return throwError(response);
-          })
-        );
-    } else {
-      // Manejo de error si no se pudo obtener el token
-      console.error('No se pudo obtener el token');
-      // Puedes lanzar una excepción o manejarlo de acuerdo a tus necesidades.
-      return throwError('No se pudo obtener el token');
-    }
+    return this.http
+      .post(`${this.apiUrl}/dispatch/create`, data, { context: checkToken() })
+      .pipe(
+        // si es un success devuelvo el body
+        tap((response) => {
+          console.log(response);
+          // si la respuesta es Expediente creado con exito. devuelvo un true
+          if (response === 'Expediente creado con exito.') {
+            return true;
+          }
+          // si la respuesta es "El expediente ya existe." devuelvo false
+          if (response === 'El expediente ya existe.') {
+            return false;
+          }
+          // si es distinto devuelvo un error
+          return throwError(response);
+        })
+      );
   }
 
   deleteFiles(fileId: Number) {
