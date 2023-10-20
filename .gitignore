@@ -40,3 +40,15 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Ignora archivos y carpetas del submódulo API-sv
+API-sv/config.php
+# Ignora el directorio vendor en el submódulo
+API-sv/vendor/
+# Ignora el archivo write_mail.php en la carpeta scrapper del submódulo
+API-sv/scrapper/write_mail.php
+# Ignora el archivo config.php en el submódulo
+API-sv/config.php
+# Ignora el archivo db.php en la carpeta scrapper del submódulo
+API-sv/scrapper/db.php
+API-sv/scrapper/scrapper.php

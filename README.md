@@ -1,5 +1,7 @@
 # SecreVirtual
-This proyect is in Angular. 
+ This proyect is in Angular.
 
-live App link.
-https://secretariovirtual-34292.web.app/
+# To start Angular proyecto
+npm install
+npm start
+To start API-sv

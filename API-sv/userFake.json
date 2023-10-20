@@ -1,0 +1,58 @@
+[
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "email@mail.com",
+        "id": 1,
+        "dispatchList": [
+            {
+                "caseNumber": "276",
+                "year": "04",
+                "court": "275555824",
+                "status": false
+            },
+            {
+                "caseNumber": "25",
+                "year": "21",
+                "court": "7441513",
+                "status": false
+            }
+        ],
+        "secreataryList": [
+            {
+                "firstName": "ffff",
+                "Semail": "ffff@mail.com"
+            }
+        ]
+    },
+    {
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "email": "22email@mail.com",
+        "id": 2,
+        "dispatchList": [
+            {
+                "caseNumber": "130",
+                "year": "22",
+                "court": "7441513",
+                "status": false
+            },
+            {
+                "caseNumber": "00",
+                "year": "22",
+                "court": "7441513",
+                "status": false
+            }
+        ],
+        "secreataryList": [
+            {
+                "firstName": "dddd",
+                "Semail": "ddddd@mail.com"
+            },
+            {
+                "firstName": "ssss",
+                "Semail": "sssss@mail.com"
+            }
+        ]
+    }
+]

@@ -1,0 +1,12 @@
+Array
+(
+    [firstName] => 
+    [lastName] => 
+    [inputDNI] => 
+    [inputaddress] => 
+    [inputcity] => 
+    [email] => ss@aa.com
+    [password] => 123456
+    [confirmPassword] => 
+    [gridCheck] => 
+)
