@@ -43,3 +43,22 @@ por un lado:
 
 tokenControl.php: se encarga de controla que el token que recibimos en el head sea el correcto
 
+## Docker
+### Configuracion (archivo .env)
+Copiar el archivo de ejemplo `.env.example` y renombrarlo como `.env`. Aqui se deben configurar las credenciales de MYSQL.
+
+### Iniciar
+Para iniciar los contenedores de Docker, ejecutar:
+
+```
+docker-compose up
+```
+
+### Accesos
+Acceder al contenido de API-sv en http://localhost:8080
+
+Para acceder a PhpMyAdmin utilizar el puerto 8081.
+
+Las credenciales del PhpMyAdmin (como asi tambien para la conexion a MySQL desde PHP) son las configuradas en el `.env`.
+
+Si PhpMyAdmin solicita un host, el mismo es `mysql`.
