@@ -43,3 +43,6 @@ Thumbs.db
 
 # Ignorar package-lock.json para futuras instalaciones limpias
 package-lock.json
+
+# Ignorar yarn.lock para futuras instalaciones limpias
+yarn.lock
