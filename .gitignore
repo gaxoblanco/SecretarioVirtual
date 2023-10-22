@@ -40,3 +40,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Ignorar package-lock.json para futuras instalaciones limpias
+package-lock.json
