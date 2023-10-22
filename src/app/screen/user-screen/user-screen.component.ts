@@ -15,6 +15,7 @@ import { AutenticationServiceService } from 'src/app/services/autentication-serv
 import { FilesService } from 'src/app/services/files.service';
 import { UserServiceService } from 'src/app/services/user-service.service';
 import { FileModel } from '../../models/file.model';
+import { RequestStatus } from '@models/request-status.model';
 
 @Component({
   selector: 'app-user-screen',
@@ -22,6 +23,7 @@ import { FileModel } from '../../models/file.model';
   styleUrls: ['./user-screen.component.scss'],
 })
 export class UserScreenComponent implements OnInit {
+  status: RequestStatus = 'loading';
   filList: FileModel[] = [];
   NumberFile = 0;
   list$: any[] = [];
@@ -44,17 +46,16 @@ export class UserScreenComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.list = this.userServ.list;
-    // // this.user = this.autServ.user
-
-    // this.filList = this.fileSer.files;
-    // this.NumberFile = this.filList.length;
     this.userServ.getProfile().subscribe((response) => {
       this.user = response;
     });
     //obtengo los secretarios
     this.userServ.getAllAdditional().subscribe((response) => {
-      this.list$ = response;
+      // console.log(response);
+    });
+    this.userServ.getListSecreataryes$().subscribe((list) => {
+      this.list$ = list;
+      this.status = 'success';
     });
   }
 

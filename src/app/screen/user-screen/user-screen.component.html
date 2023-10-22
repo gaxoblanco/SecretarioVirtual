@@ -30,11 +30,16 @@
     </div>
   </div>
   <div class="row row-cols-1 row-cols-md-3 g-5">
-    <div
+    <!-- spinner -->
+    <ng-container *ngIf="status === 'loading'">
+      <div class="spinner"></div>
+    </ng-container>
+    <!-- spinner -->
+    <ng-container
       *ngFor="let additional of list$"
       >
       <app-user-componenet [additional]="additional"></app-user-componenet>
-  </div>
+    </ng-container>
 
     <div class="plus-sign">
       <button class="plus-sign-button" (click)="more()">

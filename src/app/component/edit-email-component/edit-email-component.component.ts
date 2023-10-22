@@ -62,7 +62,11 @@ export class EditEmailComponentComponent implements OnInit {
     // console.log(this.edditAdi.value);
 
     //consulto si algun campo del formulario tiene contenido
-    if (this.edditAdi.value.name !== '') {
+    if (
+      this.edditAdi.value.name !== '' ||
+      this.edditAdi.value.email !== '' ||
+      this.edditAdi.value.Spass !== ''
+    ) {
       this.status = 'loading';
       const sData = this.edditAdi.value;
       //agrego el campo oldSemail al objeto sData
@@ -73,10 +77,12 @@ export class EditEmailComponentComponent implements OnInit {
 
       this.userServ.upAdditional(sData).subscribe({
         next: () => {
-          this.status = 'success';
-          this.userComp.editEmail = false;
-          this.userServ.getAllAdditional();
-          console.log('success');
+          // agregamos un delay de 2s
+          setTimeout(() => {
+            this.status = 'success';
+            this.userComp.editEmail = false;
+            // console.log('success');
+          }, 2000);
         },
         error: (error) => {
           this.status = 'failed';

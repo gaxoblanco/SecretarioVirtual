@@ -83,7 +83,9 @@ export class UserServiceService {
       })
       .pipe(
         // devuelvo el contenido de data del response
-        map((response) => response.data)
+        map((response) => response.data),
+        // actualizo listSecreataryes$
+        tap(() => this.getAllAdditional().subscribe())
       );
   }
 
@@ -95,8 +97,8 @@ export class UserServiceService {
         context: checkToken(),
       })
       .pipe(
-        // Si la respuesta es exitosa getAllAdditional
-        tap(() => this.getAllAdditional())
+        // actualizo listSecreataryes$
+        tap(() => this.getAllAdditional().subscribe())
       );
   }
 
@@ -109,10 +111,11 @@ export class UserServiceService {
         context: checkToken(),
       })
       .pipe(
-        // Si actualizo listSecreataryes$
-        tap(() => {
-          this.getAllAdditional(), console.log('delet', delet);
-        })
+        // actualizo listSecreataryes$
+        tap(() => this.getAllAdditional().subscribe())
       );
+  }
+  getListSecreataryes$(): Observable<Additional[]> {
+    return this.listSecreataryes$.asObservable();
   }
 }
