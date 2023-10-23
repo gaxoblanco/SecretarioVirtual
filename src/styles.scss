@@ -56,3 +56,8 @@ body{
     transform: rotate(360deg);
   }
 }
+.alert-danger {
+  p {
+    margin-bottom: 0;
+  }
+}

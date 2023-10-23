@@ -13,7 +13,8 @@ input, select{
 }
 .container{
   display: grid;
-  place-items: center;
+  align-items: baseline;
+  align-content: center;
 }
 .add-container-form{
   width: auto;
@@ -33,6 +34,20 @@ input, select{
     }
     .card-link{
       margin-left: 46px;
+    }
+  }
+}
+.table-new_exp {
+  .table-new_exp--tr{
+    color: white;
+    border-width: none;
+    .th-l {
+      border-radius: 12px 0 0 0;
+      background-color: #37BBED;
+    }
+    .th-r {
+      border-radius:0 12px 0 0;
+      background-color: #37BBED;
     }
   }
 }

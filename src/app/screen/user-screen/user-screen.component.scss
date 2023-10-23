@@ -28,8 +28,9 @@ article{
     height: 200px;
     overflow: hidden;
     position: relative;
-    border-radius: 16px 16px 16px 16px;
-    img{
+    border-radius: 16px 16px 0px 16px;
+    .img-fluid{
+      border-radius: 16px 16px 0 16px;
       position:absolute;
       left: -100%;
       right: -100%;
