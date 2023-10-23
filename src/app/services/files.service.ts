@@ -7,6 +7,7 @@ import { environment } from '@env/environment';
 import { AppRoutingModule } from '../app-routing.module';
 import { TokenService } from './token.service';
 import { checkToken } from '../interceptors/token.interceptor';
+import { dependencias, Dependencia } from '@models/dependencias';
 
 @Injectable({
   providedIn: 'root',
@@ -61,9 +62,24 @@ export class FilesService {
       .pipe(
         tap((files) => {
           this.files$.next(files);
+          this.upDependencia();
         })
       );
   }
+  // funcion para actualizar el valor de dependencia numero a nombre
+  upDependencia() {
+    const files = this.files$.getValue();
+    files.forEach((file) => {
+      const dependencia = dependencias.find(
+        (dependencia) => dependencia.id === file.dependencia
+      );
+      file.dependencia = dependencia!.nombre;
+    });
+    console.log('newDependencia', files);
+
+    this.files$.next(files);
+  }
+
   getFiles$(): Observable<FileModel[]> {
     return this.files$.asObservable();
   }

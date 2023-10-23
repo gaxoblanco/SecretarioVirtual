@@ -41,6 +41,10 @@
 
 table{
   margin-top: 20px;
+  // display: grid;
+  .table-list_exp--th{
+    white-space: nowrap;
+  }
   .thead-container{
     background-color: #37BBED;
     color: white;
@@ -61,8 +65,8 @@ table{
   }
   .deleteFile{
     border: none;
+    background: none;
     width: 100%;
-    border-bottom: 1px solid #dee2e6;
   }
 }
 
