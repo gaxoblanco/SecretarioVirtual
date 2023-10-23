@@ -19,4 +19,22 @@
       <button type="submit" class="btn card-link mb-2" (click)="addFile()" >Agregar</button>
     </form>
   </div>
+  <table class="table table-striped">
+    <thead class="thead-container">
+      <tr class="table-list_exp--tr">
+        <th scope="col" class="table-list_exp--th">
+          N°Exp
+        </th>
+        <th scope="col" class="table-list_exp--th">
+          Año
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let fileList of newFileList">
+        <td> {{fileList.numero_exp}}</td>
+        <td> {{fileList.anio_exp}}</td>
+      </tr>
+    </tbody>
+  </table>
 </article>

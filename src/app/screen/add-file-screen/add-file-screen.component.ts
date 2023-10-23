@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NewFile } from '@models/file.model';
+import { FileModel, NewFile } from '@models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 import { FilesService } from '@services/files.service';
 
@@ -12,6 +12,8 @@ import { FilesService } from '@services/files.service';
 export class AddFileScreenComponent implements OnInit {
   files: FormGroup;
   status: RequestStatus = 'init';
+
+  newFileList: FileModel[] = [];
 
   constructor(private fileSer: FilesService) {
     this.files = new FormGroup({
@@ -40,6 +42,13 @@ export class AddFileScreenComponent implements OnInit {
       this.fileSer.addFiles(newFile).subscribe({
         next: () => {
           this.status = 'success';
+          this.newFileList.push({
+            id_exp: 0,
+            numero_exp: newFile.fileNumber,
+            anio_exp: newFile.yearNumber.toString(),
+            caratula: '',
+            dependencia: '',
+          });
         },
         error: (error) => {
           this.status = 'failed';

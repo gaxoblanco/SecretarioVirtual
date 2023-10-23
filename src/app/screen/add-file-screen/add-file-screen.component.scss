@@ -1,5 +1,7 @@
 article{
   height: 77vh;
+  grid-template-columns: auto 1fr;
+  grid-gap: 2em;
 }
 label, option{
   color:#707070;
