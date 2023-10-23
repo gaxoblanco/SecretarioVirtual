@@ -12,8 +12,8 @@ import {
   UpAdditionalDTO,
 } from 'src/app/models/additional-model';
 import { AutenticationServiceService } from 'src/app/services/autentication-service.service';
-import { FilesService } from 'src/app/services/files.service';
-import { UserServiceService } from 'src/app/services/user-service.service';
+import { FilesService } from '@services/files.service';
+import { UserServiceService } from '@services/user-service.service';
 import { FileModel } from '../../models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 
@@ -59,6 +59,13 @@ export class UserScreenComponent implements OnInit {
     this.userServ.getListSecreataryes$().subscribe((list) => {
       this.list$ = list;
       this.status = 'success';
+    });
+    // obengo el numero de expedientes -- falta actualizar para hacer una sola solicitud al inicio de la webApp
+    this.fileSer.getFiles().subscribe((files) => {});
+    this.fileSer.getFiles$().subscribe((response) => {
+      console.log('getFiles$', response);
+
+      this.NumberFile = response.length;
     });
   }
 
