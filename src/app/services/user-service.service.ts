@@ -52,14 +52,23 @@ export class UserServiceService {
   listSecreataryes$ = new BehaviorSubject<Additional[]>([]);
 
   // obtengo los datos del usuario
-  getProfile() {
+  getProfile(): Observable<User> {
     return this.http
       .get<User>(`${this.apiUrl}/user/get`, { context: checkToken() })
       .pipe(
         tap((user) => {
           console.log('user', user);
-
           this.user$.next(user);
+        })
+      );
+  }
+  // editop el usuario
+  editProfile(user: User): Observable<User> {
+    return this.http
+      .post<any>(`${this.apiUrl}/user/update`, user, { context: checkToken() })
+      .pipe(
+        tap(() => {
+          this.getProfile().subscribe();
         })
       );
   }
@@ -117,5 +126,8 @@ export class UserServiceService {
   }
   getListSecreataryes$(): Observable<Additional[]> {
     return this.listSecreataryes$.asObservable();
+  }
+  getUser$(): Observable<User> {
+    return this.user$.asObservable();
   }
 }

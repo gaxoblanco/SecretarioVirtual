@@ -27,7 +27,7 @@ export class UserScreenComponent implements OnInit {
   filList: FileModel[] = [];
   NumberFile = 0;
   list$: any[] = [];
-  user = {
+  user$ = {
     email: '',
     password: '',
     firstName: '',
@@ -47,7 +47,10 @@ export class UserScreenComponent implements OnInit {
 
   ngOnInit(): void {
     this.userServ.getProfile().subscribe((response) => {
-      this.user = response;
+      // this.user = response;
+    });
+    this.userServ.getUser$().subscribe((user) => {
+      this.user$ = user;
     });
     //obtengo los secretarios
     this.userServ.getAllAdditional().subscribe((response) => {

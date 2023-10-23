@@ -5,4 +5,4 @@ This proyect is in Angular.
 npm install
 npm start
 
-# Correr API-sv en entorno virutal
+# To start Docker

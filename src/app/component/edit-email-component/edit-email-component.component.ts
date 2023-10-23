@@ -74,21 +74,20 @@ export class EditEmailComponentComponent implements OnInit {
       //agrego el secreataryId al objeto sData
       sData.secreataryId = this.secreataryId;
       console.log(sData);
-
-      this.userServ.upAdditional(sData).subscribe({
-        next: () => {
-          // agregamos un delay de 2s
-          setTimeout(() => {
+      // agregamos un delay de 2s
+      setTimeout(() => {
+        this.userServ.upAdditional(sData).subscribe({
+          next: () => {
             this.status = 'success';
             this.userComp.editEmail = false;
             // console.log('success');
-          }, 2000);
-        },
-        error: (error) => {
-          this.status = 'failed';
-          console.log(error);
-        },
-      });
+          },
+          error: (error) => {
+            this.status = 'failed';
+            console.log(error);
+          },
+        });
+      }, 500);
     }
   }
 

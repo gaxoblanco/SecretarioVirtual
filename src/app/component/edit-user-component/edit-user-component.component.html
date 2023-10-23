@@ -41,37 +41,44 @@
     <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class=" mb-4">The Boss</h5>
-      <form class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="form-group mb-2 ">
-          <label for="name">Nombre</label>
-          <input type="text" class="form-control" id="name" placeholder="{{user$.firstName}}">
-        </div>
-        <div class="form-group mb-2">
-          <label for="exampleInputEmail1">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="{{user$.email}}">
-        </div>
+      <!-- spinner -->
+      <ng-container *ngIf="status === 'loading'">
+        <div class="spinner"></div>
+      </ng-container>
+      <!-- spinner -->
+      <ng-container *ngIf="status !== 'loading'">
+        <form class="row row-cols-1 row-cols-md-3 g-4" [formGroup]="userDTO" (ngSubmit)="editUser()">
+          <div class="form-group mb-2 ">
+            <label for="name">Nombre</label>
+            <input formControlName="firstName" type="text" class="form-control" id="name" placeholder="{{user$.firstName}}">
+          </div>
+          <div class="form-group mb-2">
+            <label for="exampleInputEmail1">Email</label>
+            <input formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="{{user$.email}}">
+          </div>
 
-        <div class="form-group mb-2">
-          <label for="Surname">Apellido</label>
-          <input type="text" class="form-control" id="Surname" placeholder="{{user$.lastName}}">
-        </div>
+          <div class="form-group mb-2">
+            <label for="Surname">Apellido</label>
+            <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="{{user$.lastName}}">
+          </div>
 
-        <div class="form-group ">
-          <label for="exampleInputPassword1">Contraseña</label>
-          <button class="form-control inputStyle" (click)="changePassword()">Cambiar contraseña</button>
-        </div>
+          <div class="form-group ">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <button class="form-control inputStyle" (click)="changePassword()">Cambiar contraseña</button>
+          </div>
 
-        <div class="form-group mb-2">
-          <label>Subcripcion</label>
-          <select id="inputCity" class="form-control inputStyle">
-            <option selected>{{user$.subscribe}}</option>
-            <option>Anual</option>
-          </select>
-        </div>
-        <div class="button-container">
-          <button type="submit" class="btn card-link mb-4">Confirmar</button>
-        </div>
-      </form>
+          <div class="form-group mb-2">
+            <label>Subcripcion</label>
+            <select formControlName="subscribe" id="subscribe" class="form-control inputStyle">
+              <option selected>{{user$.subscribe}}</option>
+              <option>Anual</option>
+            </select>
+          </div>
+          <div class="button-container">
+            <button type="submit" class="btn card-link mb-4">Confirmar</button>
+          </div>
+        </form>
+      </ng-container>
   </div>
   <button class="cancel-container" (click)="cancelClick()">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">

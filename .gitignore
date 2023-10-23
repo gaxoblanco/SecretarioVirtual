@@ -43,6 +43,7 @@ Thumbs.db
 
 # Ignora archivos y carpetas del submódulo API-sv
 API-sv/config.php
+API-sv/.env
 # Ignora el directorio vendor en el submódulo
 API-sv/vendor/
 API-sv/phpmailer/
