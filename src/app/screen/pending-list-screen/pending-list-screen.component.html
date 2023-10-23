@@ -27,7 +27,7 @@
     <thead class="thead-container">
       <tr>
         <th scope="col">
-          Expediente
+          N°Exp
           <button
             class="arrow-button"
             [class.active]="filsArrowDownStyle"
@@ -48,7 +48,7 @@
 
 
         <th scope="col">
-          Juzgado
+          Año
           <button
             class="arrow-button"
             [class.active]="coursArrowDownStyle"
@@ -67,7 +67,26 @@
           </button>
         </th>
         <th scope="col">
-          Estado
+          Dependencia
+          <button
+            class="arrow-button"
+            [class.active]="coursArrowDownStyle"
+            (click)="coursArrowDown()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            </svg>
+          </button>
+          <button
+            class="arrow-button"
+            [class.active]="coursArrowUpStyle"
+            (click)="coursArrowUp()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+              <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+            </svg>
+          </button>
+        </th>
+        <th scope="col">
+          Caratula
           <button
             class="arrow-button"
             [class.active]="StateArrowDownStyle"
@@ -90,9 +109,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let fileList of fileList">
-        <td> {{fileList.fileNumber}}</td>
-        <td> {{fileList.department}}</td>
-        <td> {{fileList.state}}</td>
+        <td> {{fileList.numero_exp}}</td>
+        <td> {{fileList.anio_exp}}</td>
+        <td> {{fileList.dependencia ? fileList.dependencia : '-'}}</td>
+        <td> {{fileList.caratula ? fileList.caratula : '-'}}</td>
         <button class="deleteFile" (click)="deleteFile(fileList.id)">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>

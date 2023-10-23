@@ -1,8 +1,11 @@
 export interface FileModel {
   id: number;
-  fileNumber: number;
-  department: String;
-  state: Boolean;
+  numero_exp: number;
+  anio_exp: String;
+  caratula: string;
+  dependencia: string;
+  tipo_lista?: string;
+  state?: Boolean;
 }
 
 export interface NewFile {

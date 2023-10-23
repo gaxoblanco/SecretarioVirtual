@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, tap, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FileModel, NewFile } from '@models/file.model';
@@ -12,38 +12,7 @@ import { checkToken } from '../interceptors/token.interceptor';
   providedIn: 'root',
 })
 export class FilesService {
-  files: FileModel[] = [
-    {
-      id: 4456,
-      fileNumber: 5461215,
-      department: 'Penal',
-      state: false,
-    },
-    {
-      id: 453,
-      fileNumber: 6542165,
-      department: 'Penal',
-      state: true,
-    },
-    {
-      id: 4656,
-      fileNumber: 5641651,
-      department: 'Familia',
-      state: true,
-    },
-    {
-      id: 5456,
-      fileNumber: 5646518,
-      department: 'defaul1',
-      state: true,
-    },
-    {
-      id: 14564,
-      fileNumber: 5156200,
-      department: 'Familia',
-      state: false,
-    },
-  ];
+  files$ = new BehaviorSubject<FileModel[]>([]);
   // url de API
   apiUrl = environment.API_URL;
 
@@ -84,13 +53,29 @@ export class FilesService {
       );
   }
 
-  deleteFiles(fileId: Number) {
-    const position = this.files.findIndex((item) => item.id === fileId);
-    this.files.splice(position, 1);
-    console.log(position);
+  getFiles(): Observable<FileModel[]> {
+    return this.http
+      .get<FileModel[]>(`${this.apiUrl}/dispatch/get`, {
+        context: checkToken(),
+      })
+      .pipe(
+        tap((files) => {
+          this.files$.next(files);
+        })
+      );
   }
-  filter(number: Number) {
-    this.files.find((item: FileModel) => item.fileNumber === number);
-    console.log(this.files);
+  getFiles$(): Observable<FileModel[]> {
+    return this.files$.asObservable();
   }
+
+  //----
+  // deleteFiles(fileId: Number) {
+  //   const position = this.files.findIndex((item) => item.id === fileId);
+  //   this.files.splice(position, 1);
+  //   console.log(position);
+  // }
+  // filter(number: Number) {
+  //   this.files.find((item: FileModel) => item.numero_exp === number);
+  //   console.log(this.files);
+  // }
 }
