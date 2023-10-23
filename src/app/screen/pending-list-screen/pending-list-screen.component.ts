@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { RequestStatus } from '@models/request-status.model';
 import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
 
@@ -9,6 +10,7 @@ import { FilesService } from 'src/app/services/files.service';
   styleUrls: ['./pending-list-screen.component.scss'],
 })
 export class PendingListScreenComponent implements OnInit {
+  status: RequestStatus = 'init';
   filsArrowDownStyle: Boolean = false;
   filsArrowUpStyle: Boolean = false;
   coursArrowDownStyle: Boolean = false;
@@ -19,7 +21,7 @@ export class PendingListScreenComponent implements OnInit {
   searchFile: FormGroup;
   fileList: FileModel[] = [
     {
-      id: 0,
+      id_exp: 0,
       numero_exp: 0,
       anio_exp: '',
       caratula: '',
@@ -45,6 +47,23 @@ export class PendingListScreenComponent implements OnInit {
   }
   deleteFile(id: any) {
     // this.FileSer.deleteFiles(id);
+    // muestro el spinner
+    this.status = 'loading';
+    setTimeout(() => {
+      this.FileSer.deleteFiles(id).subscribe((response) => {
+        // si la respuesta es true
+        if (response) {
+          // muestro el success
+          this.FileSer.getFiles().subscribe((files) => {});
+          this.status = 'success';
+        }
+        // si la respuesta es false
+        if (!response) {
+          // muestro el error
+          console.log('error');
+        }
+      });
+    }, 500);
   }
   filterFil() {
     let filNumber = this.searchFile.value;

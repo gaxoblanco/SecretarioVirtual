@@ -1,5 +1,5 @@
 export interface FileModel {
-  id: number;
+  id_exp: number;
   numero_exp: number;
   anio_exp: String;
   caratula: string;
