@@ -62,3 +62,5 @@ Para acceder a PhpMyAdmin utilizar el puerto 8081.
 Las credenciales del PhpMyAdmin (como asi tambien para la conexion a MySQL desde PHP) son las configuradas en el `.env`.
 
 Si PhpMyAdmin solicita un host, el mismo es `mysql`.
+
+### Importar la base de datos despachos.sql

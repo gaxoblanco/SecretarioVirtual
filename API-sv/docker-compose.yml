@@ -1,11 +1,12 @@
-version: "3"
+version: "3.8"
 services:
   # PHP Service
   php:
     image: php:7.4-apache
     container_name: php
+    build: .
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html/API-sv
     ports:
       - "8080:80"
     depends_on:
@@ -25,7 +26,7 @@ services:
     container_name: phpmyadmin
     environment:
       PMA_HOST: mysql
-      PMA_PORT: 3306
+      PMA_PORT: 3366
       PMA_ARBITRARY: 1
     ports:
       - "8081:80"

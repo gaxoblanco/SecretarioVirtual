@@ -40,6 +40,8 @@ export class TokenInterceptor implements HttpInterceptor {
     // console.log('token2', token);
 
     if (token) {
+      console.log('addtoken-if', token);
+
       const authRequest = request.clone({
         setHeaders: {
           token: `${token.token}`,
