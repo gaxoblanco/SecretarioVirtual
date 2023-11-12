@@ -53,10 +53,11 @@ export class UserServiceService {
 
   // obtengo los datos del usuario
   getProfile(): Observable<User> {
-    console.log('tokenService', this.tokenService);
+    // Obtengo el token y id
+    const token = this.tokenService.getToken();
 
     return this.http
-      .get<User>(`${this.apiUrl}/user/get`, { context: checkToken() })
+      .get<any>(`${this.apiUrl}/user/get`, { context: checkToken() })
       .pipe(
         tap((user) => {
           console.log('user', user);

@@ -31,8 +31,8 @@ export class FilesService {
   addFiles(data: NewFile) {
     // Obtengo el token y id
     const token = this.tokenService.getToken();
-    console.log(token!.id);
-    console.log(data);
+    // console.log(token!.id);
+    // console.log(data);
 
     return this.http
       .post(`${this.apiUrl}/dispatch/create`, data, { context: checkToken() })

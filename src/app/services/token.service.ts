@@ -22,7 +22,7 @@ export class TokenService {
     if (!token || !id) {
       return null;
     }
-    console.log('getToken', token, id);
+    // console.log('getToken', token, id);
 
     return { token, id };
   }

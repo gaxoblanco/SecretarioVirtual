@@ -11,12 +11,20 @@ function secretaryRoot($route, $method, $conexion)
 
         // Obtener los datos para crear un nuevo secretario
         $userId = $_SERVER['HTTP_USERID'];
-        $firstName = $data['name'];
-        $email = $data['Semail'];
-        $Spass = $data['Spass'];
+        $firstName = isset($data['name']) ? $data['name'] : null; // valido que existan
+        $email = isset($data['Semail']) ? $data['Semail'] : null;
+        $Spass = isset($data['Spass']) ? $data['Spass'] : null;
 
-        $userCreateSecretary = new user_create_secretary($conexion, $userId, $firstName, $email, $Spass);
-        $userCreateSecretary->createSecretary();
+
+        if (!empty($userId) && !empty($firstName) && !empty($email) && !empty($Spass)) {
+          // Realizar la inserción en la base de datos
+          $userCreateSecretary = new user_create_secretary($conexion, $userId, $firstName, $email, $Spass);
+          $userCreateSecretary->createSecretary();
+        } else {
+          // Manejar el caso en el que los valores son nulos
+          http_response_code(400);
+          echo json_encode(['status' => 400, 'message' => 'Campos obligatorios vacíos']);
+        }
       } else {
         // Método no permitido para esta ruta
         http_response_code(405);

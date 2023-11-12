@@ -1,7 +1,6 @@
 <?php
 // Habilitar CORS
-// header('Access-Control-Allow-Origin: https://secretariovirtual.ar');
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: https://secretariovirtual.ar/');
 header('Access-Control-Allow-Credentials: true');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, email, password, token, userId, idExp, caseNumber, caseYear, secreataryId, oldSemail, newSemail, Spass, firstName");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -42,16 +41,15 @@ if (!in_array($route, $publicRoutes)) {
   $userId = $_SERVER['HTTP_USERID'];
   // Obtengo el token del header
   $token = $_SERVER['HTTP_TOKEN'];
-  // verifico si el token es valido
-  // if (!verifyToken($conexion, $token)) {
-  //   // El token no es válido
-  //   http_response_code(401);
-  //   echo json_encode(['message' => 'Invalid token']);
-  //   exit; // Sale del script
-  // }
+
+  verifyToken($conexion, $token);
 
   //ahora limpio $route de todo lo que sigue a un \/ para saber a que ruta maestra corresponde
   $root = explode('/', $route);
+  // si el primer elemento es vacio, lo elimino
+  if ($root[0] == '') {
+    array_shift($root);
+  }
 
   // derivo la solicitud a la rama correspondiente
   switch ($root[0]) {
@@ -59,9 +57,10 @@ if (!in_array($route, $publicRoutes)) {
       if ($root[1] == 'secretary') {
         require_once 'api/secretary.php';
         secretaryRoot($route, $method, $conexion);
+      } else {
+        require_once 'api/user.php';
+        userRoot($route, $method, $conexion);
       }
-      require_once 'api/user.php';
-      userRoot($route, $method, $conexion);
       break;
     case 'dispatch':
       require_once 'api/dispatch.php';

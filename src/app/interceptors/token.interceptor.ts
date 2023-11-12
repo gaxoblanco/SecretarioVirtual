@@ -37,9 +37,11 @@ export class TokenInterceptor implements HttpInterceptor {
     // console.log('token2', token);
 
     if (token) {
-      console.log('addtoken-if', token);
+      // console.log('interceptor token', token);
 
       const newHeaders = new HttpHeaders()
+        // Authorization
+        .set('Authorization', `Bearer ${token.token}`)
         .set('token', token.token)
         .set('userId', token.id);
 
