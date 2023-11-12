@@ -85,45 +85,6 @@ function dispatchRoot($route, $method, $conexion)
       }
       break;
 
-      // actualiza las tablas de expedientes y movimientos
-    case 'dispatch/update':
-      require_once './scrapper/users_data.php';
-      require_once './scrapper/up_user_exp.php';
-      require_once './scrapper/write_mail.php';
-      require_once './tokenControl.php';
-      if (isset($_SERVER['HTTP_TOKEN'])) {
-        $token = $_SERVER['HTTP_TOKEN']; // Accede al encabezado 'token' enviado en la solicitud
-      } else {
-        // El encabezado 'token' no se ha proporcionado en la solicitud
-        http_response_code(401);
-        echo json_encode(['message' => 'Token not provided']);
-        exit; // Sale del script
-      }
-
-
-      //obtengo un array de usuarios con sus expedientes y los movimientos asociados
-      $tablesUpdater = new users_data($conexion);
-      $oldTableUserExp = $tablesUpdater->getExpedients();
-
-      // echo json_encode($oldTableUserExp);
-
-      // compara las tablas y actualiza los expedientes y movimientos
-      $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-      $newsBy = $upUserExp->getExpedient();
-
-      // echo json_encode($newsBy);
-
-      // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
-      $writeMail = new write_mail($conexion, $newsBy);
-      // $writeMail->write();
-
-
-      echo json_encode($writeMail->write());
-
-      break;
-
-
-
     default:
       // Ruta no encontrada
       http_response_code(404);

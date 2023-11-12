@@ -21,6 +21,7 @@ $publicRoutes = [
   '/',
   'user/create',
   'user/login',
+  'dispatch/update', // actualiza las tablas de expedientes y envia mails
   // Otras rutas públicas
 ];
 
