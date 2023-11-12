@@ -1,10 +1,10 @@
 <?php
 
-function secretaryRoot($route)
+function secretaryRoot($route, $method, $conexion)
 {
   switch ($route) {
-    case '/user/secretary/create':
-      require_once '../user/user_create_secretary.php';
+    case 'user/secretary/create':
+      require_once './user/user_create_secretary.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);
@@ -25,8 +25,8 @@ function secretaryRoot($route)
       break;
 
       // user updata secretary
-    case '/user/secretary/update':
-      require_once '../user/user_update_secretary.php';
+    case 'user/secretary/update':
+      require_once './user/user_update_secretary.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);
@@ -49,8 +49,8 @@ function secretaryRoot($route)
       break;
 
       // user delete secretary
-    case '/user/secretary/delete':
-      require_once '../user/user_delete_secretary.php';
+    case 'user/secretary/delete':
+      require_once './user/user_delete_secretary.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);
@@ -69,8 +69,8 @@ function secretaryRoot($route)
       break;
 
       // user get secretary
-    case '/user/secretary/get':
-      require_once '../user/user_get_secretary.php';
+    case 'user/secretary/get':
+      require_once './user/user_get_secretary.php';
       if ($method === 'GET') {
         // Obtener el userId del encabezado de la solicitud
         $userId = $_SERVER['HTTP_USERID'];

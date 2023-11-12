@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Router,
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { Router, CanActivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { TokenService } from '../services/token.service';

@@ -15,50 +15,64 @@ if ($method == "OPTIONS") {
   die();
 }
 
-// Eliminar la parte de la URL después de 'Logica' y obtener la ruta relativa
-$base = '/API-sv';
-$route = explode($base, $request, 2)[1] ?? '';
-
+// crea $route =  elemento que sigue a API-sv en $request y borra lo que sigue
+$route = str_replace('/API-sv/', '', $request);
 // No Requieren Token
 $publicRoutes = [
   '/',
-  '/login',
-  '/register',
+  'user/create',
+  'user/login',
   // Otras rutas públicas
 ];
 
-// Obtengo el userId del header
-$userId = $_SERVER['HTTP_USERID'];
-// Obtengo el token del header
-$token = $_SERVER['HTTP_TOKEN'];
+// consulto si la ruta esta en el grupo publicRoutes con un for
+// for ($i = 0; $i < count($publicRoutes); $i++) {
+//   if ($route == $publicRoutes[$i]) {
+//     require_once 'api/openRoute.php';
+//     openRoute($route, $method, $conexion);
+//   }
+// }
 
-// verifico si la ruta NO esta en el grupo publicRoutes (todas las rutas necesitan token salvo que sean publcia)
+// consulto si la ruta NO esta en el grupo publicRoutes
 if (!in_array($route, $publicRoutes)) {
-  // verifico si el token es valido
-  if (!verifyToken($conexion, $token)) {
-    // El token no es válido
-    http_response_code(401);
-    echo json_encode(['message' => 'Invalid token']);
-    exit; // Sale del script
-  }
 
-  switch ($route) {
-    case 'user/secretary':
-      //llamo al archivo api/secretary.php y le paso $route
-      require_once 'api/secretary.php';
-      secretaryRoot($route);
-      break;
+
+  require_once 'tokenControl.php';
+  // Obtengo el userId del header
+  $userId = $_SERVER['HTTP_USERID'];
+  // Obtengo el token del header
+  $token = $_SERVER['HTTP_TOKEN'];
+  // verifico si el token es valido
+  // if (!verifyToken($conexion, $token)) {
+  //   // El token no es válido
+  //   http_response_code(401);
+  //   echo json_encode(['message' => 'Invalid token']);
+  //   exit; // Sale del script
+  // }
+
+  //ahora limpio $route de todo lo que sigue a un \/ para saber a que ruta maestra corresponde
+  $root = explode('/', $route);
+
+  // derivo la solicitud a la rama correspondiente
+  switch ($root[0]) {
     case 'user':
+      if ($root[1] == 'secretary') {
+        require_once 'api/secretary.php';
+        secretaryRoot($route, $method, $conexion);
+      }
       require_once 'api/user.php';
-      userRoot($route);
+      userRoot($route, $method, $conexion);
       break;
     case 'dispatch':
       require_once 'api/dispatch.php';
-      dispatchRoot($route);
+      dispatchRoot($route, $method, $conexion);
+      break;
+      // si no se cumple ninguno muestro el valor de $route
+    default:
+      echo json_encode(['message' => $route]);
       break;
   }
+} else {
+  require_once 'api/openRoute.php';
+  openRoute($route, $method, $conexion);
 }
-
-// Rutas publicas
-require_once 'api/openRoute.php';
-openRoute($route);

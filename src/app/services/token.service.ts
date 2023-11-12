@@ -20,8 +20,9 @@ export class TokenService {
     const id = getCookie('userId');
 
     if (!token || !id) {
-      return null; // O puedes devolver undefined si lo prefieres
+      return null;
     }
+    console.log('getToken', token, id);
 
     return { token, id };
   }

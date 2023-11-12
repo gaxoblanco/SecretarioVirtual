@@ -1,10 +1,10 @@
 <?php
-function dispatchRoot($route)
+function dispatchRoot($route, $method, $conexion)
 {
   switch ($route) {
       // dispatch get
-    case '/dispatch/get':
-      require_once '../dispatch/get_dispatch.php';
+    case 'dispatch/get':
+      require_once './dispatch/get_dispatch.php';
       if ($method === 'GET') {
         // Obtener el userId del encabezado de la solicitud
         $userId = $_SERVER['HTTP_USERID'];
@@ -19,8 +19,8 @@ function dispatchRoot($route)
       break;
 
       //dispatch moves
-    case '/dispatch/moves':
-      require_once '../dispatch/get_moves.php';
+    case 'dispatch/moves':
+      require_once './dispatch/get_moves.php';
       if ($method === 'GET') {
         // Obtener el id_exp del encabezado de la solicitud
         $id_exp = $_SERVER['HTTP_IDEXP'];
@@ -42,8 +42,8 @@ function dispatchRoot($route)
       break;
 
       // dispatch create
-    case '/dispatch/create':
-      require_once '../dispatch/add_dispatch.php';
+    case 'dispatch/create':
+      require_once './dispatch/add_dispatch.php';
 
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
@@ -66,8 +66,8 @@ function dispatchRoot($route)
       break;
 
       // dispatch delete
-    case '/dispatch/delete':
-      require_once '../dispatch/delete_dispatch.php';
+    case 'dispatch/delete':
+      require_once './dispatch/delete_dispatch.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);
@@ -86,7 +86,7 @@ function dispatchRoot($route)
       break;
 
       // actualiza las tablas de expedientes y movimientos
-    case '/dispatch/update':
+    case 'dispatch/update':
       require_once './scrapper/users_data.php';
       require_once './scrapper/up_user_exp.php';
       require_once './scrapper/write_mail.php';

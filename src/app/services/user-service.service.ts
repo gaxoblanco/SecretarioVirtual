@@ -53,7 +53,7 @@ export class UserServiceService {
 
   // obtengo los datos del usuario
   getProfile(): Observable<User> {
-    console.log('checkToken', checkToken());
+    console.log('tokenService', this.tokenService);
 
     return this.http
       .get<User>(`${this.apiUrl}/user/get`, { context: checkToken() })

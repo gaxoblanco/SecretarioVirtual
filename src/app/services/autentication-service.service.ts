@@ -74,7 +74,7 @@ export class AutenticationServiceService {
   tokenTrue = this.tokenService.getToken() || null;
 
   login(value: LoginModel) {
-    // configuro el hader para enviar email y password
+    // Configuro el header para enviar email y password
     const headers = new HttpHeaders({
       email: value.email, // Agregar el email en las cabeceras
       password: value.password, // Agregar la contraseña en las cabeceras
@@ -85,18 +85,24 @@ export class AutenticationServiceService {
     return this.http
       .post<ResponseLogin>(`${this.apiUrl}/user/login`, null, { headers })
       .pipe(
-        // procesamos la respeusta
-        tap((response) => {
-          console.log(response);
-          // guardamos el response.token y response.id en una cookie
-          this.tokenService.saveToken(response);
-          // actualizo las rutas
-          this.permissions.updatePermissions();
-          // cambiamos el estado del login
-          this.LogState = true;
-          // navego a la pagina principal
-          this.router.navigate(['/login']);
-        })
+        // Procesamos la respuesta
+        tap(
+          (response) => {
+            console.log(response);
+            // Guardamos el response.token y response.id en una cookie
+            this.tokenService.saveToken(response);
+            // Actualizamos las rutas
+            this.permissions.updatePermissions();
+            // Cambiamos el estado del login
+            this.LogState = true;
+            // Navegamos a la página principal
+            this.router.navigate(['/login']);
+          },
+          (error) => {
+            // Manejamos errores aquí
+            console.error('Error en la solicitud:', error);
+          }
+        )
       );
   }
 

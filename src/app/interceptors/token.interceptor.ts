@@ -32,24 +32,21 @@ export class TokenInterceptor implements HttpInterceptor {
   }
 
   //metodo para agregar el token a la peticion
-  private addtoken(
-    request: HttpRequest<unknown>,
-    next: HttpHandler
-  ): Observable<HttpEvent<unknown>> {
+  private addtoken(request: HttpRequest<unknown>, next: HttpHandler) {
     const token = this.tokenServices.getToken();
     // console.log('token2', token);
 
     if (token) {
       console.log('addtoken-if', token);
 
-      const authRequest = request.clone({
-        setHeaders: {
-          token: `${token.token}`,
-          userId: `${token.id}`,
-        },
-      });
-      console.log('authRequest', authRequest.headers);
+      const newHeaders = new HttpHeaders()
+        .set('token', token.token)
+        .set('userId', token.id);
 
+      const authRequest = request.clone({
+        headers: newHeaders,
+      });
+      // console.log('authRequest', authRequest.headers);
       return next.handle(authRequest);
     } else {
       return next.handle(request);

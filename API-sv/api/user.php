@@ -1,9 +1,9 @@
 <?php
-function userRoot($route)
+function userRoot($route, $method, $conexion)
 {
   switch ($route) {
-    case '/user/get':
-      require_once '../user/user_get.php';
+    case 'user/get':
+      require_once './user/user_get.php';
       if ($method === 'GET') {
         // Obtener el id del encabezado de la solicitud
         $id = $_SERVER['HTTP_USERID'];
@@ -17,8 +17,8 @@ function userRoot($route)
       break;
 
       //user update
-    case '/user/update':
-      require_once '../user/user_update.php';
+    case 'user/update':
+      require_once './user/user_update.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);

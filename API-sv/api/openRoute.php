@@ -1,9 +1,9 @@
 <?php
-function openRoute($route)
+function openRoute($route, $method, $conexion)
 {
   switch ($route) {
       //user create
-    case '/user/create':
+    case 'user/create':
       require_once './user/user_create.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
@@ -24,7 +24,7 @@ function openRoute($route)
       break;
 
       // user login
-    case '/user/login':
+    case 'user/login':
       require_once './user/login.php';
       if ($method === 'POST') {
         // Obtener el email y password proporcionados

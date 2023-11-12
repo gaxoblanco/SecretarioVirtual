@@ -1,8 +1,5 @@
 <IfModule mod_rewrite.c>
-  Header add Access-Control-Allow-Origin "https://secretariovirtual.ar"
-  Header add Access-Control-Allow-Origin "https://secretariovirtual.ar/agregarExpediente"
-  Header add Access-Control-Allow-Origin "https://secretariovirtual.ar/listaExpediente"
-  Header add Access-Control-Allow-Origin "https://secretariovirtual.ar/usuario"
+  Header add Access-Control-Allow-Origin "http://secretariovirtual.ar/"
   Header add Access-Control-Allow-Methods: "GET,POST,OPTIONS,DELETE,PUT"
   Header add Access-Control-Allow-Headers: "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, email, password, token, userId, idExp, caseNumber, caseYear, secreataryId, oldSemail, newSemail, Spass, firstName"
   Header add Access-Control-Allow-Credentials: "true"
