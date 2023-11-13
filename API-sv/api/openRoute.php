@@ -61,7 +61,7 @@ function openRoute($route, $method, $conexion)
 
       // compara las tablas y actualiza los expedientes y movimientos
       $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-      // $newsBy = $upUserExp->getExpedient();
+      $newsBy = $upUserExp->getExpedient();
 
       echo json_encode($newsBy);
 

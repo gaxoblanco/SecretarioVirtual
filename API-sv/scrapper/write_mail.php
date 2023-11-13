@@ -122,7 +122,9 @@ class write_mail
     $message .= "<p>Se le notifica que los siguientes expedientes tuvieron movimientos:</p>";
 
     foreach ($news['expedients'] as $expedient) {
-      $message .= "<div style='border: 1px solid black; padding: 10px; margin: 10px;'>";
+      $message .= "<div style='height: 4px; background-color: #37bbed; margin: 30px; border-radius: 10px;'>";
+      $message .= "</div>";
+      $message .= "<div style='max-width: 80%; border: 1px solid #0c4d66; padding: 10px; margin: 0 auto; border-top: 20px solid #37bbed; border-radius: 12px;'>";
       $message .= "<h3>Expediente: " . $expedient['numero_exp'] . "/" . $expedient['anio_exp'] . "</h3>";
       $message .= "<div style='padding: 10px; margin: 10px;'>";
       $message .= "<h4>Carátula: " . $expedient['caratula'] . "</h4>";
@@ -130,37 +132,36 @@ class write_mail
       $message .= "<h4>Dependencia: " . $expedient['dependencia'] . "</h4>";
       $message .= "<h4>Tipo de lista: " . $expedient['tipo_lista'] . "</h4>";
       $message .= "</div>";
-      $message .= "<h4>Movimientos:</h4>";
+      $message .= "<h4 style='font-size: medium;'>Movimientos:</h4>";
 
 
       //si $expedient['movimientos'] escribo el expediente aun no tiene movimientos
       if (empty($expedient['movimientos'])) { //si $expedient['movimientos'] esta vacio
-        $message .= "<div style='border: 1px solid black; padding: 10px; margin: 10px;'>";
+        $message .= "<div style='border: 1px solid #0c4d66; padding: 10px; margin: 10px; border-top: 10px solid #37bbed;'>";
         $message .= "<h5 style='font-weight: bold; font-size:14px;'>El expediente aun no tiene movimientos</h5>";
         $message .= "</div>";
       }
 
       foreach ($expedient['movimientos'] as $movimiento) {
-        $message .= "<div style='border: 1px solid black; padding: 10px; margin: 10px;'>";
-        $message .= "<div style='border: 1px solid black; padding: 10px; margin: 10px;'>";
-        $message .= "<h5 style='font-weight: bold; font-size:14px;'>Fecha de movimiento: " .
-          "<p>" . $movimiento['fecha_movimiento'] . "</p>" . "</h5>";
-        $message .= "<h5 style='font-weight: bold; font-size:14px;'>Estado: " .
-          "<p>" . $movimiento['estado'] . "</p>" . "</h5>";
+        $message .= "<div style='border: 1px solid #0c4d66; margin: 10px; border-radius: 12px;'>";
+        $message .= "<div style='border-bottom: 1px solid #0c4d66; padding: 0 10px;'>";
+        $message .= "<h5 style='font-weight: bold; font-size:14px; display: flex;'>Fecha de movimiento: " .
+          "<p style='margin:0; margin-left: 10px;'>" . $movimiento['fecha_movimiento'] . "</p>" . "</h5>";
+        $message .= "<h5 style='font-weight: bold; font-size:14px; display: flex;'>Estado: " .
+          "<p style='margin:0; margin-left: 10px;'>" . $movimiento['estado'] . "</p>" . "</h5>";
         $message .= "</div>";
 
-        $message .= "<h5 style='font-weight: bold; font-size:14px;'>Texto: " .
+        $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Texto: " .
           "<p>" . $movimiento['texto'] . "</p>" . "</h5>";
-        $message .= "<h5 style='font-weight: bold; font-size:14px;'>Título: " .
+        $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Título: " .
           "<p>" . $movimiento['titulo'] . "</p>" . "</h5>";
-        $message .= "<h5 style='font-weight: bold; font-size:14px;'>Despacho: " .
+        $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Despacho: " .
           "<p>" . $movimiento['despacho'] . "</p>" . "</h5>";
         $message .= "</div>";
       }
 
       $message .= "</div>";
     }
-
     $message .= "</body></html>";
 
     echo "body creado";
