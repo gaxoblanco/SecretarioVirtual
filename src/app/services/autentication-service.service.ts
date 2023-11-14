@@ -79,7 +79,7 @@ export class AutenticationServiceService {
       email: value.email, // Agregar el email en las cabeceras
       password: value.password, // Agregar la contraseña en las cabeceras
     });
-    console.log('header', headers);
+    // console.log('header', headers);
 
     // Realiza la solicitud POST a la API para el inicio de sesión
     return this.http
@@ -88,7 +88,7 @@ export class AutenticationServiceService {
         // Procesamos la respuesta
         tap(
           (response) => {
-            console.log(response);
+            // console.log(response);
             // Guardamos el response.token y response.id en una cookie
             this.tokenService.saveToken(response);
             // Actualizamos las rutas
@@ -131,7 +131,7 @@ export class AutenticationServiceService {
     this.tokenService.removeToken();
     // cambio el estado del login
     this.LogState = false;
-    console.log(this.tokenService.getToken());
+    // console.log(this.tokenService.getToken());
     // actualizo las rutas
     this.permissions.updatePermissions();
     // navego a la pagina principal

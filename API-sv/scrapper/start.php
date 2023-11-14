@@ -27,20 +27,20 @@ $scrapper->startScript(); // Ejecutar el scrapper
 
 echo "Scrapper finalizado\n";
 
-//obtengo un array de usuarios con sus expedientes y los movimientos asociados
-$tablesUpdater = new users_data($conexion);
-$oldTableUserExp = $tablesUpdater->getExpedients();
+// //obtengo un array de usuarios con sus expedientes y los movimientos asociados
+// $tablesUpdater = new users_data($conexion);
+// $oldTableUserExp = $tablesUpdater->getExpedients();
 
-echo "Actualizando base de datos...\n";
+// echo "Actualizando base de datos...\n";
 
-// compara las tablas y actualiza los expedientes y movimientos
-$upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-$newsBy = $upUserExp->getExpedient();
+// // compara las tablas y actualiza los expedientes y movimientos
+// $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
+// $newsBy = $upUserExp->getExpedient();
 
-echo "Base de datos actualizada\n";
+// echo "Base de datos actualizada\n";
 
-// crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
-$writeMail = new write_mail($conexion, $newsBy);
-$writeBy = $writeMail->write();
+// // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
+// $writeMail = new write_mail($conexion, $newsBy);
+// $writeBy = $writeMail->write();
 
-echo "Correos enviados: ";
+// echo "Correos enviados: ";

@@ -56,11 +56,12 @@ export class FilesService {
 
   getFiles(): Observable<FileModel[]> {
     return this.http
-      .get<FileModel[]>(`${this.apiUrl}/dispatch/get`, {
+      .get<any[]>(`${this.apiUrl}/dispatch/get`, {
         context: checkToken(),
       })
       .pipe(
         tap((files) => {
+          console.log('files', files);
           this.files$.next(files);
           this.upDependencia();
         })

@@ -124,7 +124,7 @@ class write_mail
     foreach ($news['expedients'] as $expedient) {
       $message .= "<div style='height: 4px; background-color: #37bbed; margin: 30px; border-radius: 10px;'>";
       $message .= "</div>";
-      $message .= "<div style='max-width: 80%; border: 1px solid #0c4d66; padding: 10px; margin: 0 auto; border-top: 20px solid #37bbed; border-radius: 12px;'>";
+      $message .= "<div style='max-width: 80%; border: 1px solid #a0bdcf; padding: 10px; margin: 0 auto; border-top: 20px solid #37bbed; border-radius: 12px;'>";
       $message .= "<h3>Expediente: " . $expedient['numero_exp'] . "/" . $expedient['anio_exp'] . "</h3>";
       $message .= "<div style='padding: 10px; margin: 10px;'>";
       $message .= "<h4>Carátula: " . $expedient['caratula'] . "</h4>";
@@ -137,14 +137,14 @@ class write_mail
 
       //si $expedient['movimientos'] escribo el expediente aun no tiene movimientos
       if (empty($expedient['movimientos'])) { //si $expedient['movimientos'] esta vacio
-        $message .= "<div style='border: 1px solid #0c4d66; padding: 10px; margin: 10px; border-top: 10px solid #37bbed;'>";
+        $message .= "<div style='border: 1px solid #a0bdcf; padding: 10px; margin: 10px; border-top: 10px solid #37bbed;'>";
         $message .= "<h5 style='font-weight: bold; font-size:14px;'>El expediente aun no tiene movimientos</h5>";
         $message .= "</div>";
       }
 
       foreach ($expedient['movimientos'] as $movimiento) {
-        $message .= "<div style='border: 1px solid #0c4d66; margin: 10px; border-radius: 12px;'>";
-        $message .= "<div style='border-bottom: 1px solid #0c4d66; padding: 0 10px;'>";
+        $message .= "<div style='border: 1px solid #a0bdcf; margin: 10px; border-radius: 12px;'>";
+        $message .= "<div style='border-bottom: 1px solid #a0bdcf; padding: 0 10px;'>";
         $message .= "<h5 style='font-weight: bold; font-size:14px; display: flex;'>Fecha de movimiento: " .
           "<p style='margin:0; margin-left: 10px;'>" . $movimiento['fecha_movimiento'] . "</p>" . "</h5>";
         $message .= "<h5 style='font-weight: bold; font-size:14px; display: flex;'>Estado: " .

@@ -55,7 +55,7 @@ export class AddFileScreenComponent implements OnInit {
           },
           error: (error) => {
             this.status = 'failed';
-            console.log('er1', error);
+            // console.log('er1', error);
           },
         });
       } else {
