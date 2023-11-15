@@ -55,8 +55,9 @@ function dispatchRoot($route, $method, $conexion)
         $userId = explode(' ', $Id)[0];
         $caseNumber = $data['fileNumber'];
         $caseYear = $data['yearNumber'];
+        $dispatch = $data['dispatch'];
 
-        $addDispatch = new add_dispatch($conexion, $userId, $caseNumber, $caseYear);
+        $addDispatch = new add_dispatch($conexion, $userId, $caseNumber, $caseYear, $dispatch);
         $addDispatch->addDispatch();
       } else {
         // Método no permitido para esta ruta

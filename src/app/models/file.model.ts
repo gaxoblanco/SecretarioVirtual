@@ -13,4 +13,5 @@ export interface FileModel {
 export interface NewFile {
   fileNumber: number;
   yearNumber: number;
+  dispatch: number;
 }
