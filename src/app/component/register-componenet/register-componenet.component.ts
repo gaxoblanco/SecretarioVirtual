@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 // import { CustomValidators } from '@utils/validators';
 import { AutenticationServiceService } from '@services/autentication-service.service';
@@ -26,7 +26,7 @@ export class RegisterComponenetComponent implements OnInit {
   );
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private authService: AutenticationServiceService
   ) {}

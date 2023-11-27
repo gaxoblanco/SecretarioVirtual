@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserServiceService } from '@services/user-service.service';
 import { LoginModel } from 'src/app/models/login-model';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
@@ -16,8 +16,8 @@ import { RequestStatus } from '@models/request-status.model';
 })
 export class EditUserComponentComponent implements OnInit {
   status: RequestStatus = 'init';
-  passwordDTO: FormGroup;
-  userDTO: FormGroup;
+  passwordDTO: UntypedFormGroup;
+  userDTO: UntypedFormGroup;
   user$ = {
     email: '',
     password: '',
@@ -34,21 +34,21 @@ export class EditUserComponentComponent implements OnInit {
     private userScreen: UserScreenComponent,
     private userServ: UserServiceService
   ) {
-    (this.passwordDTO = new FormGroup(
+    (this.passwordDTO = new UntypedFormGroup(
       {
-        password: new FormControl('', [
+        password: new UntypedFormControl('', [
           Validators.required,
           Validators.minLength(6),
         ]),
-        confirmPassword: new FormControl('', [Validators.required]),
+        confirmPassword: new UntypedFormControl('', [Validators.required]),
       },
       [StrengthValidatorService.MatchValidator('password', 'confirmPassword')]
     )),
-      (this.userDTO = new FormGroup({
-        firstName: new FormControl('', [Validators.required]),
-        lastName: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        subscribe: new FormControl('', [Validators.required]),
+      (this.userDTO = new UntypedFormGroup({
+        firstName: new UntypedFormControl('', [Validators.required]),
+        lastName: new UntypedFormControl('', [Validators.required]),
+        email: new UntypedFormControl('', [Validators.required, Validators.email]),
+        subscribe: new UntypedFormControl('', [Validators.required]),
       }));
   }
 

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { RequestStatus } from '@models/request-status.model';
 import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
@@ -18,7 +18,7 @@ export class PendingListScreenComponent implements OnInit {
   StateArrowDownStyle: Boolean = false;
   StateArrowUpStyle: Boolean = false;
 
-  searchFile: FormGroup;
+  searchFile: UntypedFormGroup;
   fileList: FileModel[] = [
     {
       id_exp: 0,
@@ -32,8 +32,8 @@ export class PendingListScreenComponent implements OnInit {
   arrowDow = {};
 
   constructor(private FileSer: FilesService) {
-    this.searchFile = new FormGroup({
-      searchNumber: new FormControl(''),
+    this.searchFile = new UntypedFormGroup({
+      searchNumber: new UntypedFormControl(''),
     });
   }
 

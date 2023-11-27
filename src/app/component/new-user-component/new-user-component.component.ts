@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { UserServiceService } from '../../services/user-service.service';
 import { newAdditionalDTO } from '../../models/additional-model';
@@ -13,16 +13,16 @@ import { min } from 'rxjs';
 })
 export class NewUserComponentComponent implements OnInit {
   status: RequestStatus = 'init';
-  newAdditionalDTO: FormGroup;
+  newAdditionalDTO: UntypedFormGroup;
 
   constructor(
     private userServ: UserServiceService,
     private userScreen: UserScreenComponent
   ) {
-    this.newAdditionalDTO = new FormGroup({
-      name: new FormControl('', Validators.required),
-      Semail: new FormControl('', [Validators.required, Validators.email]),
-      Spass: new FormControl('', [
+    this.newAdditionalDTO = new UntypedFormGroup({
+      name: new UntypedFormControl('', Validators.required),
+      Semail: new UntypedFormControl('', [Validators.required, Validators.email]),
+      Spass: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
       ]),

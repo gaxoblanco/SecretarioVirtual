@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { LoginModel } from '@models/login-model';
 import { RequestStatus } from '@models/request-status.model';
 import { AutenticationServiceService } from '@services/autentication-service.service';
@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-componenet.component.scss'],
 })
 export class LoginComponenetComponent implements OnInit {
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private autenticacionService: AutenticationServiceService,
     private router: Router
   ) {

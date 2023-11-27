@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { FileModel, NewFile } from '@models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 import { FilesService } from '@services/files.service';
@@ -10,7 +10,7 @@ import { FilesService } from '@services/files.service';
   styleUrls: ['./add-file-screen.component.scss'],
 })
 export class AddFileScreenComponent implements OnInit {
-  files: FormGroup;
+  files: UntypedFormGroup;
   status: RequestStatus = 'init';
 
   newFileList: FileModel[] = [];
@@ -62,13 +62,13 @@ export class AddFileScreenComponent implements OnInit {
   selectedDependencia: number = 0;
 
   constructor(private fileSer: FilesService) {
-    this.files = new FormGroup({
-      fileNumber: new FormControl('', [
+    this.files = new UntypedFormGroup({
+      fileNumber: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(7),
       ]),
-      dependenciaSelect: new FormControl('', [Validators.required]),
+      dependenciaSelect: new UntypedFormControl('', [Validators.required]),
     });
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { newAdditionalDTO } from '../../models/additional-model';
 import { UserComponenetComponent } from '../user-componenet/user-componenet.component';
 import { RequestStatus } from '@models/request-status.model';
@@ -19,16 +19,16 @@ export class EditEmailComponentComponent implements OnInit {
   oldSemail: any = '';
   secreataryId: any = '';
 
-  edditAdi: FormGroup;
+  edditAdi: UntypedFormGroup;
 
   constructor(
     private userComp: UserComponenetComponent,
     private userServ: UserServiceService
   ) {
-    this.edditAdi = new FormGroup({
-      name: new FormControl('', Validators.required),
-      newSemail: new FormControl('', [Validators.required, Validators.email]),
-      Spass: new FormControl('', [
+    this.edditAdi = new UntypedFormGroup({
+      name: new UntypedFormControl('', Validators.required),
+      newSemail: new UntypedFormControl('', [Validators.required, Validators.email]),
+      Spass: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
       ]),
