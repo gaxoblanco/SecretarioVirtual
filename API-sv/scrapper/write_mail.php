@@ -152,11 +152,11 @@ class write_mail
         $message .= "</div>";
 
         $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Texto: " .
-          "<p>" . $movimiento['texto'] . "</p>" . "</h5>";
+          "<p style='margin: 8px; margin-left: 12px;'>" . $movimiento['texto'] . "</p>" . "</h5>";
         $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Título: " .
-          "<p>" . $movimiento['titulo'] . "</p>" . "</h5>";
+          "<p style='margin: 8px; margin-left: 12px;>" . $movimiento['titulo'] . "</p>" . "</h5>";
         $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Despacho: " .
-          "<p>" . $movimiento['despacho'] . "</p>" . "</h5>";
+          "<p style='margin: 8px; margin-left: 12px;>" . $movimiento['despacho'] . "</p>" . "</h5>";
         $message .= "</div>";
       }
 
