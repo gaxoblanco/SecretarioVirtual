@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-register-screen',
   templateUrl: './register-screen.component.html',
-  styleUrls: ['./register-screen.component.scss']
+  styleUrls: ['./register-screen.component.scss'],
 })
 export class RegisterScreenComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

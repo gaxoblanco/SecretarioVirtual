@@ -46,6 +46,9 @@
       ],
       "@env": [
         "./src/environments/environment"
+      ],
+      "tslib" : [
+        "bower_components/tslib/tslib.d.ts"
       ]
     },
     "useDefineForClassFields": false
@@ -54,6 +57,7 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "importHelpers": true
   }
 }
