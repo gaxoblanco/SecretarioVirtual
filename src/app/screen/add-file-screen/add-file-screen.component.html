@@ -42,11 +42,13 @@
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let fileList of newFileList">
-        <td> {{fileList.numero_exp}}</td>
-        <td> {{fileList.anio_exp}}</td>
-      </tr>
+    <tbody class="add_file-tbody">
+      <div>
+        <tr class="add_file-tr" *ngFor="let fileList of newFileList">
+          <td class="add_file-td"> {{fileList.numero_exp}}</td>
+          <td class="add_file-td--r"> {{fileList.anio_exp}}</td>
+        </tr>
+      </div>
     </tbody>
   </table>
 </article>

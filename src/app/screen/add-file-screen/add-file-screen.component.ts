@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { FileModel, NewFile } from '@models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 import { FilesService } from '@services/files.service';
@@ -111,8 +115,14 @@ export class AddFileScreenComponent implements OnInit {
             });
           },
           error: (error) => {
-            this.status = 'failed';
-            // console.log('er1', error);
+            // Maneja el error aquí
+            if (error === 'El expediente ya existe.') {
+              // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
+              console.log('Expediente ya existe');
+            } else {
+              this.status = 'failed';
+              console.log('Error:', error);
+            }
           },
         });
       } else {
@@ -127,7 +137,7 @@ export class AddFileScreenComponent implements OnInit {
           next: () => {
             this.status = 'success';
             this.newFileList.push({
-              id_exp: 0,
+              id_exp: this.newFileList.length,
               numero_exp: newFile.fileNumber,
               anio_exp: newFile.yearNumber.toString(),
               caratula: '',
@@ -135,9 +145,14 @@ export class AddFileScreenComponent implements OnInit {
             });
           },
           error: (error) => {
-            this.status = 'failed';
-            console.log(error);
-            console.log('er2', error);
+            // Maneja el error aquí
+            if (error === 'El expediente ya existe.') {
+              // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
+              console.log('Expediente ya existe');
+            } else {
+              this.status = 'failed';
+              console.log('Error:', error);
+            }
           },
         });
       }

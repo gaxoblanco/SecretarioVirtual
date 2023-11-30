@@ -44,11 +44,14 @@ export class FilesService {
             return true;
           }
           // si la respuesta es "El expediente ya existe." devuelvo false
-          if (response === 'El expediente ya existe.') {
+          if (response === 'null') {
             return false;
           }
           // si es distinto devuelvo un error
-          return throwError(response);
+          return response;
+        }),
+        catchError((error) => {
+          return throwError(error.error.message || 'Server error');
         })
       );
   }
@@ -59,9 +62,9 @@ export class FilesService {
         context: checkToken(),
       })
       .pipe(
-        tap((files) => {
-          console.log('files', files);
-          this.files$.next(files);
+        tap((response) => {
+          console.log('files', response);
+          this.files$.next(response);
           this.upDependencia();
         })
       );
