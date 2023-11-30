@@ -109,7 +109,7 @@ export class AddFileScreenComponent implements OnInit {
             this.newFileList.push({
               id_exp: this.newFileList.length,
               numero_exp: newFile.fileNumber,
-              anio_exp: newFile.yearNumber.toString(),
+              anio_exp: newFile.yearNumber,
               caratula: '',
               dependencia: '',
             });
@@ -139,7 +139,7 @@ export class AddFileScreenComponent implements OnInit {
             this.newFileList.push({
               id_exp: this.newFileList.length,
               numero_exp: newFile.fileNumber,
-              anio_exp: newFile.yearNumber.toString(),
+              anio_exp: newFile.yearNumber,
               caratula: '',
               dependencia: '',
             });

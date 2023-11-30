@@ -6,9 +6,8 @@ function dispatchRoot($route, $method, $conexion)
     case 'dispatch/get':
       require_once './dispatch/get_dispatch.php';
       if ($method === 'GET') {
-        // Obtener el userId del encabezado de la solicitud
+        // Obtener el id del encabezado de la solicitud
         $userId = $_SERVER['HTTP_USERID'];
-
         $getDispatch = new get_dispatch($conexion, $userId);
         $getDispatch->getDispatches();
       } else {

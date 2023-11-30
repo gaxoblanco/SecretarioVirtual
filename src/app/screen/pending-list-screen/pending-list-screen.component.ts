@@ -23,7 +23,7 @@ export class PendingListScreenComponent implements OnInit {
     {
       id_exp: 0,
       numero_exp: 0,
-      anio_exp: '',
+      anio_exp: 0,
       caratula: '',
       dependencia: '',
       state: false,

@@ -13,6 +13,7 @@ export class TokenService {
     // document.cookie = `token=${token.token}; id=${token.id}`;
     setCookie('token', token.token, { expires: 30, path: '/' });
     setCookie('userId', token.id, { expires: 30, path: '/' });
+    // console.log('saveToken', token.token, token.id);
   }
 
   getToken() {
@@ -22,7 +23,7 @@ export class TokenService {
     if (!token || !id) {
       return null;
     }
-    // console.log('getToken', token, id);
+    console.log('getToken', token, id);
 
     return { token, id };
   }

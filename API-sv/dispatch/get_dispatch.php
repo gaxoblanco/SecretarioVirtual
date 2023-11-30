@@ -23,7 +23,7 @@ class get_dispatch
 
       // Devolver los expedientes como respuesta en formato JSON
       echo json_encode($dispatches);
-      // return $dispatches;
+      return;
     } catch (PDOException $e) {
       echo 'Error al obtener los expedientes: ' . $e->getMessage();
     }
