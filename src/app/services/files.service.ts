@@ -8,6 +8,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { TokenService } from './token.service';
 import { checkToken } from '../interceptors/token.interceptor';
 import { dependencias, Dependencia } from '@models/dependencias';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -62,13 +63,15 @@ export class FilesService {
         context: checkToken(),
       })
       .pipe(
-        tap((response) => {
-          console.log('files', response);
-          this.files$.next(response);
+        map((response: any) => response.data),
+        tap((files) => {
+          console.log('files', files);
+          this.files$.next(files);
           this.upDependencia();
         })
       );
   }
+
   // funcion para actualizar el valor de dependencia numero a nombre
   upDependencia() {
     const files = this.files$.getValue();

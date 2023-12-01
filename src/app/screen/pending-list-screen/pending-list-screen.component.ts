@@ -39,11 +39,14 @@ export class PendingListScreenComponent implements OnInit {
 
   ngOnInit(): void {
     // this.fileList = this.FileSer.files;
-    this.FileSer.getFiles().subscribe((files) => {});
-    this.FileSer.getFiles$().subscribe((files) => {
+    this.FileSer.getFiles().subscribe((files) => {
       this.fileList = files;
-      console.log('files', files[0]);
+      console.log('files-com', files[0]);
     });
+    // this.FileSer.getFiles$().subscribe((files) => {
+    //   this.fileList = files;
+    //   console.log('files-com', files[0]);
+    // });
   }
   deleteFile(id: any) {
     // this.FileSer.deleteFiles(id);
