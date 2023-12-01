@@ -25,6 +25,7 @@ class Login
 
     if (!$user) {
       // El email no coincide con ningún usuario
+      http_response_code(401);
       echo json_encode(['message' => 'Invalid email']);
       return null;
     }
@@ -34,6 +35,7 @@ class Login
     // Verificar la contraseña proporcionada con la contraseña del usuario
     if (!password_verify($this->password, $user['password'])) {
       // Las contraseñas no coinciden
+      http_response_code(401);
       echo json_encode(['message' => 'Invalid password']);
       return null;
     }

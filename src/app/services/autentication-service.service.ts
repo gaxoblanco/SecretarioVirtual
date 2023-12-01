@@ -88,7 +88,8 @@ export class AutenticationServiceService {
         // Procesamos la respuesta
         tap(
           (response) => {
-            // console.log(response);
+            console.log(response);
+
             // Guardamos el response.token y response.id en una cookie
             this.tokenService.saveToken(response);
             // Actualizamos las rutas

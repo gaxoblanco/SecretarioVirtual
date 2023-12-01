@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { LoginModel } from '@models/login-model';
 import { RequestStatus } from '@models/request-status.model';
 import { AutenticationServiceService } from '@services/autentication-service.service';
