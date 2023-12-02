@@ -39,6 +39,13 @@ por un lado:
 
     * $bodyEmailByUserId: {"1":[{"medium_type":"Expediente Principal","cover":"OLIVA, Efren C\/ GODOY, Gilberto y\/o cualquier otro ocupante  S\/ Juicio Ordinario (Acci\u00f3n Reivindicatoria (Arts.2252 y sgtes. CCyCN))","unit":"Juzgado de 1\u00b0 Instancia en lo Civil y Comercial N\u00b0 1","year_number":"25\/22"}]...}, lo que vamos a hacer es cargar la informacion en el body del mail, siempre confirmando que el $bodyEmailByUserId.id y el $emailTo.id coinciden
 
+## secretaries add
+* add_secretary.php: recibe $secretaryData (email, firstname, lastname, password, userId) y lo guarda en la tabla secretarylist
+- Consulta al archivo suscript.php para obtener el num_exp y num_secretary (son el numero maximo de expedientes y secretarios que puede tener un usuario con esa suscripcion)
+- Consulta el numero de secreatarios que tiene el usuario en la tabla secretarylist
+- Si el numero de secretarios es menor al numero de secretarios permitidos, se agrega el secretario a la tabla secretarylist y se devuelve un mensaje de exito.
+- Si el numero de secretarios es igual al numero de secretarios permitidos, se devuelve un mensaje de error.
+
 
 
 tokenControl.php: se encarga de controla que el token que recibimos en el head sea el correcto
