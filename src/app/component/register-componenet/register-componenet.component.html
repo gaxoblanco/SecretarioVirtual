@@ -35,6 +35,17 @@
       <label for="inputPassword" class="mb-2"></label>
       <input type="password" class="form-control" id="password2" placeholder="Repetir contraseña" formControlName="password2">
     </div>
+    <!-- multiple option de tipo de subscripcion -->
+    <div class="form-group col-md-12 mb-4">
+      <label for="inputSubscription" class="mb-2">Tipo de suscripcion</label>
+      <select id="inputSubscription" class="form-control" formControlName="id_subscription">
+        <option value="" disabled selected>Selecciona una suscripcion</option>
+        <option value="1">Gratis</option>
+        <option value="2">Basic</option>
+        <option value="3">Premium</option>
+      </select>
+    </div>
+
       <div class="col-sm-12 mb-4">
         <div class="card conditionTerm-container">
           <div class="card-body">

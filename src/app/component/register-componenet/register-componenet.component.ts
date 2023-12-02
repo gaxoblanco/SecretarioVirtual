@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 // import { CustomValidators } from '@utils/validators';
 import { AutenticationServiceService } from '@services/autentication-service.service';
@@ -20,6 +24,7 @@ export class RegisterComponenetComponent implements OnInit {
       password2: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      id_subscription: ['', Validators.required],
     }
     // valido que concindan las password
     // validators: [ CustomValidators.MatchValidator('password', 'password2')]
@@ -40,6 +45,7 @@ export class RegisterComponenetComponent implements OnInit {
       this.status = 'loading';
       // guardo los valores del formulario en un objeto
       const user = this.form.value;
+      console.log(user);
       this.authService.register(user).subscribe({
         next: () => {
           // console.log('success');

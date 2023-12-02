@@ -13,8 +13,9 @@ function openRoute($route, $method, $conexion)
         $lastName = $data['lastName'];
         $email = $data['email'];
         $password = $data['password'];
+        $id_subscription = $data['id_subscription'];
 
-        $userCreate = new user_create($conexion, $firstName, $lastName, $email, $password);
+        $userCreate = new user_create($conexion, $firstName, $lastName, $email, $password, $id_subscription);
         $userCreate->createUser();
       } else {
         // Método no permitido para esta ruta
