@@ -1,51 +1,67 @@
 <?php
-//data base
+//- Consulta al archivo suscript.php para obtener el num_exp y num_secretary (son el numero maximo de expedientes y secretarios que puede tener un usuario con esa suscripcion)
+// - Consulta el numero de expedientes que tiene el usuario en la tabla dispatchlist
+// - Si el numero de expedientes es menor al numero de expedientes permitidos, se agrega el expediente a la tabla dispatchlist y se devuelve un mensaje de exito.
+// - Si el numero de expedientes es igual al numero de expedientes permitidos, se devuelve un mensaje de error.
+require_once './subscription.php';
 class add_dispatch
 {
-  private $userId;
+  private $id_user;
   private $caseNumber;
   private $caseYear;
   private $conexion;
   private $dispatch;
 
-  public function __construct($conexion, $userId, $caseNumber, $caseYear, $dispatch)
+  public function __construct($conexion, $id_user, $caseNumber, $caseYear, $dispatch)
   {
     $this->conexion = $conexion;
-    $this->userId = $userId;
+    $this->id_user = $id_user;
     $this->caseNumber = $caseNumber;
     $this->caseYear = $caseYear;
     $this->dispatch = $dispatch;
 
-    $this->userId = $userId;
+    $this->id_user = $id_user;
   }
 
   // Funcion que toma la informacion y consulta si existe un expediente con el mismo numero y año y es del mismo usuario
   public function addDispatch()
   {
+    //Obtengo la informacion del tipo de suscripcion del usuario
+    $subscription = new subscription($this->conexion, $this->id_user);
+    $subscriptionInfo = $subscription->subscriptionUser();
+    $Nexp = $subscriptionInfo['num_exp'];
+    // echo json_encode($Nexp);
+
+    //Limitacion del numero de expedientes
     try {
-      // Verificar si el expediente con el numero, año y dependencia proporcionado existe y obtiene su id_user
+      // Verificar si el expediente con el numero, año y dependencia proporcionado existe para el id_user
       $query = $this->conexion->prepare('SELECT id_user FROM user_expedients WHERE numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia');
       $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch]);
       $count = $query->rowCount();
-
+      echo json_encode($count);
       if ($count > 0) {
         // http response de que salio bien pero que no se cargo
-        http_response_code(200);
+        http_response_code(400);
         //retorno un json con el mensaje de expediente ya existe
-        echo json_encode(['message' => `El expediente ya existe.`]);
+        echo json_encode(['message' => 'El expediente ya existe.']);
         exit;
       }
+    } catch (PDOException $e) {
+      // Devolver mensaje de error en json
+      echo json_encode([
+        'status' => 500,
+        'message' => 'Error al consultar el expediente para crear uno nuevo'
+      ]);
+    }
 
+    try {
       // Crear el expediente
       $query = $this->conexion->prepare('INSERT INTO user_expedients (id_lista_despacho, numero_exp, anio_exp, dependencia, id_user) VALUES (NULL, :numero_exp, :anio_exp, :dependencia, :id_user)');
-      $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch, ':id_user' => $this->userId]);
-
+      $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch, ':id_user' => $this->id_user]);
       //retorna un json mensaje de exito
       http_response_code(200);
       echo json_encode(['message' => 'Expediente creado con exito.']);
     } catch (PDOException $e) {
-
-
       // Devolver una respuesta JSON de error
       http_response_code(500); // Establece el código de estado HTTP adecuado para un error interno del servidor
       echo json_encode(['message' => 'Error al crear el expediente API: ' . $e->getMessage()]);

@@ -46,6 +46,13 @@ por un lado:
 - Si el numero de secretarios es menor al numero de secretarios permitidos, se agrega el secretario a la tabla secretarylist y se devuelve un mensaje de exito.
 - Si el numero de secretarios es igual al numero de secretarios permitidos, se devuelve un mensaje de error.
 
+## dispatch add 
+* add_dispatch.php: recibe $dispatchData (userId, year_number, caseNumber, medium_type, cover, unit) y lo guarda en la tabla dispatchlist
+- Consulta al archivo suscript.php para obtener el num_exp y num_secretary (son el numero maximo de expedientes y secretarios que puede tener un usuario con esa suscripcion)
+- Consulta el numero de expedientes que tiene el usuario en la tabla dispatchlist
+- Si el numero de expedientes es menor al numero de expedientes permitidos, se agrega el expediente a la tabla dispatchlist y se devuelve un mensaje de exito.
+- Si el numero de expedientes es igual al numero de expedientes permitidos, se devuelve un mensaje de error.
+
 
 
 tokenControl.php: se encarga de controla que el token que recibimos en el head sea el correcto
