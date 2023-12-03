@@ -53,6 +53,13 @@ por un lado:
 - Si el numero de expedientes es menor al numero de expedientes permitidos, se agrega el expediente a la tabla dispatchlist y se devuelve un mensaje de exito.
 - Si el numero de expedientes es igual al numero de expedientes permitidos, se devuelve un mensaje de error.
 
+## get user
+* get_user.php: recibe $userId y devuelve la informacion del usuario con el tipo de subscription que tiene
+- Consulta si el usuario existe en la db
+- Obtiene los datos del usuario
+- Agrega los datos de la subscripcion
+- Devuelve los datos del usuario + subscripcion
+
 
 
 tokenControl.php: se encarga de controla que el token que recibimos en el head sea el correcto
