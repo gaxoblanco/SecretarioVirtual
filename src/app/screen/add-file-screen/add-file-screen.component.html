@@ -24,7 +24,7 @@
         </select>
       </div>
 
-      <button type="submit" class="btn card-link mb-2" (click)="addFile()" >Agregar</button>
+      <button type="submit" class="card-link mb-2" (click)="addFile()" [ngClass]="{'active': isActive, 'disabled': !isActive}">Agregar</button>
       <!-- mensaje de error segun status -->
       <div class="alert alert-danger" role="alert" *ngIf="status === 'failed'">
         <p>El espediente no se pudo cargar</p>

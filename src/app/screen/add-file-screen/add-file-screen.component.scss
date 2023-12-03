@@ -36,6 +36,14 @@ input, select{
       margin-left: 46px;
     }
   }
+  .disabled{
+    background-color: #ed3737d5;
+    cursor: default;
+  }
+  .active{
+    background-color: #1BBB1F;
+  }
+
 }
 .table-new_exp {
   width: 100%; /* Ajusta el ancho según tus necesidades */

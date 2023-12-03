@@ -7,6 +7,7 @@ import {
 import { FileModel, NewFile } from '@models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 import { FilesService } from '@services/files.service';
+import { UserServiceService } from '@services/user-service.service';
 
 @Component({
   selector: 'app-add-file-screen',
@@ -16,9 +17,31 @@ import { FilesService } from '@services/files.service';
 export class AddFileScreenComponent implements OnInit {
   files: UntypedFormGroup;
   status: RequestStatus = 'init';
-
+  isActive = false;
   newFileList: FileModel[] = [];
-
+  user$ = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    subscribe: '',
+    subscription: {
+      id_subscription: 0,
+      name: '',
+      num_exp: 0,
+      num_secretary: 0,
+    },
+  };
+  fileList: FileModel[] = [
+    {
+      id_exp: 0,
+      numero_exp: 0,
+      anio_exp: 0,
+      caratula: '',
+      dependencia: '',
+      state: false,
+    },
+  ];
   dependencias = [
     { id: 7441513, name: 'Juzgado 1º Civ. Com. Nº 1' },
     { id: 47322600, name: 'Juzgado 1º Civ. Com. Nº 2' },
@@ -65,7 +88,10 @@ export class AddFileScreenComponent implements OnInit {
 
   selectedDependencia: number = 0;
 
-  constructor(private fileSer: FilesService) {
+  constructor(
+    private fileSer: FilesService,
+    private userServ: UserServiceService
+  ) {
     this.files = new UntypedFormGroup({
       fileNumber: new UntypedFormControl('', [
         Validators.required,
@@ -76,7 +102,20 @@ export class AddFileScreenComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userServ.getUser$().subscribe((user) => {
+      this.user$ = user;
+    });
+
+    this.fileSer.getFiles().subscribe((files) => {
+      this.fileList = files;
+    });
+
+    // Valido que el files.length no sea mayor al num_exp de la subscripcion
+    if (this.fileList.length < this.user$.subscription.num_exp) {
+      this.isActive = true;
+    }
+  }
   onChange() {
     // actualizo selectedDependencia con el id del dependenciaSelect
     this.selectedDependencia = this.files.value.dependenciaSelect;
@@ -113,6 +152,10 @@ export class AddFileScreenComponent implements OnInit {
               caratula: '',
               dependencia: '',
             });
+            // valido si puede seguir agregando mas expedientes
+            if (this.fileList.length < this.user$.subscription.num_exp) {
+              this.isActive = true;
+            }
           },
           error: (error) => {
             // Maneja el error aquí

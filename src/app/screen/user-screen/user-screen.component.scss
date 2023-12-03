@@ -20,8 +20,9 @@ article{
       }
     }
     .disabled{
+      cursor: default;
       svg{
-        color: #ed3737;
+        color: #ed3737d5;
       }
     }
     .active{
