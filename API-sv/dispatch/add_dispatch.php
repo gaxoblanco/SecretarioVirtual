@@ -30,7 +30,6 @@ class add_dispatch
     $subscription = new subscription($this->conexion, $this->id_user);
     $subscriptionInfo = $subscription->subscriptionUser();
     $Nexp = $subscriptionInfo['num_exp'];
-    // echo json_encode($Nexp);
 
     // trycatch para consultar a la db la cantidad de expedientes que tiene el usuario
     try {
@@ -61,7 +60,7 @@ class add_dispatch
       $query = $this->conexion->prepare('SELECT id_user FROM user_expedients WHERE numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia');
       $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch]);
       $count = $query->rowCount();
-      echo json_encode($count);
+      // echo json_encode($count);
       if ($count > 0) {
         // http response de que salio bien pero que no se cargo
         http_response_code(400);

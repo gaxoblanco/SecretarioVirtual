@@ -17,7 +17,7 @@ import { UserServiceService } from '@services/user-service.service';
 export class AddFileScreenComponent implements OnInit {
   files: UntypedFormGroup;
   status: RequestStatus = 'init';
-  isActive = true;
+  isActive = false;
   newFileList: FileModel[] = [];
   user$ = {
     email: '',
