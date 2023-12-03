@@ -32,7 +32,30 @@ class add_dispatch
     $Nexp = $subscriptionInfo['num_exp'];
     // echo json_encode($Nexp);
 
-    //Limitacion del numero de expedientes
+    // trycatch para consultar a la db la cantidad de expedientes que tiene el usuario
+    try {
+      // verifica cuantos expedientes ya tiene el usuario
+      $query = $this->conexion->prepare('SELECT COUNT(*) FROM user_expedients WHERE id_user = :id_user');
+      $query->execute([':id_user' => $this->id_user]);
+      $expedientsCount = $query->fetchColumn();
+    } catch (PDOException $e) {
+      // Devolver mensaje de error en json
+      echo json_encode([
+        'status' => 500,
+        'message' => 'Error al consultar el numero de expedientes para crear uno nuevo'
+      ]);
+    }
+
+    // Si el numero de expedientes es igual al numero de expedientes permitidos, se devuelve un mensaje de error.
+    if ($expedientsCount >= $Nexp) {
+      // Devolver mensaje de error en json si ya tiene el maximo de expedientes
+      echo json_encode([
+        'status' => 400,
+        'message' => 'El usuario ya tiene el maximo de expedientes. No se puede agregar más.'
+      ]);
+      return;
+    }
+
     try {
       // Verificar si el expediente con el numero, año y dependencia proporcionado existe para el id_user
       $query = $this->conexion->prepare('SELECT id_user FROM user_expedients WHERE numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia');

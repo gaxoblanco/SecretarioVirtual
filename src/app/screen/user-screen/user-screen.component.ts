@@ -24,7 +24,7 @@ import { RequestStatus } from '@models/request-status.model';
 })
 export class UserScreenComponent implements OnInit {
   status: RequestStatus = 'loading';
-  isActive = false;
+  isActive = true;
   filList: FileModel[] = [];
   NumberFile = 0;
   list$: any[] = [];
@@ -76,8 +76,8 @@ export class UserScreenComponent implements OnInit {
     });
 
     // si el numero maximo de secretarios == num_secretary desactivo al add secretary
-    if (this.list$.length < this.user$.subscription.num_secretary) {
-      this.isActive = true;
+    if (this.list$.length >= this.user$.subscription.num_secretary) {
+      this.isActive = false;
     }
   }
 
