@@ -47,6 +47,12 @@ export class UserServiceService {
     firstName: '',
     lastName: '',
     subscribe: '',
+    subscription: {
+      id_subscription: 0,
+      name: '',
+      num_exp: 0,
+      num_secretary: 0,
+    },
   });
   // varaible listSecreataryes
   listSecreataryes$ = new BehaviorSubject<Additional[]>([]);

@@ -9,6 +9,14 @@ export interface User {
   password: string;
   Check?: boolean;
   subscribe: string;
+  subscription: subscription;
+}
+
+interface subscription {
+  id_subscription: number;
+  name: string;
+  num_exp: number;
+  num_secretary: number;
 }
 
 export interface CreateUserDTO extends Omit<User, 'id'> {}

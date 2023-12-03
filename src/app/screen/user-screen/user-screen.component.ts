@@ -24,6 +24,7 @@ import { RequestStatus } from '@models/request-status.model';
 })
 export class UserScreenComponent implements OnInit {
   status: RequestStatus = 'loading';
+  isActive = false;
   filList: FileModel[] = [];
   NumberFile = 0;
   list$: any[] = [];
@@ -33,6 +34,12 @@ export class UserScreenComponent implements OnInit {
     firstName: '',
     lastName: '',
     subscribe: '',
+    subscription: {
+      id_subscription: 0,
+      name: '',
+      num_exp: 0,
+      num_secretary: 0,
+    },
   };
 
   moreEmail: boolean = false;
@@ -67,11 +74,18 @@ export class UserScreenComponent implements OnInit {
 
       this.NumberFile = response.length;
     });
+
+    // si el numero maximo de secretarios == num_secretary desactivo al add secretary
+    if (this.list$.length < this.user$.subscription.num_secretary) {
+      this.isActive = true;
+    }
   }
 
   more() {
-    if (this.moreEmail == false) {
-      this.moreEmail = !this.moreEmail;
+    if (this.list$.length < this.user$.subscription.num_secretary) {
+      if (this.moreEmail == false) {
+        this.moreEmail = !this.moreEmail;
+      }
     }
   }
 

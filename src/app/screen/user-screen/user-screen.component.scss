@@ -13,11 +13,21 @@ article{
     .plus-sign-button{
       border: none;
       background-color: white;
+      svg{
+        width: 200px;
+        height: auto;
+        color: #37BBED;
+      }
     }
-    svg{
-      width: 200px;
-      height: auto;
-      color: #37BBED;
+    .disabled{
+      svg{
+        color: #ed3737;
+      }
+    }
+    .active{
+      svg{
+        color: #37BBED;
+      }
     }
   }
 
