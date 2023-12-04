@@ -57,17 +57,35 @@ export class FilesService {
       );
   }
 
+  // sabiendo que dispatch/get devuelve:
+  // {
+  //   "0": 200,
+  //   "dispatches": [
+  //       {
+  //           "id_exp": 3,
+  //           "id_lista_despacho": 15754,
+  //           "numero_exp": 948,
+  //           "anio_exp": 19,
+  //           "caratula": "ALCALA, Francisco Rene C/ VENICA, Diamela Luisa S/ Juicio Ejecutivo",
+  //           "reservado": 0,
+  //           "dependencia": "7441513",
+  //           "tipo_lista": "1",
+  //           "id_user": 2
+  //       },
+
   getFiles(): Observable<FileModel[]> {
     return this.http
       .get<any[]>(`${this.apiUrl}/dispatch/get`, {
         context: checkToken(),
       })
       .pipe(
-        map((response: any) => response.data),
-        tap((files) => {
-          console.log('files', files);
-          this.files$.next(files);
-          this.upDependencia();
+        tap((response) => {
+          console.log('files', response);
+          if (response != null) {
+            this.files$.next(response);
+            this.upDependencia();
+          }
+          return response;
         })
       );
   }

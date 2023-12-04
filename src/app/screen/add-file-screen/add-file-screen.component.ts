@@ -17,7 +17,7 @@ import { UserServiceService } from '@services/user-service.service';
 export class AddFileScreenComponent implements OnInit {
   files: UntypedFormGroup;
   status: RequestStatus = 'init';
-  isActive = false;
+  isActive = true;
   newFileList: FileModel[] = [];
   user$ = {
     email: '',
@@ -111,10 +111,13 @@ export class AddFileScreenComponent implements OnInit {
       this.fileList = files;
     });
 
-    // Valido que el files.length no sea mayor al num_exp de la subscripcion
-    if (this.fileList.length < this.user$.subscription.num_exp) {
-      this.isActive = true;
-    }
+    //timeout para que cargue la lista de expedientes
+    setTimeout(() => {
+      // valido si puede seguir agregando mas expedientes
+      if (this.fileList.length >= this.user$.subscription.num_exp) {
+        this.isActive = false;
+      }
+    }, 1000);
   }
   onChange() {
     // actualizo selectedDependencia con el id del dependenciaSelect
