@@ -1,32 +1,40 @@
 version: "3.8"
 services:
-  # PHP Service
+  # Servicio de PHP con Apache
   php:
-    image: php:7.4-apache
-    container_name: php
     build: .
-    volumes:
-      - ./:/var/www/html/API-sv
+    container_name: my-php-app
     ports:
       - "8080:80"
     depends_on:
       - mysql
+    environment:
+      - APACHE_HEADER_ACCESS_CONTROL_ALLOW_ORIGIN=http://localhost:8080
+      - APACHE_HEADER_ACCESS_CONTROL_ALLOW_HEADERS=Content-Type
+      - APACHE_HEADER_ACCESS_CONTROL_ALLOW_METHODS=OPTIONS, GET, POST, PUT, DELETE
+      - APACHE_HEADER_ACCESS_CONTROL_ALLOW_CREDENTIALS=true
 
-  # MySQL Service
+  # Servicio de MySQL
   mysql:
     image: mysql:latest
-    container_name: mysql
-    env_file: .env
+    container_name: my-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: despachos
+      MYSQL_USER: gaston
+      MYSQL_PASSWORD: blanco
     ports:
-      - "3366:3366"
+      - "3307:3306"
+    volumes:
+      - ./despachos_dataBase.sql:/docker-entrypoint-initdb.d/despachos_dataBase.sql
 
-  # phpMyAdmin Service
+  # Servicio de PHPMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: my-phpmyadmin
     environment:
       PMA_HOST: mysql
-      PMA_PORT: 3366
+      PMA_PORT: 3306
       PMA_ARBITRARY: 1
     ports:
       - "8081:80"

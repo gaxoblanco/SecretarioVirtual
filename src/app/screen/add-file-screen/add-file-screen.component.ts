@@ -112,12 +112,14 @@ export class AddFileScreenComponent implements OnInit {
     });
 
     //timeout para que cargue la lista de expedientes
-    setTimeout(() => {
-      // valido si puede seguir agregando mas expedientes
-      if (this.fileList.length >= this.user$.subscription.num_exp) {
-        this.isActive = false;
-      }
-    }, 1000);
+    // setTimeout(() => {
+    //   // valido si puede seguir agregando mas expedientes
+    //   if (
+    //     this.fileList.length >= this.user$.subscription.num_exp
+    //   ) {
+    //     this.isActive = false;
+    //   }
+    // }, 1000);
   }
   onChange() {
     // actualizo selectedDependencia con el id del dependenciaSelect

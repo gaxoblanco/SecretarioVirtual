@@ -75,6 +75,9 @@ Para iniciar los contenedores de Docker, ejecutar:
 docker-compose up
 ```
 
+### Database
+Para importar la base de datos, archivo `despachos_dataBase.sql` 
+
 ### Accesos
 Acceder al contenido de API-sv en http://localhost:8080
 
