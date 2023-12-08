@@ -31,24 +31,26 @@
       </div>
     </form>
   </div>
-  <table class="table table-new_exp">
+  <table class="table">
     <thead class="thead-container">
-      <tr class="table-new_exp--tr">
-        <th scope="col" class="th-l">
+      <tr class="table--tr">
+        <th scope="col" class="table--th l">
           N°Exp
         </th>
-        <th scope="col" class="th-r">
+        <th scope="col" class="table--th">
           Año
+        </th>
+        <th scope="col" class="table--th r">
+          Dependencia
         </th>
       </tr>
     </thead>
     <tbody class="add_file-tbody">
-      <div>
         <tr class="add_file-tr" *ngFor="let fileList of newFileList">
           <td class="add_file-td"> {{fileList.numero_exp}}</td>
           <td class="add_file-td--r"> {{fileList.anio_exp}}</td>
+          <td class="add_file-td--r"> {{fileList.dependencia}}</td>
         </tr>
-      </div>
     </tbody>
   </table>
 </article>

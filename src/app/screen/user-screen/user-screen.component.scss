@@ -55,8 +55,10 @@ article{
   .sub-text{
     display: grid;
     grid-template-rows: auto 1fr auto auto;
-    h3, p{
+    padding-top: 16px;
+    .h3, .p{
     margin: 0 auto;
+    padding-bottom: 12px;
     }
     div{
       display: grid;
@@ -66,11 +68,11 @@ article{
     }
     .data-master{
       display: grid;
-      padding-top: 10px;
+      padding-top: 14px;
       grid-template-columns: auto auto auto auto;
-      height: 40px;
+      height: 46px;
       background-color: #37BBED;
-      border-radius: 0px 0px 16px 0px;
+      border-radius: 0px 0px 16px 16px;
       color: white;
       button{
         border: none;

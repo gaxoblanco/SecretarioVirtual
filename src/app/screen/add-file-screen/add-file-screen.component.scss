@@ -45,41 +45,6 @@ input, select{
   }
 
 }
-.table-new_exp {
-  width: 100%; /* Ajusta el ancho según tus necesidades */
-
-  .table-new_exp--tr {
-    color: white;
-    border-width: none;
-
-    .th-l {
-      border-radius: 12px 0 0 0;
-      background-color: #37BBED;
-    }
-
-    .th-r {
-      border-radius: 0 12px 0 0;
-      background-color: #37BBED;
-    }
-  }
-
-  .add_file-tbody {
-    max-height: 298px;
-    overflow-y: auto;
-    display: contents; /* Agrega el display block para que el tbody actúe como un contenedor */
-    border-top: none;
-  }
-
-  .add_file-td {
-    /* Agrega un estilo para las celdas si es necesario */
-    padding: 8px; /* Ajusta el espaciado interno según tus necesidades */
-    border: 1px solid #ddd; /* Añade un borde a las celdas si es necesario */
-  }
-  .add_file-td--r {
-    border-right: 1px solid #ddd;
-  }
-}
-
 
 @media (min-width: 500){
   .add-container-form{

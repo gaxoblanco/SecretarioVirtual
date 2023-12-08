@@ -51,6 +51,62 @@ body{
   margin: 0 auto;
 }
 
+// tables
+.table {
+  width: 100%; /* Ajusta el ancho según tus necesidades */
+
+  .table--tr {
+    color: white;
+    border-width: none;
+
+    .table--th {
+      background-color: #37BBED;
+      &.l {
+        border-radius: 12px 0 0 0;
+      }
+      // si table--th tiene la clase table--th-r
+      &.r {
+        border-radius: 0 12px 0 0;
+      }
+    }
+
+    .th-r {
+      border-radius: 0 12px 0 0;
+      background-color: #37BBED;
+    }
+  }
+
+  .add_file-tbody {
+    max-height: 298px;
+    overflow-y: auto;
+    display: contents; /* Agrega el display block para que el tbody actúe como un contenedor */
+    border-top: none;
+  }
+
+  .add_file-td {
+    /* Agrega un estilo para las celdas si es necesario */
+    padding: 8px; /* Ajusta el espaciado interno según tus necesidades */
+    border: 1px solid #ddd; /* Añade un borde a las celdas si es necesario */
+  }
+  .add_file-td--r {
+    border-right: 1px solid #ddd;
+  }
+  //butons arrow para ordenar la tabla
+  .arrow-button{
+    border: 1px solid #37BBED;
+    color: white;
+    background-color: #37BBED;
+    margin-left: 6px;
+    svg{
+      margin-top: -4px;
+    }
+    &.active{
+      border: 1px solid rgb(244, 244, 244);
+      border-radius: 6px;
+    }
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
