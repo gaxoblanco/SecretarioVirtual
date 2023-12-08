@@ -1,0 +1,97 @@
+<div>
+  <!-- filter -->
+  <div class="input-group search">
+    <div>
+        <input
+        type="text"
+        class="form-control"
+        placeholder="Ciudad del Juzgado"
+        formControlName="searchJustice"
+        value="{{ searchJustice }}"
+        >
+      <button class="input-group-text" id="basic-addon2" (click)="filterFill()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+  <!-- table -->
+    <table class="table">
+      <thead class="thead-container">
+        <tr class="table--tr">
+          <th scope="col" class="table--th l">
+            Provincia
+            <button class="arrow-button" [class.active]="filsArrowDownStyle" (click)="filsArrowDown()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </button>
+            <button class="arrow-button" [class.active]="filsArrowUpStyle" (click)="filsArrowUp()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+            </button>
+          </th>
+          <th scope="col" class="table--th">
+            Juzgado
+            <button class="arrow-button" [class.active]="coursArrowDownStyle" (click)="coursArrowDown()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </button>
+            <button class="arrow-button" [class.active]="coursArrowUpStyle" (click)="coursArrowUp()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+            </button>
+          </th>
+          <th scope="col" class="table--th th_email">
+            Correo Electronico
+            <button class="arrow-button" [class.active]="coursArrowDownStyle" (click)="coursArrowDown()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </button>
+            <button class="arrow-button" [class.active]="coursArrowUpStyle" (click)="coursArrowUp()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+            </button>
+            <!-- Mostrar mensaje copiado -->
+            <div *ngIf="copiedMessage" class="popup">
+              {{ copiedMessage }}
+            </div>
+          </th>
+          <th scope="col" class="table--th">
+            Telefono
+            <button class="arrow-button" [class.active]="StateArrowDownStyle" (click)="StateArrowDown()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+              </svg>
+            </button>
+            <button class="arrow-button" [class.active]="StateArrowUpStyle" (click)="StateArrowUp()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+              </svg>
+            </button>
+          </th>
+          <th scope="col" class="table--th r">
+            Digital
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of justice">
+          <td>{{ item.provincia }}</td>
+          <td>{{ item.juzgado }}</td>
+          <td (click)="copyToClipboard(item.email)">
+            {{ item.email }}
+          </td>
+          <td>{{ item.tel }}</td>
+          <td>{{ item.digitalExp }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

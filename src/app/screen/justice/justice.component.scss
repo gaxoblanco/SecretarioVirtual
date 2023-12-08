@@ -1,0 +1,13 @@
+
+.th_email {
+  cursor: pointer;
+  position: relative;
+  .popup {
+    position: absolute;
+    top: 10px;
+    left: 220px;
+    z-index: 1;
+    padding: 1px 10px;
+    border-radius: 14px;
+  }
+}

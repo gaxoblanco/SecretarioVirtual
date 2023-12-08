@@ -8,6 +8,7 @@ import { RegisterScreenComponent } from './screen/register-screen/register-scree
 import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen.component';
 import { SubcribeScreenComponent } from './screen/subcribe-screen/subcribe-screen.component';
 import { UserScreenComponent } from './screen/user-screen/user-screen.component';
+import { JusticeComponent } from './screen/justice/justice.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterScreenComponent },
   // {path: 'resetpw', component: ResetPwScreenComponent},
   { path: 'subcribe', component: SubcribeScreenComponent },
+  { path: 'justice', component: JusticeComponent },
 ];
 
 @NgModule({
