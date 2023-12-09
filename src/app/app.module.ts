@@ -31,6 +31,8 @@ import { PendingFileComponenetComponent } from './component/pending-file-compone
 import { NavigationMenuComponenetComponent } from './component/navigation-menu-componenet/navigation-menu-componenet.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +67,7 @@ import { TokenInterceptor } from './interceptors/token.interceptor';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

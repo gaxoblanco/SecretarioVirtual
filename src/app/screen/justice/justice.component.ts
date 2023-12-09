@@ -1,7 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RequestStatus } from '@models/request-status.model';
-import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  FormGroup,
+  FormBuilder,
+  FormsModule,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-justice',
@@ -12,6 +18,7 @@ import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 })
 export class JusticeComponent {
   copiedMessage: string = '';
+  idMessage: number = 0;
   status: RequestStatus = 'init';
   filsArrowDownStyle: Boolean = false;
   filsArrowUpStyle: Boolean = false;
@@ -19,6 +26,16 @@ export class JusticeComponent {
   coursArrowUpStyle: Boolean = false;
   StateArrowDownStyle: Boolean = false;
   StateArrowUpStyle: Boolean = false;
+
+  searchCityForm: FormGroup = this.formBuilder.group({
+    searchJustice: [''],
+  });
+
+  constructor(private formBuilder: FormBuilder) {
+    // this.searchCityForm = new FormGroup({
+    //   searchJustice: new FormControl(''),
+    // });
+  }
 
   //justice
   justice: any[] = [
@@ -48,18 +65,24 @@ export class JusticeComponent {
     },
   ];
 
-  searchChing: string = '';
+  searchChing: any = {
+    city: '',
+  };
 
   // filter
   filterPost = '';
   searchJustice: any;
   ngOnInit(): void {
     // iguala  this.searchChing = formControlName="searchJustice"
-    this.searchChing = this.searchJustice.value;
-    console.log('searchChing', this.searchChing);
+    // this.searchChing = this.searchJustice.value;
+    // console.log('searchChing', this.searchChing);
   }
 
-  filterFill() {}
+  filterFill() {
+    // prevengo la recarga de la pagina
+    event?.preventDefault();
+    console.log('filterFill', this.filterPost);
+  }
 
   // ordenar por flechas
   arrowOff() {
@@ -119,7 +142,7 @@ export class JusticeComponent {
   }
 
   // Función para copiar el contenido al portapapeles y mostrar el mensaje emergente
-  copyToClipboard(content: string): void {
+  copyToClipboard(content: string, id: number): void {
     const tempInput = document.createElement('input');
     document.body.appendChild(tempInput);
     tempInput.value = content;
@@ -128,8 +151,10 @@ export class JusticeComponent {
     document.body.removeChild(tempInput);
 
     this.copiedMessage = 'copiado';
+    this.idMessage = id;
     setTimeout(() => {
       this.copiedMessage = ''; // Reiniciar el mensaje después de unos segundos
+      this.idMessage = 0;
     }, 2000); // 2000 milisegundos (2 segundos)
   }
 }

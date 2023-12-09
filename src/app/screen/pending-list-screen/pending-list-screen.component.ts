@@ -3,11 +3,25 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { RequestStatus } from '@models/request-status.model';
 import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-pending-list-screen',
   templateUrl: './pending-list-screen.component.html',
   styleUrls: ['./pending-list-screen.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(600, style({ opacity: 1 })),
+        animate(500, style({ fontSize: '1rem' })),
+      ]),
+      transition(':leave', [
+        animate(600, style({ opacity: 0 })),
+        animate(500, style({ fontSize: '0rem' })),
+      ]),
+    ]),
+  ],
 })
 export class PendingListScreenComponent implements OnInit {
   status: RequestStatus = 'init';
@@ -28,7 +42,88 @@ export class PendingListScreenComponent implements OnInit {
       dependencia: '',
       state: false,
     },
+    {
+      id_exp: 1,
+      numero_exp: 11,
+      anio_exp: 11,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N1',
+      state: false,
+    },
+    {
+      id_exp: 2,
+      numero_exp: 22,
+      anio_exp: 22,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N2',
+      state: false,
+    },
+    {
+      id_exp: 3,
+      numero_exp: 33,
+      anio_exp: 33,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N3',
+      state: false,
+    },
+    {
+      id_exp: 4,
+      numero_exp: 44,
+      anio_exp: 44,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N4',
+      state: false,
+    },
+    {
+      id_exp: 5,
+      numero_exp: 55,
+      anio_exp: 55,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N5',
+      state: false,
+    },
+    {
+      id_exp: 6,
+      numero_exp: 66,
+      anio_exp: 66,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N6',
+      state: false,
+    },
+    {
+      id_exp: 7,
+      numero_exp: 77,
+      anio_exp: 77,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N7',
+      state: false,
+    },
+    {
+      id_exp: 8,
+      numero_exp: 88,
+      anio_exp: 88,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N8',
+      state: false,
+    },
+    {
+      id_exp: 9,
+      numero_exp: 99,
+      anio_exp: 99,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N9',
+      state: false,
+    },
+    {
+      id_exp: 10,
+      numero_exp: 100,
+      anio_exp: 100,
+      caratula: 'caratulera',
+      dependencia: 'juzgado N10',
+      state: false,
+    },
   ];
+  fileFilter: FileModel[] = [];
   arrowDow = {};
 
   constructor(private FileSer: FilesService) {
@@ -74,7 +169,23 @@ export class PendingListScreenComponent implements OnInit {
   }
   filterFil() {
     let filNumber = this.searchFile.value;
-    // this.FileSer.filter(filNumber);
+    console.log(filNumber);
+
+    // divido el value usando / como referencia
+    let filNumberSplit = filNumber.searchNumber.split('/');
+
+    // filtro el array fileList por numero de expediente
+    this.fileFilter = this.fileList.filter((file: any) => {
+      // si el numero de expediente es igual al primer valor del array
+      if (
+        file.numero_exp == filNumberSplit[0] &&
+        (filNumberSplit[1] == undefined || file.anio_exp == filNumberSplit[1])
+      ) {
+        // retorno el expediente
+        return file;
+      }
+    });
+    console.log(this.fileFilter);
   }
 
   arrowOff() {

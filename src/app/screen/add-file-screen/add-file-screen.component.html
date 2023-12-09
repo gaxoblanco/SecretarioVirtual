@@ -46,7 +46,7 @@
       </tr>
     </thead>
     <tbody class="add_file-tbody">
-        <tr class="add_file-tr" *ngFor="let fileList of newFileList">
+        <tr class="add_file-tr" *ngFor="let fileList of newFileList" @fadeInOut>
           <td class="add_file-td"> {{fileList.numero_exp}}</td>
           <td class="add_file-td--r"> {{fileList.anio_exp}}</td>
           <td class="add_file-td--r"> {{fileList.dependencia}}</td>

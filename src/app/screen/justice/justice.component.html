@@ -1,19 +1,28 @@
-<div>
+<div class="container">
+  <div class="mb-5 title-page">
+    <h2>Presenta tus expedientes digitales</h2>
+    <p>
+      Ahorra tiempo y dinero enviando los expedientes gitiales<br>
+      Encuentra el juzgado que necesitas y copia el correo con 1 click
+    </p>
+  </div>
   <!-- filter -->
   <div class="input-group search">
     <div>
+      <!-- formulario con 1 input -->
+      <form (ngSubmit)="filterFill()" >
         <input
-        type="text"
+        type="city"
         class="form-control"
         placeholder="Ciudad del Juzgado"
-        formControlName="searchJustice"
-        value="{{ searchJustice }}"
-        >
-      <button class="input-group-text" id="basic-addon2" (click)="filterFill()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-        </svg>
-      </button>
+        formControlName="filterPost"
+        />
+        <button class="input-group-text" id="basic-addon2" type="submit">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </form>
     </div>
 
   </div>
@@ -47,7 +56,7 @@
               </svg>
             </button>
           </th>
-          <th scope="col" class="table--th th_email">
+          <th scope="col" class="table--th">
             Correo Electronico
             <button class="arrow-button" [class.active]="coursArrowDownStyle" (click)="coursArrowDown()">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
@@ -59,10 +68,6 @@
                 <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
               </svg>
             </button>
-            <!-- Mostrar mensaje copiado -->
-            <div *ngIf="copiedMessage" class="popup">
-              {{ copiedMessage }}
-            </div>
           </th>
           <th scope="col" class="table--th">
             Telefono
@@ -86,8 +91,12 @@
         <tr *ngFor="let item of justice">
           <td>{{ item.provincia }}</td>
           <td>{{ item.juzgado }}</td>
-          <td (click)="copyToClipboard(item.email)">
+          <td (click)="copyToClipboard(item.email, item.id)" class="td_email">
             {{ item.email }}
+                        <!-- Mostrar mensaje copiado -->
+            <div *ngIf="copiedMessage && idMessage === item.id " class="popup">
+              {{ copiedMessage }}
+            </div>
           </td>
           <td>{{ item.tel }}</td>
           <td>{{ item.digitalExp }}</td>

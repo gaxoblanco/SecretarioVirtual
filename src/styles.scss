@@ -117,3 +117,50 @@ body{
     margin-bottom: 0;
   }
 }
+
+// search list
+.search{
+  width: 300px;
+  .form{
+    position: relative;
+    input{
+      width: 250px;
+      border-radius: 10px 20px 20px 10px;
+    }
+  }
+  .input-group-text{
+    position: absolute;
+    height: 38px;
+    margin-top: -38px;
+    margin-left: 190px;
+  }
+  button{
+    display:grid;
+    justify-content: center;
+    width: 60px;
+    height:40px;
+    background-color: white;
+    border-radius: 0px 26px 26px  0px;
+    border-left: none;
+    svg{
+      width: 20px;
+      height: auto;
+      color: #1f3442;
+    }
+  }
+}
+// titulos de las paginas
+.title-page {
+  // min-width: 300px;
+  max-width: 550px;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid #4e84a5;
+  border-bottom: 14px solid #37BBED;
+  @media (min-width: 480px){
+    .exp-list-title{
+      margin: 0;
+      width: 500px;
+    }
+  }
+}

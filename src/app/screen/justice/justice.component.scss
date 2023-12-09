@@ -1,13 +1,17 @@
 
-.th_email {
+.search {
+  margin-bottom: 20px;
+}
+.td_email {
   cursor: pointer;
   position: relative;
   .popup {
     position: absolute;
     top: 10px;
-    left: 220px;
+    left: 200px;
     z-index: 1;
     padding: 1px 10px;
     border-radius: 14px;
+    border: 1px solid #4e84a5;
   }
 }

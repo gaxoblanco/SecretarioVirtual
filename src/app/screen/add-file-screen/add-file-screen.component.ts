@@ -8,11 +8,25 @@ import { FileModel, NewFile } from '@models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 import { FilesService } from '@services/files.service';
 import { UserServiceService } from '@services/user-service.service';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-add-file-screen',
   templateUrl: './add-file-screen.component.html',
   styleUrls: ['./add-file-screen.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(600, style({ opacity: 1 })),
+        animate(500, style({ fontSize: '1rem' })),
+      ]),
+      transition(':leave', [
+        animate(600, style({ opacity: 0 })),
+        animate(500, style({ fontSize: '0rem' })),
+      ]),
+    ]),
+  ],
 })
 export class AddFileScreenComponent implements OnInit {
   files: UntypedFormGroup;
