@@ -7,14 +7,34 @@ import {
   FormGroup,
   FormBuilder,
   FormsModule,
+  ReactiveFormsModule,
+  FormControl,
+  Validators,
 } from '@angular/forms';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-justice',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './justice.component.html',
   styleUrl: './justice.component.scss',
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate(200, style({ opacity: 0 }))]),
+    ]),
+    trigger('errorAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate(200, style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class JusticeComponent {
   copiedMessage: string = '';
@@ -27,14 +47,13 @@ export class JusticeComponent {
   StateArrowDownStyle: Boolean = false;
   StateArrowUpStyle: Boolean = false;
 
-  searchCityForm: FormGroup = this.formBuilder.group({
-    searchJustice: [''],
-  });
+  searchCityForm: UntypedFormGroup;
+  serching: any[] = [];
 
   constructor(private formBuilder: FormBuilder) {
-    // this.searchCityForm = new FormGroup({
-    //   searchJustice: new FormControl(''),
-    // });
+    this.searchCityForm = this.formBuilder.group({
+      filterCity: new FormControl('', Validators.pattern('^[a-zA-Z ]*$')),
+    });
   }
 
   //justice
@@ -69,8 +88,6 @@ export class JusticeComponent {
     city: '',
   };
 
-  // filter
-  filterPost = '';
   searchJustice: any;
   ngOnInit(): void {
     // iguala  this.searchChing = formControlName="searchJustice"
@@ -79,9 +96,17 @@ export class JusticeComponent {
   }
 
   filterFill() {
-    // prevengo la recarga de la pagina
-    event?.preventDefault();
-    console.log('filterFill', this.filterPost);
+    let serchInput = this.searchCityForm.value;
+    console.log('filterFill', serchInput);
+
+    // filtro searchCityForm segun provincia
+    this.serching = this.justice.filter((justice) => {
+      //retorno todas las provincias que concidan las primeras letras con el input
+      if (justice.provincia.toLowerCase().includes(serchInput.filterCity)) {
+        return justice;
+      }
+    });
+    console.log('serching', this.serching);
   }
 
   // ordenar por flechas
@@ -155,6 +180,6 @@ export class JusticeComponent {
     setTimeout(() => {
       this.copiedMessage = ''; // Reiniciar el mensaje después de unos segundos
       this.idMessage = 0;
-    }, 2000); // 2000 milisegundos (2 segundos)
+    }, 1200); // 2000 milisegundos (2 segundos)
   }
 }

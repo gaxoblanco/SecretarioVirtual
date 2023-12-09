@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  FormControl,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { RequestStatus } from '@models/request-status.model';
 import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
@@ -20,6 +25,13 @@ import { trigger, transition, style, animate } from '@angular/animations';
         animate(600, style({ opacity: 0 })),
         animate(500, style({ fontSize: '0rem' })),
       ]),
+    ]),
+    trigger('errorAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate(200, style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate(200, style({ opacity: 0 }))]),
     ]),
   ],
 })
@@ -128,7 +140,7 @@ export class PendingListScreenComponent implements OnInit {
 
   constructor(private FileSer: FilesService) {
     this.searchFile = new UntypedFormGroup({
-      searchNumber: new UntypedFormControl(''),
+      searchNumber: new FormControl('', Validators.pattern('^[0-9/]*$')),
     });
   }
 

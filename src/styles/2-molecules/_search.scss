@@ -1,0 +1,42 @@
+// search list
+.search{
+  width: 300px;
+  .form{
+    position: relative;
+    input{
+      width: 250px;
+      border-radius: 10px 20px 20px 10px;
+    }
+  }
+  .input-group-text{
+    position: absolute;
+    height: 38px;
+    margin-top: -38px;
+    margin-left: 190px;
+  }
+  button{
+    display:grid;
+    justify-content: center;
+    width: 60px;
+    height:40px;
+    background-color: white;
+    border-radius: 0px 26px 26px  0px;
+    border-left: none;
+    svg{
+      width: 20px;
+      height: auto;
+      color: #1f3442;
+    }
+  }
+}
+//search error menssage
+.search-error {
+  width: 200px;
+  position: absolute;
+  top: -6px;
+  padding: 4px 10px;
+  border: 1px solid rgba(237, 55, 55, 0.8352941176);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  left: 260px;
+}

@@ -10,18 +10,22 @@
   <div class="input-group search">
     <div>
       <!-- formulario con 1 input -->
-      <form (ngSubmit)="filterFill()" >
+      <form [formGroup]="searchCityForm">
         <input
         type="city"
         class="form-control"
         placeholder="Ciudad del Juzgado"
-        formControlName="filterPost"
+        formControlName="filterCity"
+        name="filterCity"
         />
-        <button class="input-group-text" id="basic-addon2" type="submit">
+        <button class="input-group-text" id="basic-addon2" type="submit" (click)="filterFill()">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
           </svg>
         </button>
+        <div class="search-error" *ngIf="searchCityForm.controls['filterCity'].invalid" @errorAnimation>
+          Por favor, introduce solo letras sin caracteres especiales.
+        </div>
       </form>
     </div>
 
@@ -58,29 +62,9 @@
           </th>
           <th scope="col" class="table--th">
             Correo Electronico
-            <button class="arrow-button" [class.active]="coursArrowDownStyle" (click)="coursArrowDown()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-              </svg>
-            </button>
-            <button class="arrow-button" [class.active]="coursArrowUpStyle" (click)="coursArrowUp()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-              </svg>
-            </button>
           </th>
           <th scope="col" class="table--th">
             Telefono
-            <button class="arrow-button" [class.active]="StateArrowDownStyle" (click)="StateArrowDown()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-              </svg>
-            </button>
-            <button class="arrow-button" [class.active]="StateArrowUpStyle" (click)="StateArrowUp()">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-                <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-              </svg>
-            </button>
           </th>
           <th scope="col" class="table--th r">
             Digital
@@ -88,13 +72,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of justice">
+        <tr *ngFor="let item of (serching.length > 0 ? serching : justice)">
           <td>{{ item.provincia }}</td>
           <td>{{ item.juzgado }}</td>
           <td (click)="copyToClipboard(item.email, item.id)" class="td_email">
             {{ item.email }}
                         <!-- Mostrar mensaje copiado -->
-            <div *ngIf="copiedMessage && idMessage === item.id " class="popup">
+            <div *ngIf="copiedMessage && idMessage === item.id " class="popup" @fadeInOut>
               {{ copiedMessage }}
             </div>
           </td>

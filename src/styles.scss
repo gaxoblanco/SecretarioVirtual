@@ -51,61 +51,6 @@ body{
   margin: 0 auto;
 }
 
-// tables
-.table {
-  width: 100%; /* Ajusta el ancho según tus necesidades */
-
-  .table--tr {
-    color: white;
-    border-width: none;
-
-    .table--th {
-      background-color: #37BBED;
-      &.l {
-        border-radius: 12px 0 0 0;
-      }
-      // si table--th tiene la clase table--th-r
-      &.r {
-        border-radius: 0 12px 0 0;
-      }
-    }
-
-    .th-r {
-      border-radius: 0 12px 0 0;
-      background-color: #37BBED;
-    }
-  }
-
-  .add_file-tbody {
-    max-height: 298px;
-    overflow-y: auto;
-    display: contents; /* Agrega el display block para que el tbody actúe como un contenedor */
-    border-top: none;
-  }
-
-  .add_file-td {
-    /* Agrega un estilo para las celdas si es necesario */
-    padding: 8px; /* Ajusta el espaciado interno según tus necesidades */
-    border: 1px solid #ddd; /* Añade un borde a las celdas si es necesario */
-  }
-  .add_file-td--r {
-    border-right: 1px solid #ddd;
-  }
-  //butons arrow para ordenar la tabla
-  .arrow-button{
-    border: 1px solid #37BBED;
-    color: white;
-    background-color: #37BBED;
-    margin-left: 6px;
-    svg{
-      margin-top: -4px;
-    }
-    &.active{
-      border: 1px solid rgb(244, 244, 244);
-      border-radius: 6px;
-    }
-  }
-}
 
 @keyframes spin {
   to {
@@ -118,37 +63,8 @@ body{
   }
 }
 
-// search list
-.search{
-  width: 300px;
-  .form{
-    position: relative;
-    input{
-      width: 250px;
-      border-radius: 10px 20px 20px 10px;
-    }
-  }
-  .input-group-text{
-    position: absolute;
-    height: 38px;
-    margin-top: -38px;
-    margin-left: 190px;
-  }
-  button{
-    display:grid;
-    justify-content: center;
-    width: 60px;
-    height:40px;
-    background-color: white;
-    border-radius: 0px 26px 26px  0px;
-    border-left: none;
-    svg{
-      width: 20px;
-      height: auto;
-      color: #1f3442;
-    }
-  }
-}
+
+
 // titulos de las paginas
 .title-page {
   // min-width: 300px;
@@ -164,3 +80,16 @@ body{
     }
   }
 }
+
+// importo los archivos styles
+@import './styles/0-base/button.scss';
+
+@import './styles/1-atoms/_button-component.component.scss';
+@import './styles/1-atoms/_spinner.scss';
+
+@import './styles/2-molecules/search.scss';
+@import './styles/2-molecules/table.scss';
+
+// @import './styles/3-organisms/*';
+
+// @import './styles/4-pages/*';
