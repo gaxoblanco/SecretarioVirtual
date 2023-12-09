@@ -47,6 +47,11 @@ export class PermissionsService {
       name: 'Desconectar',
       acess: false,
     },
+    {
+      route: '/juzgado',
+      name: 'justice',
+      acess: false,
+    },
   ];
 
   // Método para actualizar los permisos basados en el token.

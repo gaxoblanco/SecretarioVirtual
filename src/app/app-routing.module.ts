@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterScreenComponent },
   // {path: 'resetpw', component: ResetPwScreenComponent},
   { path: 'subcribe', component: SubcribeScreenComponent },
-  { path: 'justice', component: JusticeComponent },
+  { path: 'juzgado', component: JusticeComponent },
 ];
 
 @NgModule({
