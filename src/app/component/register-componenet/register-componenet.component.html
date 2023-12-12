@@ -65,8 +65,11 @@
           </div>
         </div>
       </div>
-      <div *ngIf="status === 'failed'">
+      <ng-container *ngIf="status === 'failed'">
         <p class="text-danger">El usuario no se pudo crear</p>
-      </div>
+      </ng-container>
+      <ng-container *ngIf="status == 'loading'">
+        <div class="spinner"></div>
+      </ng-container>
     <button type="submit" class="btn card-link">Crear cuenta</button>
   </form>

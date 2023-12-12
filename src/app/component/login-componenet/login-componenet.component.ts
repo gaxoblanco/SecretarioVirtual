@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponenetComponent implements OnInit {
   form: UntypedFormGroup;
+  status: RequestStatus = 'init'; // funciona como una maquina de state
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -27,8 +28,6 @@ export class LoginComponenetComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
-
-  status: RequestStatus = 'init'; // funciona como una maquina de state
 
   ngOnInit(): void {}
   get Email() {
@@ -42,6 +41,7 @@ export class LoginComponenetComponent implements OnInit {
   LogCheckin(event: Event) {
     let log: LoginModel = this.form.value;
     event.preventDefault;
+    this.status = 'loading';
     this.autenticacionService.login(log).subscribe({
       next: () => {
         this.status = 'success';

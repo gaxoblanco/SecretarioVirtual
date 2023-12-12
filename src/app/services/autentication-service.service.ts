@@ -26,6 +26,11 @@ export class AutenticationServiceService {
       name: 'Login',
       acess: true,
     },
+    {
+      route: '/listaExpediente',
+      name: 'Lista',
+      acess: true,
+    },
   ];
 
   pages: Route[] = [

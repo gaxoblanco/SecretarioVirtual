@@ -28,6 +28,11 @@ export class PermissionsService {
       acess: true,
     },
     {
+      route: '/juzgado',
+      name: 'email juzgado',
+      acess: true,
+    },
+    {
       route: '/agregarExpediente',
       name: 'Agregar',
       acess: false,
@@ -45,11 +50,6 @@ export class PermissionsService {
     {
       route: '/',
       name: 'Desconectar',
-      acess: false,
-    },
-    {
-      route: '/juzgado',
-      name: 'justice',
       acess: false,
     },
   ];

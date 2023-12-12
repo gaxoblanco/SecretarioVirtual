@@ -32,18 +32,18 @@
         id="InputPassword"
         placeholder="Contraseña">
     </div>
-    <div *ngIf="status === 'failed'">
+    <ng-container *ngIf="status === 'failed'">
       <p class="text-danger">El usuario o la contraseña son incorrectos</p>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="status == 'loading'">
+      <div class="spinner"></div>
+    </ng-container>
     <div class="form-group mb-4">
       <a [routerLink]="['/resetpw']" class="">
         ¿Olvidaste tu contraseña?
       </a>
     </div>
-    <button
-      type="submit"
-      class="btn card-link mb-4"
-      >Ingresar</button>
+    <button type="submit" class="btn card-link mb-4" >Ingresa </button>
   </form>
 
   <div class="createUser-container">

@@ -1,0 +1,235 @@
+[
+  {
+    "provincia": "Formosa",
+    "municipio": [
+      {
+        "id": 2,
+        "email": "consultavirtual_civil1@jusformosa.gob.ar",
+        "municipio": "Formosa",
+        "movil": "(370)154211064",
+        "juzgado": "Mesa de Ayuda Civil 1"
+      },
+      {
+        "id": 3,
+        "email": "consultavirtual_civil2@jusformosa.gob.ar",
+        "municipio": "Formosa",
+        "movil": "(370)154211551",
+        "juzgado": "Mesa de Ayuda Civil 2"
+      },
+      {
+        "id": 4,
+        "email": "consultavirtual_civil3@jusformosa.gob.ar",
+
+        "municipio": "Formosa",
+        "movil": "(370)154211776",
+        "juzgado": "Mesa de Ayuda Civil 3"
+      },
+      {
+        "id": 5,
+        "email": "consultavirtual_civil4@jusformosa.gob.ar",
+
+        "municipio": "Formosa",
+        "movil": "(370)154212083",
+        "juzgado": "Mesa de Ayuda Civil 4"
+      },
+      {
+        "id": 6,
+        "email": "consultavirtual_civil5@jusformosa.gob.ar",
+
+        "municipio": "Formosa",
+        "movil": "(370)154212089",
+        "juzgado": "Mesa de Ayuda Civil 5"
+      },
+      {
+        "id": 7,
+        "email": "consultavirtual_civil6@jusformosa.gob.ar",
+        "municipio": "Formosa",
+        "movil": "(370)154212469",
+        "juzgado": "Mesa de Ayuda Civil 6"
+      },
+      {
+        "id": 8,
+        "email": "jcc_4_juez@jusformosa.gob.ar",
+        "municipio": "Formosa",
+        "movil": "(370)4436301"
+      },
+      {
+        "id": 9,
+        "email": "jcc_7_sec1@jusformosa.gob.ar",
+        "provincia": "El Colorado",
+        "municipio": "Formosa",
+        "movil": "(370)4480144"
+      },
+      {
+        "id": 10,
+        "email": "jcc_7_entrada@jusformosa.gob.ar",
+        "provincia": "El Colorado",
+        "municipio": "Formosa",
+        "movil": "(370)154994537",
+        "juzgado": "Mesa de Ayuda Civil 7"
+      },
+      {
+        "id": 11,
+        "email": "jcc_7_juez@jusformosa.gob.ar",
+        "provincia": "El Colorado",
+        "municipio": "Formosa",
+        "movil": "(370)154418444"
+      },
+      {
+        "id": 12,
+        "email": "jcc_2_juez@jusformosa.gob.ar",
+        "municipio": "Formosa",
+        "movil": "(370)4436301"
+      },
+      {
+        "id": 13,
+        "email": "jcc_6_juez@jusformosa.gob.ar",
+        "municipio": "Formosa",
+        "movil": "(370)4436301"
+      }
+    ]
+  },
+  {
+    "provincia": "Cordoba",
+    "municipio": [
+      {
+        "id": 14,
+        "municipio": "Alta Gracia",
+        "movil": "(03547) 434137",
+        "email": "tribunales-ag@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 15,
+        "municipio": "Arroyito",
+        "movil": "(03576) 428500",
+        "email": "tribunales-ar@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 16,
+        "municipio": "Bell Ville",
+        "movil": "(03537) – 450000",
+        "email": "tribunales-bv@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 17,
+        "municipio": "Carlos Paz",
+        "movil": "(03541) - 426425",
+        "email": "tribunales-cp@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 18,
+        "municipio": "Corral de Bustos",
+        "movil": "(03468) 423442",
+        "email": "tribunales-cb@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 19,
+        "municipio": "Cosquín",
+        "movil": "(03541) - 454985",
+        "email": "tribunales-co@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 20,
+        "municipio": "Cruz del Eje",
+        "movil": "(03549) 422547",
+        "email": "tribunales-ce@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 21,
+        "municipio": "Cura Brochero",
+        "movil": "(03544) - 471138",
+        "email": "tribunales-br@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 22,
+        "municipio": "Deán Funes",
+        "movil": "(03521) 429000",
+        "email": "tribunales-df@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 23,
+        "municipio": "Huinca Renancó",
+        "movil": "(02336) -442892",
+        "email": "tribunales-hr@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 24,
+        "municipio": "Jesús María",
+        "movil": "(03525) - 421639",
+        "email": "tribunales-jm@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 25,
+        "municipio": "La Carlota",
+        "movil": "(03584) - 423145",
+        "email": "tribunales-lc@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 26,
+        "municipio": "Laboulaye",
+        "movil": "(03385) - 428540",
+        "email": "tribunales-lb@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 27,
+        "municipio": "Las Varillas",
+        "movil": "(03533) 421546",
+        "email": "tribunales-lv@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 28,
+        "municipio": "Marcos Juárez",
+        "movil": "(03472) 443080",
+        "email": "tribunales-mj@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 29,
+        "municipio": "Morteros",
+        "movil": "(03562) - 404663",
+        "email": "tribunales-mo@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 30,
+        "municipio": "Oliva",
+        "movil": "(03532) - 421511",
+        "email": "tribunales-ol@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 31,
+        "municipio": "Río Cuarto",
+        "movil": "(0358) - 467-7800",
+        "email": "tribunales-rc@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 32,
+        "municipio": "Río Segundo",
+        "movil": "(03572) - 426100",
+        "email": "tribunales-rs@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 33,
+        "municipio": "Río Tercero",
+        "movil": "(03571) – 434000",
+        "email": "tribunales-rt@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 34,
+        "municipio": "San Francisco",
+        "movil": "(03564) - 47-5000",
+        "email": "tribunales-sf@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 35,
+        "municipio": "Villa Dolores",
+        "movil": "(03544) - 421201",
+        "email": "tribunales-vd@justiciacordoba.gob.ar"
+      },
+      {
+        "id": 36,
+        "municipio": "Villa María",
+        "movil": "(0353) - 461-8800",
+        "email": "tribunales-vm@justiciacordoba.gob.ar"
+      }
+    ]
+  }
+]

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RequestStatus } from '@models/request-status.model';
 import {
@@ -12,6 +12,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { HttpClient } from '@angular/common/http';
+import dataBase from './juzgadosFormosa.json';
 
 @Component({
   selector: 'app-justice',
@@ -36,7 +38,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
     ]),
   ],
 })
-export class JusticeComponent {
+export class JusticeComponent implements OnInit {
   copiedMessage: string = '';
   idMessage: number = 0;
   status: RequestStatus = 'init';
@@ -49,8 +51,8 @@ export class JusticeComponent {
 
   searchCityForm: UntypedFormGroup;
   serching: any[] = [];
-
-  constructor(private formBuilder: FormBuilder) {
+  sBoolean: Boolean = false;
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
     this.searchCityForm = this.formBuilder.group({
       filterCity: new FormControl('', Validators.pattern('^[a-zA-Z ]*$')),
     });
@@ -60,45 +62,34 @@ export class JusticeComponent {
   justice: any[] = [
     {
       id: 1,
-      provincia: 'Buenos Aires',
-      juzgado: 'Juzgado 1',
-      email: 'juez1@example.com',
-      digitalExp: true,
-      tel: 123456789,
-    },
-    {
-      id: 2,
-      provincia: 'Buenos Aires',
-      juzgado: 'Juzgado 2',
-      email: 'juz2@example.com.ar',
-      digitalExp: false,
-      tel: 123456789,
-    },
-    {
-      id: 3,
-      provincia: 'CABA',
-      juzgado: 'Juzgado 3',
-      email: 'juzgado3@example.com.ar',
-      digitalExp: true,
-      tel: 123456789,
+      provincia: 'Formosa',
+      municipio: 'Formosa',
+      juzgado: 'Juez Civil 1',
+      email: 'jcc_1_juez@jusformosa.gob.ar',
+      movil: '3704282336',
     },
   ];
 
-  searchChing: any = {
-    city: '',
-  };
+  searchChing: any[] = [
+    {
+      city: '',
+    },
+  ];
 
   searchJustice: any;
+
+  // Accede a los datos reales
+  // justiceDa = justiceData as any[];
+
   ngOnInit(): void {
-    // iguala  this.searchChing = formControlName="searchJustice"
-    // this.searchChing = this.searchJustice.value;
-    // console.log('searchChing', this.searchChing);
+    this.justice = dataBase;
+    console.log('justice', this.justice);
   }
 
   filterFill() {
     let serchInput = this.searchCityForm.value;
     console.log('filterFill', serchInput);
-
+    this.sBoolean = true;
     // filtro searchCityForm segun provincia
     this.serching = this.justice.filter((justice) => {
       //retorno todas las provincias que concidan las primeras letras con el input
@@ -106,7 +97,25 @@ export class JusticeComponent {
         return justice;
       }
     });
+    if (this.serching.length == 0) {
+      this.serching = [
+        {
+          id: 1,
+          provincia: 'No encontrado',
+          municipio: '-',
+          juzgado: '-',
+          email: '-',
+          movil: 0,
+        },
+      ];
+    }
     console.log('serching', this.serching);
+  }
+  cancelFill() {
+    this.sBoolean = false;
+    this.searchCityForm.reset();
+    console.log('cancelFill', this.searchCityForm.value);
+    this.serching = [];
   }
 
   // ordenar por flechas
