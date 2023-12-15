@@ -31,7 +31,7 @@ class up_user_exp
         if ($expedient['tipo_lista'] == null) {
           // echo "el expediente del usuario: " . $user['id_user'] . " no TENIA dependencia: " . $expedient['numero_exp'] . '/' . $expedient['anio_exp'] . " - id_exp " . $expedient['id_exp'] . " : ";
 
-          // llamar a la funcion firstUp que recibe el numero_exp y anio_exp
+          // llamar a la funcion firstUp que recibe el numero_exp, anio_exp y dependencia
           $ifExisted = $this->firstUp($expedient['numero_exp'], $expedient['anio_exp'], $user['id_user'], $expedient['id_exp'], $expedient['dependencia']);
           // echo "firstUp data: " . var_dump($ifExisted) . " : ";
 

@@ -169,7 +169,7 @@ export class AddFileScreenComponent implements OnInit {
               numero_exp: newFile.fileNumber,
               anio_exp: newFile.yearNumber,
               caratula: '',
-              dependencia: '',
+              dependencia: newFile.dispatch.toString(),
             });
             // valido si puede seguir agregando mas expedientes
             if (this.fileList.length < this.user$.subscription.num_exp) {
