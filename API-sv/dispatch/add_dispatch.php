@@ -57,8 +57,8 @@ class add_dispatch
 
     try {
       // Verificar si el expediente con el numero, año y dependencia proporcionado existe para el id_user
-      $query = $this->conexion->prepare('SELECT id_user FROM user_expedients WHERE numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia');
-      $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch]);
+      $query = $this->conexion->prepare('SELECT * FROM user_expedients WHERE numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia AND id_user = :id_user');
+      $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch, ':id_user' => $this->id_user]);
       $count = $query->rowCount();
       // echo json_encode($count);
       if ($count > 0) {
