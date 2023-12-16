@@ -36,7 +36,7 @@ class users_data
   // Consultar por cada usuario en la tabla user_expedients y cargar en $user['expedients'] los expedientes asociados a cada usuario
   public function userExpedients($offset, $limit)
   {
-    $users = $this->getUsers();
+    $users = $this->getUsers($offset, $limit);
     try {
       // Obtener los expedientes del usuario de la tabla dispatchlist
       foreach ($users as &$user) {
