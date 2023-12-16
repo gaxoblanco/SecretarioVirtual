@@ -7,27 +7,35 @@ require_once 'users_data.php';
 require_once 'up_user_exp.php';
 
 // Incluir la clase write_mail
-require_once './mail/write_mail.php';
+require_once './email/write_mail.php';
 
 // Importar el cliente SQL
 require_once 'db.php';
 
 echo "Iniciando eMail...\n";
 
-//obtengo un array de usuarios con sus expedientes y los movimientos asociados
-$tablesUpdater = new users_data($conexion);
-$oldTableUserExp = $tablesUpdater->getExpedients();
+// Obtener los usuarios con paginación
+$offset = 0;
+$limit = 50; // Número de usuarios por bloque
 
-// echo json_encode($oldTableUserExp);
+do {
+  //obtengo un array de usuarios con sus expedientes y los movimientos asociados
+  $tablesUpdater = new users_data($conexion);
+  $oldTableUserExp = $tablesUpdater->userExpedients($offset, $limit);
 
-// compara las tablas y actualiza los expedientes y movimientos
-$upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-$newsBy = $upUserExp->getExpedient();
+  // echo json_encode($oldTableUserExp);
 
-echo json_encode("correos para...\n");
+  // compara las tablas y actualiza los expedientes y movimientos
+  $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
+  $newsBy = $upUserExp->getExpedient();
 
-// crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
-$writeMail = new write_mail($conexion, $newsBy);
-$writeMail->write();
+  echo json_encode("correos para...\n");
 
-// echo json_encode($writeMail->write());
+  // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
+  $writeMail = new write_mail($conexion, $newsBy);
+  $writeMail->write();
+  // echo json_encode($writeMail->write());
+
+  // Incrementar el offset para el siguiente bloque
+  $offset += $limit;
+} while (!empty($oldTableUserExp)); // cuando ya no hayan usuarios en la tabla users, termina el bucle
