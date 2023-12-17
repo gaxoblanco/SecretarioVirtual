@@ -27,7 +27,7 @@ do {
 
   // compara las tablas y actualiza los expedientes y movimientos
   $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-  $newsBy = $upUserExp->getExpedient();
+  $newsBy = $upUserExp->getExpedient($offset, $limit);
 
   echo json_encode("correos para...\n");
 
