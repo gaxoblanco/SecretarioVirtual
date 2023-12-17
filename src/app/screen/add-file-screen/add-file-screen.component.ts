@@ -141,6 +141,7 @@ export class AddFileScreenComponent implements OnInit {
   }
 
   addFile() {
+    this.status = 'loading';
     // tomo el valor fileNumber del formulario y hago split para separar los numeros
     let fileNumber = this.files.value.fileNumber;
     // console.log('fileData', this.files.value);
@@ -156,8 +157,7 @@ export class AddFileScreenComponent implements OnInit {
         let newFile: NewFile = {
           fileNumber: Number(fileNumberSplit[0]),
           yearNumber: Number(fileNumberSplit[1]),
-          // dependencia es = id de la dependencia seleccionada
-          dispatch: this.selectedDependencia,
+          dispatch: Number(this.selectedDependencia),
         };
 
         // envio el objeto al servicio
@@ -169,7 +169,8 @@ export class AddFileScreenComponent implements OnInit {
               numero_exp: newFile.fileNumber,
               anio_exp: newFile.yearNumber,
               caratula: '',
-              dependencia: newFile.dispatch.toString(),
+              dependencia:
+                this.getDependenciaName(newFile.dispatch)?.toString() || '',
             });
             // valido si puede seguir agregando mas expedientes
             if (this.fileList.length < this.user$.subscription.num_exp) {
@@ -179,6 +180,9 @@ export class AddFileScreenComponent implements OnInit {
           error: (error) => {
             // Maneja el error aquí
             if (error === 'El expediente ya existe.') {
+              this.status = 'failed';
+              console.log(this.status);
+
               // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
               console.log('Expediente ya existe');
             } else {
@@ -203,12 +207,14 @@ export class AddFileScreenComponent implements OnInit {
               numero_exp: newFile.fileNumber,
               anio_exp: newFile.yearNumber,
               caratula: '',
-              dependencia: '',
+              dependencia:
+                this.getDependenciaName(newFile.dispatch)?.toString() || '',
             });
           },
           error: (error) => {
             // Maneja el error aquí
             if (error === 'El expediente ya existe.') {
+              this.status = 'failed';
               // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
               console.log('Expediente ya existe');
             } else {
@@ -225,5 +231,11 @@ export class AddFileScreenComponent implements OnInit {
 
   get FileNumber() {
     return this.files.get('fileNumber');
+  }
+
+  // segun el id obtengo el name de la dependencia
+  getDependenciaName(id: number) {
+    let dependenciaName = this.dependencias.find((d) => d.id === id);
+    return dependenciaName?.name;
   }
 }
