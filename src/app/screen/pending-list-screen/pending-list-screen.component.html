@@ -30,7 +30,7 @@
   <table class="table">
     <thead class="thead-container">
       <tr class="table--tr">
-        <th scope="col" class="table--th l">
+        <th scope="col" class="table--th l w-m">
           N°Exp
           <button
             class="arrow-button"
@@ -49,7 +49,7 @@
             </svg>
           </button>
         </th>
-        <th scope="col" class="table--th">
+        <th scope="col" class="table--th w-m">
           Año
           <button
             class="arrow-button"
@@ -106,16 +106,19 @@
             </svg>
           </button>
         </th>
-        <th class="table--th r"></th>
+        <th class="table--th r w-s"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let fileList of (fileFilter.length > 0? fileFilter : fileList)" @fadeInOut>
-        <td> {{fileList.numero_exp}}</td>
-        <td> {{fileList.anio_exp}}</td>
+      <tr
+        *ngFor="let fileList of (fileFilter.length > 0? fileFilter : fileList)"
+        @fadeInOut
+        [class.delete-message]="status === 'loading' && fileList.id_exp === deletedFileId">
+        <td class="w-m"> {{fileList.numero_exp}}</td>
+        <td class="w-m"> {{fileList.anio_exp}}</td>
         <td> {{fileList.dependencia ? fileList.dependencia : '-'}}</td>
         <td> {{fileList.caratula ? fileList.caratula : '-'}}</td>
-        <td>
+        <td class="w-s">
           <button class="deleteFile" (click)="deleteFile(fileList.id_exp)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
               <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -126,4 +129,7 @@
       </tr>
     </tbody>
   </table>
+  <!-- <div class="delete-message" *ngIf="true">
+    expediente eliminado
+  </div> -->
 </div>

@@ -75,8 +75,13 @@ export class PendingListScreenComponent implements OnInit {
     //   console.log('files-com', files[0]);
     // });
   }
+
+  // Agrega esta propiedad en tu componente
+  deletedFileId: any;
   deleteFile(id: any) {
     // this.FileSer.deleteFiles(id);
+    // Guardo el ID del archivo que está siendo eliminado
+    this.deletedFileId = id;
     // muestro el spinner
     this.status = 'loading';
     setTimeout(() => {
@@ -92,6 +97,8 @@ export class PendingListScreenComponent implements OnInit {
           // muestro el error
           console.log('error');
         }
+        // Reinicio la propiedad deletedFileId después de la eliminación
+        this.deletedFileId = null;
       });
       this.FileSer.getFiles().subscribe((files) => {
         this.fileList = files;
@@ -174,5 +181,19 @@ export class PendingListScreenComponent implements OnInit {
     this.fileList.sort((a, b) => Number(a.state) - Number(b.state));
     this.arrowOff();
     this.StateArrowUpStyle = true;
+  }
+
+  mouseX = 0;
+  mouseY = 0;
+  public showDeleteMessageFlag = false;
+  // mouse position
+  showDeleteMessage(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.showDeleteMessageFlag = true;
+  }
+
+  hideDeleteMessage() {
+    this.showDeleteMessageFlag = false;
   }
 }

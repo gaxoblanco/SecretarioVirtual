@@ -1,7 +1,8 @@
 // tables
 .table {
   width: 100%; /* Ajusta el ancho según tus necesidades */
-
+  border-collapse: collapse;
+  overflow: hidden;
   .table--tr {
     color: white;
     border-width: none;
@@ -21,6 +22,15 @@
       border-radius: 0 12px 0 0;
       background-color: #37BBED;
     }
+  }
+
+  .w-m {
+    width: 170px;
+    text-align: center;
+  }
+  .w-s {
+    width: 70px;
+    text-align: center;
   }
 
   .add_file-tbody {
@@ -51,5 +61,30 @@
       border: 1px solid rgb(244, 244, 244);
       border-radius: 6px;
     }
+  }
+
+  thead, tbody {
+    display: block;
+  }
+
+  tbody {
+    max-height: 600px;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  tr {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+  }
+    /* Estilos adicionales para resaltar el efecto de scroll */
+  tr {
+    transition: background-color 0.3s;
+  }
+
+  /* Pseudo-clase hover para resaltar las filas al pasar el ratón */
+  tr:hover {
+    background-color: #f5f5f5;
   }
 }
