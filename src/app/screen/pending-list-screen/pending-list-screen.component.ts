@@ -1,10 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormControl,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { RequestStatus } from '@models/request-status.model';
 import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
@@ -57,7 +52,8 @@ export class PendingListScreenComponent implements OnInit {
   ];
   fileFilter: FileModel[] = [];
   arrowDow = {};
-
+  deletedFileId: any;
+  isFilter: Boolean = false;
   constructor(private FileSer: FilesService) {
     this.searchFile = new UntypedFormGroup({
       searchNumber: new FormControl('', Validators.pattern('^[0-9/]*$')),
@@ -76,8 +72,6 @@ export class PendingListScreenComponent implements OnInit {
     // });
   }
 
-  // Agrega esta propiedad en tu componente
-  deletedFileId: any;
   deleteFile(id: any) {
     // this.FileSer.deleteFiles(id);
     // Guardo el ID del archivo que está siendo eliminado
@@ -108,7 +102,7 @@ export class PendingListScreenComponent implements OnInit {
   }
   filterFil() {
     let filNumber = this.searchFile.value;
-    console.log(filNumber);
+    this.isFilter = true;
 
     // divido el value usando / como referencia
     let filNumberSplit = filNumber.searchNumber.split('/');
@@ -124,7 +118,13 @@ export class PendingListScreenComponent implements OnInit {
         return file;
       }
     });
-    console.log(this.fileFilter);
+    // console.log(this.fileFilter);
+  }
+  //clear filter
+  clearFil() {
+    this.fileFilter = [];
+    this.searchFile.reset();
+    this.isFilter = false;
   }
 
   arrowOff() {
