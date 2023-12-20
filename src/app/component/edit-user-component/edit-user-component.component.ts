@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { UserServiceService } from '@services/user-service.service';
 import { LoginModel } from 'src/app/models/login-model';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
@@ -18,12 +22,12 @@ export class EditUserComponentComponent implements OnInit {
   status: RequestStatus = 'init';
   passwordDTO: UntypedFormGroup;
   userDTO: UntypedFormGroup;
-  user$ = {
+  user$: any = {
     email: '',
     password: '',
     firstName: '',
     lastName: '',
-    subscribe: '',
+    subscription: {},
   };
 
   statePassword: Boolean = false;
@@ -47,7 +51,10 @@ export class EditUserComponentComponent implements OnInit {
       (this.userDTO = new UntypedFormGroup({
         firstName: new UntypedFormControl('', [Validators.required]),
         lastName: new UntypedFormControl('', [Validators.required]),
-        email: new UntypedFormControl('', [Validators.required, Validators.email]),
+        email: new UntypedFormControl('', [
+          Validators.required,
+          Validators.email,
+        ]),
         subscribe: new UntypedFormControl('', [Validators.required]),
       }));
   }
@@ -55,7 +62,12 @@ export class EditUserComponentComponent implements OnInit {
   ngOnInit(): void {
     this.userServ.getUser$().subscribe((user) => {
       this.user$ = user;
+      console.log('userrrr', user);
     });
+    setTimeout(() => {
+      console.log(this.user$);
+    }),
+      500;
   }
 
   changePassword() {

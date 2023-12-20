@@ -53,14 +53,15 @@
             <label for="name">Nombre</label>
             <input formControlName="firstName" type="text" class="form-control" id="name" placeholder="{{user$.firstName}}">
           </div>
-          <div class="form-group mb-2">
-            <label for="exampleInputEmail1">Email</label>
-            <input formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="{{user$.email}}">
-          </div>
 
           <div class="form-group mb-2">
             <label for="Surname">Apellido</label>
             <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="{{user$.lastName}}">
+          </div>
+
+          <div class="form-group mb-2">
+            <label for="exampleInputEmail1">Email</label>
+            <input formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="{{user$.email}}">
           </div>
 
           <div class="form-group ">
@@ -71,8 +72,10 @@
           <div class="form-group mb-2">
             <label>Subcripcion</label>
             <select formControlName="subscribe" id="subscribe" class="form-control inputStyle">
-              <option selected>{{user$.subscribe}}</option>
-              <option>Anual</option>
+              <option selected>{{user$.subscription['name']}}</option>
+              <option value="1">Gratis</option>
+              <option value="2">Basico</option>
+              <option value="3">Premium</option>
             </select>
           </div>
           <div class="button-container">
