@@ -1,4 +1,5 @@
 <div >
+  <!-- confirm a new password -->
   <div class="background-new-user changePassword" [class.active]="statePassword">
     <form class="card changPass-form mb-4" [formGroup]="passwordDTO">
       <div class="form-group mb-2 ">
@@ -17,7 +18,7 @@
         <input
           type="text"
           class="form-control"
-          id="password"
+          id="confirmPassword"
           placeholder="Contraseña"
           formControlName="confirmPassword"
           [ngClass]="{'is-invalid':confirmPassword?.errors && confirmPassword?.touched,
@@ -34,7 +35,7 @@
       </button>
     </form>
   </div>
-
+  <!-- end confirm a new password -->
   <div class="background-new-user">
 
   <div class="card new-user-container mb-4" >

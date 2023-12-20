@@ -1,5 +1,12 @@
 import { Injectable, Output, EventEmitter, OnChanges } from '@angular/core';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  tap,
+  throwError,
+} from 'rxjs';
 import {
   Additional,
   newAdditionalDTO,
@@ -108,13 +115,25 @@ export class UserServiceService {
   }
 
   upAdditional(edition: UpAdditionalDTO) {
-    console.log('edition', edition);
+    // console.log('edition', edition);
 
     return this.http
       .post<any>(`${this.apiUrl}/user/secretary/update`, edition, {
         context: checkToken(),
       })
       .pipe(
+        // procesamos la respuesta
+        map((response) => {
+          // Aquí puedes procesar la respuesta. Por ejemplo:
+          console.log('Respuesta del servidor:', response);
+          return response;
+        }),
+        // manejamos los errores
+        catchError((error) => {
+          // Aquí puedes manejar los errores. Por ejemplo:
+          console.error('Error al actualizar:', error);
+          return throwError(error); // Esto reenvía el error para que puedas manejarlo más adelante
+        }),
         // actualizo listSecreataryes$
         tap(() => this.getAllAdditional().subscribe())
       );

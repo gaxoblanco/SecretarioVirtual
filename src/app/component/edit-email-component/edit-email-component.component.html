@@ -11,10 +11,10 @@
       <ng-container *ngIf="status !== 'loading'">
         <form [formGroup]="edditAdi" (ngSubmit)="editAdditional()">
           <div class="form-group mb-2">
-            <label for="name" class="mb-1">Nombre</label>
+            <label for="`editSecretaryName-{{placeOlder.name}}`" class="mb-1">Nombre</label>
             <input type="text"
               class="form-control"
-              id="name"
+              id="`editSecretaryName-{{placeOlder.name}}`"
               placeholder="{{placeOlder.name}}"
               formControlName="name"
               [ngClass]="{'is-invalid':name?.errors && name?.touched,
@@ -22,11 +22,11 @@
               >
           </div>
           <div class="form-group mb-2">
-            <label for="exampleInputEmail1" class="mb-1">Email</label>
+            <label for="`secretaryEmail-{{placeOlder.email}}`" class="mb-1">Email</label>
             <input
               type="email"
               class="form-control"
-              id="exampleInputEmail1"
+              id="`secretaryEmail-{{placeOlder.email}}`"
               aria-describedby="emailHelp"
               placeholder="{{placeOlder.email}}"
               formControlName="newSemail"
@@ -36,11 +36,11 @@
           </div>
           <!-- input de password -->
           <div class="form-group mb-4">
-            <label for="InputPassword" class="mb-1">Contraseña</label>
+            <label for="`secretaryPassword-{{placeOlder.email}}`" class="mb-1">Contraseña</label>
             <input
               type="password"
               class="form-control"
-              id="InputPassword"
+              id="`secretaryPassword-{{placeOlder.email}}`"
               placeholder="Contraseña"
               formControlName="Spass">
           </div>

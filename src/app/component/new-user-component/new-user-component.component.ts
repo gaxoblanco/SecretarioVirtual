@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { UserServiceService } from '../../services/user-service.service';
 import { newAdditionalDTO } from '../../models/additional-model';
@@ -21,7 +25,10 @@ export class NewUserComponentComponent implements OnInit {
   ) {
     this.newAdditionalDTO = new UntypedFormGroup({
       name: new UntypedFormControl('', Validators.required),
-      Semail: new UntypedFormControl('', [Validators.required, Validators.email]),
+      Semail: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
       Spass: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -34,7 +41,7 @@ export class NewUserComponentComponent implements OnInit {
   saveNewAdditional() {
     // llama al addNewAdditional del servicio y le pasa el newAdditionalDTO
     this.status = 'loading';
-    console.log(this.newAdditionalDTO.value);
+    // console.log('start: ', this.newAdditionalDTO.value);
 
     if (this.newAdditionalDTO.valid) {
       this.status = 'loading';

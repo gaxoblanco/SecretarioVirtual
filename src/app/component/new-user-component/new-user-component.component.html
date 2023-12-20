@@ -5,11 +5,11 @@
       <h5 class="card-title mb-4">Nuevo Correo</h5>
       <form [formGroup]="newAdditionalDTO" (ngSubmit)="saveNewAdditional()">
         <div class="form-group mb-2 ">
-          <label for="name">Nombre</label>
+          <label for="newSecretaryName">Nombre</label>
           <input
             type="text"
             class="form-control"
-            id="name"
+            id="newSecretaryName"
             placeholder="Nombre"
             formControlName="name"
             [ngClass]="{'is-invalid':name?.errors && name?.touched,
@@ -29,11 +29,11 @@
         </div>
         <!-- input de password -->
         <div class="form-group">
-          <label for="InputPassword">Contraseña</label>
+          <label for="newSecretaryPass">Contraseña</label>
           <input
             type="password"
             class="form-control"
-            id="InputPassword"
+            id="newSecretaryPass"
             placeholder="Contraseña"
             formControlName="Spass">
         </div>

@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { newAdditionalDTO } from '../../models/additional-model';
 import { UserComponenetComponent } from '../user-componenet/user-componenet.component';
 import { RequestStatus } from '@models/request-status.model';
@@ -27,7 +31,10 @@ export class EditEmailComponentComponent implements OnInit {
   ) {
     this.edditAdi = new UntypedFormGroup({
       name: new UntypedFormControl('', Validators.required),
-      newSemail: new UntypedFormControl('', [Validators.required, Validators.email]),
+      newSemail: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
       Spass: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -54,7 +61,11 @@ export class EditEmailComponentComponent implements OnInit {
   delet() {
     this.userComp.deleteAdditional();
     this.userComp.editEmail = false;
-    console.log();
+    // if (this.list$.length < this.user$.subscription.num_secretary) {
+    //   this.isActive = true;
+    // } else {
+    //   this.isActive = false;
+    // }
   }
 
   editAdditional() {
