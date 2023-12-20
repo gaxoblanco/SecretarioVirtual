@@ -46,4 +46,12 @@ input{
     justify-items: center;
   }
 }
-
+.new-user-container {
+  .card-body {
+    .alert-danger {
+      margin-top: 20px !important;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+}

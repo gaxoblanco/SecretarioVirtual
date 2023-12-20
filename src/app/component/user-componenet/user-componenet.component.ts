@@ -35,21 +35,6 @@ export class UserComponenetComponent implements OnInit {
     }
   }
 
-  //additional
-  editionAdditional(editionValue: UpAdditionalDTO) {
-    editionValue.secreataryId = this.additional.secreataryId;
-
-    if (editionValue.firstName == '') {
-      editionValue.firstName = this.additional.firstName;
-    }
-    if (editionValue.Semail == '') {
-      editionValue.Semail = this.additional.Semail;
-    }
-
-    // //console.log('userCompo ', this.additional.id)
-    // this.usersServ.upAdditional(editionValue);
-  }
-
   deleteAdditional() {
     const data = {
       secreataryId: this.additional.secreataryId,

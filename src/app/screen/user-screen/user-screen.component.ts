@@ -44,7 +44,6 @@ export class UserScreenComponent implements OnInit {
 
   moreEmail: boolean = false;
   editUser: boolean = false;
-  editEmail: boolean = false;
 
   constructor(
     private fileSer: FilesService,
@@ -77,11 +76,6 @@ export class UserScreenComponent implements OnInit {
 
     // si el numero maximo de secretarios == num_secretary desactivo al add secretary
     setTimeout(() => {
-      console.log(
-        'errorErro',
-        this.list$.length < this.user$.subscription.num_secretary
-      );
-
       if (this.list$.length < this.user$.subscription.num_secretary) {
         this.isActive = true;
       } else {

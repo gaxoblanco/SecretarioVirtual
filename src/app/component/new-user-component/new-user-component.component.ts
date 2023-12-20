@@ -39,33 +39,32 @@ export class NewUserComponentComponent implements OnInit {
   ngOnInit(): void {}
 
   saveNewAdditional() {
-    // llama al addNewAdditional del servicio y le pasa el newAdditionalDTO
-    this.status = 'loading';
     // console.log('start: ', this.newAdditionalDTO.value);
-
     if (this.newAdditionalDTO.valid) {
       this.status = 'loading';
       const sData = this.newAdditionalDTO.value;
-      this.userServ.addNewAdditional(sData).subscribe({
-        // si devuelve true es porque se guardo correctamente
-        next: (data) => {
-          console.log('data: ', data);
+      setTimeout(() => {
+        this.userServ.addNewAdditional(sData).subscribe({
+          // si devuelve true es porque se guardo correctamente
+          next: (data) => {
+            console.log('data: ', data);
 
-          if (data === 'Secretario creado correctamente') {
-            this.status = 'success';
-            this.userScreen.moreEmail = false;
-            console.log('success');
-          }
-          if (data === 'El correo electrónico ya existe') {
-            console.log('failed');
+            if (data === 'Secretario creado correctamente') {
+              this.status = 'success';
+              this.userScreen.moreEmail = false;
+              console.log('success');
+            }
+            if (data === 'El correo electrónico ya existe') {
+              console.log('failed');
+              this.status = 'failed';
+            }
+          },
+          error: (error) => {
+            console.log('error: ', error);
             this.status = 'failed';
-          }
-        },
-        error: (error) => {
-          console.log('error: ', error);
-          this.status = 'failed';
-        },
-      });
+          },
+        });
+      }, 400);
     }
   }
 

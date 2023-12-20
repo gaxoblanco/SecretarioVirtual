@@ -132,8 +132,11 @@ export class UserServiceService {
       .pipe(
         // procesamos la respuesta
         map((response) => {
-          // Aquí puedes procesar la respuesta. Por ejemplo:
-          console.log('Respuesta del servidor:', response);
+          // se se actualizo el correo electronico actualizo la lista de secretarios
+          if (response != 'El correo electrónico ya existe') {
+            this.getAllAdditional().subscribe();
+          }
+
           return response;
         }),
         // manejamos los errores
@@ -141,9 +144,7 @@ export class UserServiceService {
           // Aquí puedes manejar los errores. Por ejemplo:
           console.error('Error al actualizar:', error);
           return throwError(error); // Esto reenvía el error para que puedas manejarlo más adelante
-        }),
-        // actualizo listSecreataryes$
-        tap(() => this.getAllAdditional().subscribe())
+        })
       );
   }
 

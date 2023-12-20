@@ -53,14 +53,11 @@ export class EditEmailComponentComponent implements OnInit {
   cancelClick() {
     this.userComp.editEmail = false;
   }
-  save() {
-    let edition: newAdditionalDTO = this.edditAdi.value;
-    this.userComp.editionAdditional(edition);
-    this.userComp.editEmail = false;
-  }
+
   delet() {
     this.userComp.deleteAdditional();
-    this.userComp.editEmail = false;
+    // this.userComp.editEmail = false;
+    //actualiza el estado del button-add-secretary
     // if (this.list$.length < this.user$.subscription.num_secretary) {
     //   this.isActive = true;
     // } else {
@@ -69,7 +66,6 @@ export class EditEmailComponentComponent implements OnInit {
   }
 
   editAdditional() {
-    this.status = 'loading';
     // console.log(this.edditAdi.value);
 
     //consulto si algun campo del formulario tiene contenido
@@ -84,21 +80,27 @@ export class EditEmailComponentComponent implements OnInit {
       sData.oldSemail = this.oldSemail;
       //agrego el secreataryId al objeto sData
       sData.secreataryId = this.secreataryId;
-      console.log(sData);
+
       // agregamos un delay de 2s
       setTimeout(() => {
         this.userServ.upAdditional(sData).subscribe({
-          next: () => {
-            this.status = 'success';
-            this.userComp.editEmail = false;
+          next: (data) => {
             // console.log('success');
+            if (data === 'El correo electrónico ya existe') {
+              this.status = 'failed';
+              this.userComp.editEmail = true;
+              console.log('El correo electrónico ya existe---');
+            } else {
+              this.status = 'success';
+              this.userComp.editEmail = false;
+            }
           },
           error: (error) => {
             this.status = 'failed';
             console.log(error);
           },
         });
-      }, 500);
+      }, 400);
     }
   }
 

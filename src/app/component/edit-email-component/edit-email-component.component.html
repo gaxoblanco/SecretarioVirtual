@@ -17,8 +17,6 @@
               id="`editSecretaryName-{{placeOlder.name}}`"
               placeholder="{{placeOlder.name}}"
               formControlName="name"
-              [ngClass]="{'is-invalid':name?.errors && name?.touched,
-              'is-valid': !name?.errors && name?.touched}"
               >
           </div>
           <div class="form-group mb-2">
@@ -32,6 +30,7 @@
               formControlName="newSemail"
               [ngClass]="{'is-invalid':newSemail?.errors && newSemail?.touched,
               'is-valid': !newSemail?.errors && newSemail?.touched}"
+              [ngClass]="{'is-invalid': status === 'failed'}"
           >
           </div>
           <!-- input de password -->
@@ -46,9 +45,13 @@
           </div>
           <div class="button-container">
             <button type="submit" class="btn card-link mb-4">Confirmar</button>
-            <button type="submit" class="btn button-delete" (click)="delet()" >Eliminar</button>
+            <button type="button" class="btn button-delete" (click)="delet()" >Eliminar</button>
           </div>
         </form>
+        <!-- mensaje de error -->
+        <div *ngIf="status === 'failed'" class="alert alert-danger" role="alert">
+          <p>El email ya esta cargado</p>
+        </div>
       </ng-container>
   </div>
   <button class="cancel-container" (click)="cancelClick()">
