@@ -47,14 +47,23 @@ export class NewUserComponentComponent implements OnInit {
       this.status = 'loading';
       const sData = this.newAdditionalDTO.value;
       this.userServ.addNewAdditional(sData).subscribe({
-        next: () => {
-          this.status = 'success';
-          this.userScreen.moreEmail = false;
-          console.log('success');
+        // si devuelve true es porque se guardo correctamente
+        next: (data) => {
+          console.log('data: ', data);
+
+          if (data === 'Secretario creado correctamente') {
+            this.status = 'success';
+            this.userScreen.moreEmail = false;
+            console.log('success');
+          }
+          if (data === 'El correo electrónico ya existe') {
+            console.log('failed');
+            this.status = 'failed';
+          }
         },
         error: (error) => {
+          console.log('error: ', error);
           this.status = 'failed';
-          console.log(error);
         },
       });
     }

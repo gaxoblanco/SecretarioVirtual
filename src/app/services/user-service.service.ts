@@ -107,10 +107,18 @@ export class UserServiceService {
         context: checkToken(),
       })
       .pipe(
-        // devuelvo el contenido de data del response
-        map((response) => response.data),
-        // actualizo listSecreataryes$
-        tap(() => this.getAllAdditional().subscribe())
+        // procesamos la respuesta
+        tap((response) => {
+          // Add return statements for all code paths
+          // console.log('Respuesta del servidor:', response);
+
+          this.getAllAdditional().subscribe();
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error al crear:', error);
+          return throwError(error); // Esto reenvía el error para que puedas manejarlo más adelante
+        })
       );
   }
 

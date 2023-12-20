@@ -39,19 +39,15 @@ class add_dispatch
       $expedientsCount = $query->fetchColumn();
     } catch (PDOException $e) {
       // Devolver mensaje de error en json
-      echo json_encode([
-        'status' => 500,
-        'message' => 'Error al consultar el numero de expedientes para crear uno nuevo'
-      ]);
+      http_response_code(500);
+      echo json_encode('Error al consultar el numero de expedientes para crear uno nuevo');
     }
 
     // Si el numero de expedientes es igual al numero de expedientes permitidos, se devuelve un mensaje de error.
     if ($expedientsCount >= $Nexp) {
       // Devolver mensaje de error en json si ya tiene el maximo de expedientes
-      echo json_encode([
-        'status' => 400,
-        'message' => 'El usuario ya tiene el maximo de expedientes. No se puede agregar más.'
-      ]);
+      http_response_code(400);
+      echo json_encode('El usuario ya tiene el maximo de expedientes. No se puede agregar más.');
       return;
     }
 
@@ -70,10 +66,8 @@ class add_dispatch
       }
     } catch (PDOException $e) {
       // Devolver mensaje de error en json
-      echo json_encode([
-        'status' => 500,
-        'message' => 'Error al consultar el expediente para crear uno nuevo'
-      ]);
+      http_response_code(500);
+      echo json_encode('Error al consultar el expediente para crear uno nuevo');
     }
 
     try {
