@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { UserScreenComponent } from 'src/app/screen/user-screen/user-screen.component';
 import { UserServiceService } from '../../services/user-service.service';
 import { newAdditionalDTO } from '../../models/additional-model';
@@ -21,7 +25,10 @@ export class NewUserComponentComponent implements OnInit {
   ) {
     this.newAdditionalDTO = new UntypedFormGroup({
       name: new UntypedFormControl('', Validators.required),
-      Semail: new UntypedFormControl('', [Validators.required, Validators.email]),
+      Semail: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
       Spass: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(6),
@@ -32,24 +39,32 @@ export class NewUserComponentComponent implements OnInit {
   ngOnInit(): void {}
 
   saveNewAdditional() {
-    // llama al addNewAdditional del servicio y le pasa el newAdditionalDTO
-    this.status = 'loading';
-    console.log(this.newAdditionalDTO.value);
-
+    // console.log('start: ', this.newAdditionalDTO.value);
     if (this.newAdditionalDTO.valid) {
       this.status = 'loading';
       const sData = this.newAdditionalDTO.value;
-      this.userServ.addNewAdditional(sData).subscribe({
-        next: () => {
-          this.status = 'success';
-          this.userScreen.moreEmail = false;
-          console.log('success');
-        },
-        error: (error) => {
-          this.status = 'failed';
-          console.log(error);
-        },
-      });
+      setTimeout(() => {
+        this.userServ.addNewAdditional(sData).subscribe({
+          // si devuelve true es porque se guardo correctamente
+          next: (data) => {
+            console.log('data: ', data);
+
+            if (data === 'Secretario creado correctamente') {
+              this.status = 'success';
+              this.userScreen.moreEmail = false;
+              console.log('success');
+            }
+            if (data === 'El correo electrónico ya existe') {
+              console.log('failed');
+              this.status = 'failed';
+            }
+          },
+          error: (error) => {
+            console.log('error: ', error);
+            this.status = 'failed';
+          },
+        });
+      }, 400);
     }
   }
 

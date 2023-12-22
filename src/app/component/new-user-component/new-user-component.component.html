@@ -3,42 +3,55 @@
     <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title mb-4">Nuevo Correo</h5>
-      <form [formGroup]="newAdditionalDTO" (ngSubmit)="saveNewAdditional()">
-        <div class="form-group mb-2 ">
-          <label for="name">Nombre</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            placeholder="Nombre"
-            formControlName="name"
-            [ngClass]="{'is-invalid':name?.errors && name?.touched,
-            'is-valid': !name?.errors && name?.touched}">
-        </div>
-        <div class="form-group mb-2">
-          <label for="InputEmail">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="InputEmail"
-            aria-describedby="emailHelp"
-            placeholder="Nuevo Email"
-            formControlName="Semail"
-            [ngClass]="{'is-invalid':email?.errors && email?.touched,
-            'is-valid': !email?.errors && email?.touched}">
-        </div>
-        <!-- input de password -->
-        <div class="form-group">
-          <label for="InputPassword">Contraseña</label>
-          <input
-            type="password"
-            class="form-control"
-            id="InputPassword"
-            placeholder="Contraseña"
-            formControlName="Spass">
-        </div>
-        <button type="submit" class="btn card-link">Confirmar</button>
-      </form>
+      <!-- spinner -->
+      <ng-container *ngIf="status === 'loading'">
+        <div class="spinner"></div>
+      </ng-container>
+      <!-- spinner -->
+      <ng-container *ngIf="status !== 'loading'">
+        <form class="new-secretary--form" [formGroup]="newAdditionalDTO" (ngSubmit)="saveNewAdditional()">
+          <div class="form-group mb-2 ">
+            <label for="newSecretaryName">Nombre</label>
+            <input
+              type="text"
+              class="form-control"
+              id="newSecretaryName"
+              placeholder="Nombre"
+              formControlName="name"
+              [ngClass]="{'is-invalid':name?.errors && name?.touched,
+              'is-valid': !name?.errors && name?.touched}">
+          </div>
+          <div class="form-group mb-2">
+            <label for="InputEmail">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="InputEmail"
+              aria-describedby="emailHelp"
+              placeholder="Nuevo Email"
+              formControlName="Semail"
+              [ngClass]="{'is-invalid':email?.errors && email?.touched,
+              'is-valid': !email?.errors && email?.touched}"
+              [ngClass]="{'is-invalid': status === 'failed'}"
+              >
+          </div>
+          <!-- input de password -->
+          <div class="form-group">
+            <label for="newSecretaryPass">Contraseña</label>
+            <input
+              type="password"
+              class="form-control"
+              id="newSecretaryPass"
+              placeholder="Contraseña"
+              formControlName="Spass">
+          </div>
+          <button type="submit" class="btn card-link">Confirmar</button>
+        </form>
+      </ng-container>
+      <!-- mensaje de error porque el email ya esta cargado -->
+      <div *ngIf="status === 'failed'" class="alert alert-danger" role="alert">
+        <p>El email ya esta cargado</p>
+      </div>
   </div>
   <button class="cancel-container" (click)="cancelClick()">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">

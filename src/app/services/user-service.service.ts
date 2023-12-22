@@ -1,5 +1,12 @@
 import { Injectable, Output, EventEmitter, OnChanges } from '@angular/core';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  tap,
+  throwError,
+} from 'rxjs';
 import {
   Additional,
   newAdditionalDTO,
@@ -100,23 +107,44 @@ export class UserServiceService {
         context: checkToken(),
       })
       .pipe(
-        // devuelvo el contenido de data del response
-        map((response) => response.data),
-        // actualizo listSecreataryes$
-        tap(() => this.getAllAdditional().subscribe())
+        // procesamos la respuesta
+        tap((response) => {
+          // Add return statements for all code paths
+          // console.log('Respuesta del servidor:', response);
+
+          this.getAllAdditional().subscribe();
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error al crear:', error);
+          return throwError(error); // Esto reenvía el error para que puedas manejarlo más adelante
+        })
       );
   }
 
   upAdditional(edition: UpAdditionalDTO) {
-    console.log('edition', edition);
+    // console.log('edition', edition);
 
     return this.http
       .post<any>(`${this.apiUrl}/user/secretary/update`, edition, {
         context: checkToken(),
       })
       .pipe(
-        // actualizo listSecreataryes$
-        tap(() => this.getAllAdditional().subscribe())
+        // procesamos la respuesta
+        map((response) => {
+          // se se actualizo el correo electronico actualizo la lista de secretarios
+          if (response != 'El correo electrónico ya existe') {
+            this.getAllAdditional().subscribe();
+          }
+
+          return response;
+        }),
+        // manejamos los errores
+        catchError((error) => {
+          // Aquí puedes manejar los errores. Por ejemplo:
+          console.error('Error al actualizar:', error);
+          return throwError(error); // Esto reenvía el error para que puedas manejarlo más adelante
+        })
       );
   }
 

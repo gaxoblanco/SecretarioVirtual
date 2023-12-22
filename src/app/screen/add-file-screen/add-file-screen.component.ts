@@ -31,6 +31,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class AddFileScreenComponent implements OnInit {
   files: UntypedFormGroup;
   status: RequestStatus = 'init';
+  statusMessage = '';
   isActive = true;
   newFileList: FileModel[] = [];
   user$ = {
@@ -141,6 +142,7 @@ export class AddFileScreenComponent implements OnInit {
   }
 
   addFile() {
+    this.status = 'loading';
     // tomo el valor fileNumber del formulario y hago split para separar los numeros
     let fileNumber = this.files.value.fileNumber;
     // console.log('fileData', this.files.value);
@@ -152,12 +154,18 @@ export class AddFileScreenComponent implements OnInit {
         // separo los numeros en un array
         let fileNumberSplit = fileNumber.split('/');
 
+        // consulto que el fileNumberSplit[1] tenga 2 numeros
+        if (fileNumberSplit[1].length != 2) {
+          this.status = 'failed';
+          this.statusMessage = 'El año debe tener 2 digitos';
+          return;
+        }
+
         // creo un objeto de tipo NewFile para enviarlo al servicio
         let newFile: NewFile = {
           fileNumber: Number(fileNumberSplit[0]),
           yearNumber: Number(fileNumberSplit[1]),
-          // dependencia es = id de la dependencia seleccionada
-          dispatch: this.selectedDependencia,
+          dispatch: Number(this.selectedDependencia),
         };
 
         // envio el objeto al servicio
@@ -169,7 +177,8 @@ export class AddFileScreenComponent implements OnInit {
               numero_exp: newFile.fileNumber,
               anio_exp: newFile.yearNumber,
               caratula: '',
-              dependencia: newFile.dispatch.toString(),
+              dependencia:
+                this.getDependenciaName(newFile.dispatch)?.toString() || '',
             });
             // valido si puede seguir agregando mas expedientes
             if (this.fileList.length < this.user$.subscription.num_exp) {
@@ -179,8 +188,9 @@ export class AddFileScreenComponent implements OnInit {
           error: (error) => {
             // Maneja el error aquí
             if (error === 'El expediente ya existe.') {
-              // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
-              console.log('Expediente ya existe');
+              this.status = 'failed';
+              this.statusMessage = 'El espediente ya esta cargado';
+              // console.log(this.status);
             } else {
               this.status = 'failed';
               console.log('Error:', error);
@@ -203,14 +213,17 @@ export class AddFileScreenComponent implements OnInit {
               numero_exp: newFile.fileNumber,
               anio_exp: newFile.yearNumber,
               caratula: '',
-              dependencia: '',
+              dependencia:
+                this.getDependenciaName(newFile.dispatch)?.toString() || '',
             });
           },
           error: (error) => {
             // Maneja el error aquí
             if (error === 'El expediente ya existe.') {
+              this.status = 'failed';
+              this.statusMessage = 'El espediente ya esta cargado';
               // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
-              console.log('Expediente ya existe');
+              // console.log('Expediente ya existe');
             } else {
               this.status = 'failed';
               console.log('Error:', error);
@@ -225,5 +238,11 @@ export class AddFileScreenComponent implements OnInit {
 
   get FileNumber() {
     return this.files.get('fileNumber');
+  }
+
+  // segun el id obtengo el name de la dependencia
+  getDependenciaName(id: number) {
+    let dependenciaName = this.dependencias.find((d) => d.id === id);
+    return dependenciaName?.name;
   }
 }

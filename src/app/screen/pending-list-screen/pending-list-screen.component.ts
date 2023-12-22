@@ -1,10 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormControl,
-  UntypedFormControl,
-  UntypedFormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { RequestStatus } from '@models/request-status.model';
 import { FileModel } from 'src/app/models/file.model';
 import { FilesService } from 'src/app/services/files.service';
@@ -57,7 +52,8 @@ export class PendingListScreenComponent implements OnInit {
   ];
   fileFilter: FileModel[] = [];
   arrowDow = {};
-
+  deletedFileId: any;
+  isFilter: Boolean = false;
   constructor(private FileSer: FilesService) {
     this.searchFile = new UntypedFormGroup({
       searchNumber: new FormControl('', Validators.pattern('^[0-9/]*$')),
@@ -75,8 +71,11 @@ export class PendingListScreenComponent implements OnInit {
     //   console.log('files-com', files[0]);
     // });
   }
+
   deleteFile(id: any) {
     // this.FileSer.deleteFiles(id);
+    // Guardo el ID del archivo que está siendo eliminado
+    this.deletedFileId = id;
     // muestro el spinner
     this.status = 'loading';
     setTimeout(() => {
@@ -92,6 +91,8 @@ export class PendingListScreenComponent implements OnInit {
           // muestro el error
           console.log('error');
         }
+        // Reinicio la propiedad deletedFileId después de la eliminación
+        this.deletedFileId = null;
       });
       this.FileSer.getFiles().subscribe((files) => {
         this.fileList = files;
@@ -101,7 +102,7 @@ export class PendingListScreenComponent implements OnInit {
   }
   filterFil() {
     let filNumber = this.searchFile.value;
-    console.log(filNumber);
+    this.isFilter = true;
 
     // divido el value usando / como referencia
     let filNumberSplit = filNumber.searchNumber.split('/');
@@ -117,7 +118,13 @@ export class PendingListScreenComponent implements OnInit {
         return file;
       }
     });
-    console.log(this.fileFilter);
+    // console.log(this.fileFilter);
+  }
+  //clear filter
+  clearFil() {
+    this.fileFilter = [];
+    this.searchFile.reset();
+    this.isFilter = false;
   }
 
   arrowOff() {
@@ -174,5 +181,19 @@ export class PendingListScreenComponent implements OnInit {
     this.fileList.sort((a, b) => Number(a.state) - Number(b.state));
     this.arrowOff();
     this.StateArrowUpStyle = true;
+  }
+
+  mouseX = 0;
+  mouseY = 0;
+  public showDeleteMessageFlag = false;
+  // mouse position
+  showDeleteMessage(event: MouseEvent) {
+    this.mouseX = event.clientX;
+    this.mouseY = event.clientY;
+    this.showDeleteMessageFlag = true;
+  }
+
+  hideDeleteMessage() {
+    this.showDeleteMessageFlag = false;
   }
 }

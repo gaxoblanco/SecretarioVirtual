@@ -24,8 +24,6 @@ function userRoot($route, $method, $conexion)
         $data = json_decode(file_get_contents('php://input'), true);
 
         // Obtener los datos del usuario a actualizar
-        // $id = $data['id'];
-        // el id viaja en el header como userId
         $id = $_SERVER['HTTP_USERID'];
 
         $firstName = $data['firstName'] ?? null;

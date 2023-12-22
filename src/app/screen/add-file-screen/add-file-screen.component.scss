@@ -33,7 +33,15 @@ input, select{
       margin-bottom: 10px;
     }
     .card-link{
-      margin-left: 46px;
+      margin-left: 20px;
+    }
+    .submit-container {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      .alert-danger {
+        margin-top: 0;
+      }
     }
   }
   .disabled{

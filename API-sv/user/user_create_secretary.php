@@ -90,8 +90,8 @@ class user_create_secretary
       }
     } catch (PDOException $e) {
       // Devolver mensaje de error en json
+      http_response_code(500);
       echo json_encode([
-        'status' => 500,
         'message' => 'Error al crear el secretario: ' . $e->getMessage()
       ]);
     }

@@ -97,7 +97,7 @@ export class FilesService {
       const dependencia = dependencias.find(
         (dependencia) => dependencia.id === file.dependencia
       );
-      file.dependencia = dependencia!.nombre;
+      file.dependencia = dependencia?.nombre || '';
     });
     console.log('newDependencia', files);
 

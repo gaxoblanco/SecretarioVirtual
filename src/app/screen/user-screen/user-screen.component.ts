@@ -44,7 +44,6 @@ export class UserScreenComponent implements OnInit {
 
   moreEmail: boolean = false;
   editUser: boolean = false;
-  editEmail: boolean = false;
 
   constructor(
     private fileSer: FilesService,
@@ -76,12 +75,21 @@ export class UserScreenComponent implements OnInit {
     });
 
     // si el numero maximo de secretarios == num_secretary desactivo al add secretary
-    if (this.list$.length >= this.user$.subscription.num_secretary) {
-      this.isActive = false;
-    }
+    setTimeout(() => {
+      if (this.list$.length < this.user$.subscription.num_secretary) {
+        this.isActive = true;
+      } else {
+        this.isActive = false;
+      }
+    }, 500);
   }
 
   more() {
+    console.log(
+      'more',
+      this.list$.length < this.user$.subscription.num_secretary
+    );
+
     if (this.list$.length < this.user$.subscription.num_secretary) {
       if (this.moreEmail == false) {
         this.moreEmail = !this.moreEmail;
