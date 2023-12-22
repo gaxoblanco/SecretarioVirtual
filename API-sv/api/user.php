@@ -31,7 +31,8 @@ function userRoot($route, $method, $conexion)
         $firstName = $data['firstName'] ?? null;
         $lastName = $data['lastName'] ?? null;
         $email = $data['email'] ?? null;
-        $password = $data['password'] ?? null;
+        // la nueva $password llega por el header
+        $password = $_SERVER['HTTP_PASSWORD'] ?? null;
 
         // Crear una instancia de la clase user_update y llamar al método updateUser()
         $userUpdate = new user_update($conexion, $id, $firstName, $lastName, $email, $password);
