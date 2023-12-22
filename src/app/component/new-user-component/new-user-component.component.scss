@@ -13,18 +13,7 @@ input{
   display: grid;
   place-items: center;
 }
-.cancel-container{
-  position : absolute;
-  right: 10px;
-  top: 10px;
-  border: none;
-  background-color: white;
-  svg{
-    width: 26px;
-    height: auto;
-    color:#b40e0e;
-  }
-}
+
 .new-user-container{
   display: grid;
   grid-template-rows: auto 1fr;
@@ -47,13 +36,7 @@ input{
   .card-link{
     margin: 20px 20px -10px 20px;
   }
-  .card-body {
-    .alert-danger {
-      margin-top: 20px !important;
-      margin: 0 auto;
-      text-align: center;
-    }
-  }
+
 }
 
 

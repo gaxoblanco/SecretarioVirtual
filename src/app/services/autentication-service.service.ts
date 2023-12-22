@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
 import { LoginModel, User } from '@models/login-model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
@@ -9,6 +9,7 @@ import { ResponseLogin } from '@models/auth.model';
 import { environment } from '@env/environment';
 import { TokenService } from './token.service';
 import { PermissionsService } from './permissions.service';
+import { checkToken } from '../interceptors/token.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -118,7 +119,35 @@ export class AutenticationServiceService {
     return this.http.post(`${this.apiUrl}/user/create`, value).pipe();
   }
 
-  changePassword(value: LoginModel) {}
+  // post para realizar cambio de password
+  changePassword(value: LoginModel) {
+    console.log('cambio password', value);
+    // envio el value ($password) en el header
+    return this.http
+      .post(
+        `${this.apiUrl}/user/update`,
+        {
+          fistName: '',
+        },
+        {
+          context: checkToken(),
+          headers: {
+            $password: value.password,
+          },
+        }
+      )
+      .pipe(
+        tap((response) => {
+          console.log(response);
+
+          return response;
+        }),
+        // si es distinto devuelvo un error
+        catchError((error) => {
+          return throwError(error.error.message || 'Server error');
+        })
+      );
+  }
 
   filterPages() {
     // console.log(this.tokenTrue!.token);

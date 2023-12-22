@@ -32,6 +32,7 @@ import { NavigationMenuComponenetComponent } from './component/navigation-menu-c
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmPasswordComponent } from './component/atoms/confirm-password/confirm-password.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PendingFileComponenetComponent,
     NavigationMenuComponenetComponent,
   ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -68,10 +73,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ConfirmPasswordComponent,
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
-  ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

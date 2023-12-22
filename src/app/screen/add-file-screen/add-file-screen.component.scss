@@ -39,6 +39,9 @@ input, select{
       display: flex;
       gap: 20px;
       align-items: center;
+      .alert-danger {
+        margin-top: 0;
+      }
     }
   }
   .disabled{

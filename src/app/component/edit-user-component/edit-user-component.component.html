@@ -1,40 +1,10 @@
 <div >
   <!-- confirm a new password -->
-  <div class="background-new-user changePassword" [class.active]="statePassword">
-    <form class="card changPass-form mb-4" [formGroup]="passwordDTO">
-      <div class="form-group mb-2 ">
-        <label for="password">Contraseña</label>
-        <input
-          type="text"
-          class="form-control"
-          id="password"
-          placeholder="Contraseña"
-          formControlName="password"
-          [ngClass]="{'is-invalid':password?.errors && password?.touched,
-          'is-valid': !password?.errors && password?.touched}">
-      </div>
-      <div class="form-group mb-4 ">
-        <label for="password">Repita la Contraseña</label>
-        <input
-          type="text"
-          class="form-control"
-          id="confirmPassword"
-          placeholder="Contraseña"
-          formControlName="confirmPassword"
-          [ngClass]="{'is-invalid':confirmPassword?.errors && confirmPassword?.touched,
-          'is-valid': !confirmPassword?.errors && confirmPassword?.touched}">
-      </div>
-      <div class="button-container" [class.disabled]="!passwordDTO.valid">
-        <button type="submit" class="btn card-link" (click)="change()">Confirmar</button>
-      </div>
-      <button class="cancel-container" (click)="cancelChange()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-        </svg>
-      </button>
-    </form>
-  </div>
+  <span *ngIf="statePassword" class="background-new-user changePassword" [class.active]="statePassword">
+    <app-confirm-password
+    (cancelChange)="cancelChange()">
+    </app-confirm-password>
+  </span>
   <!-- end confirm a new password -->
   <div class="background-new-user">
 

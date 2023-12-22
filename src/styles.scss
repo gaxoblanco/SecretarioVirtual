@@ -58,8 +58,11 @@ body{
   }
 }
 .alert-danger {
+  margin: 0 auto;
+  text-align: center;
   margin-bottom: 10px;
   padding: 4px 10px;
+  margin-top: 20px;
   p {
     margin-bottom: 0;
     font-size: 14px;
@@ -87,6 +90,7 @@ body{
 // importo los archivos styles
 @import './styles/0-base/button.scss';
 
+@import './styles/1-atoms/_button-cancel.scss';
 @import './styles/1-atoms/_button-component.component.scss';
 @import './styles/1-atoms/_spinner.scss';
 

@@ -20,7 +20,6 @@ import { RequestStatus } from '@models/request-status.model';
 })
 export class EditUserComponentComponent implements OnInit {
   status: RequestStatus = 'init';
-  passwordDTO: UntypedFormGroup;
   userDTO: UntypedFormGroup;
   user$: any = {
     email: '',
@@ -34,29 +33,18 @@ export class EditUserComponentComponent implements OnInit {
   profileForm: any;
 
   constructor(
-    private autServ: AutenticationServiceService,
     private userScreen: UserScreenComponent,
     private userServ: UserServiceService
   ) {
-    (this.passwordDTO = new UntypedFormGroup(
-      {
-        password: new UntypedFormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-        confirmPassword: new UntypedFormControl('', [Validators.required]),
-      },
-      [StrengthValidatorService.MatchValidator('password', 'confirmPassword')]
-    )),
-      (this.userDTO = new UntypedFormGroup({
-        firstName: new UntypedFormControl('', [Validators.required]),
-        lastName: new UntypedFormControl('', [Validators.required]),
-        email: new UntypedFormControl('', [
-          Validators.required,
-          Validators.email,
-        ]),
-        subscribe: new UntypedFormControl('', [Validators.required]),
-      }));
+    this.userDTO = new UntypedFormGroup({
+      firstName: new UntypedFormControl('', [Validators.required]),
+      lastName: new UntypedFormControl('', [Validators.required]),
+      email: new UntypedFormControl('', [
+        Validators.required,
+        Validators.email,
+      ]),
+      subscribe: new UntypedFormControl('', [Validators.required]),
+    });
   }
 
   ngOnInit(): void {
@@ -81,12 +69,6 @@ export class EditUserComponentComponent implements OnInit {
   }
   cancelClick() {
     this.userScreen.editUser = false;
-  }
-
-  change() {
-    const pass = this.passwordDTO.value;
-    this.autServ.changePassword(pass);
-    console.log(pass);
   }
 
   //---
@@ -127,12 +109,6 @@ export class EditUserComponentComponent implements OnInit {
     }
   }
 
-  get password() {
-    return this.passwordDTO.get('password');
-  }
-  get confirmPassword() {
-    return this.passwordDTO.get('confirmPassword');
-  }
   get passwordMatchError() {
     return (
       this.profileForm.getError('mismatch') &&
