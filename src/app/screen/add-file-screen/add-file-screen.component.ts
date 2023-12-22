@@ -31,6 +31,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class AddFileScreenComponent implements OnInit {
   files: UntypedFormGroup;
   status: RequestStatus = 'init';
+  statusMessage = '';
   isActive = true;
   newFileList: FileModel[] = [];
   user$ = {
@@ -153,6 +154,13 @@ export class AddFileScreenComponent implements OnInit {
         // separo los numeros en un array
         let fileNumberSplit = fileNumber.split('/');
 
+        // consulto que el fileNumberSplit[1] tenga 2 numeros
+        if (fileNumberSplit[1].length != 2) {
+          this.status = 'failed';
+          this.statusMessage = 'El año debe tener 2 digitos';
+          return;
+        }
+
         // creo un objeto de tipo NewFile para enviarlo al servicio
         let newFile: NewFile = {
           fileNumber: Number(fileNumberSplit[0]),
@@ -181,10 +189,8 @@ export class AddFileScreenComponent implements OnInit {
             // Maneja el error aquí
             if (error === 'El expediente ya existe.') {
               this.status = 'failed';
-              console.log(this.status);
-
-              // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
-              console.log('Expediente ya existe');
+              this.statusMessage = 'El espediente ya esta cargado';
+              // console.log(this.status);
             } else {
               this.status = 'failed';
               console.log('Error:', error);
@@ -215,8 +221,9 @@ export class AddFileScreenComponent implements OnInit {
             // Maneja el error aquí
             if (error === 'El expediente ya existe.') {
               this.status = 'failed';
+              this.statusMessage = 'El espediente ya esta cargado';
               // Puedes mostrar un mensaje al usuario o tomar alguna acción específica
-              console.log('Expediente ya existe');
+              // console.log('Expediente ya existe');
             } else {
               this.status = 'failed';
               console.log('Error:', error);

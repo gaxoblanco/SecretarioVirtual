@@ -26,13 +26,13 @@
 
       <div class="submit-container">
         <button type="submit" class="card-link mb-2" (click)="addFile()" [ngClass]="{'active': isActive, 'disabled': !isActive}">Agregar</button>
-      <!-- mensaje de error segun status -->
-      <div class="alert alert-danger" role="alert" *ngIf="status === 'failed'">
-        <p>El espediente ya esta cargado</p>
-      </div>
-      <ng-container *ngIf="status == 'loading'">
-        <div class="spinner"></div>
-      </ng-container>
+        <!-- mensaje de error segun status -->
+        <div class="alert alert-danger" role="alert" *ngIf="status === 'failed'">
+          <p>{{statusMessage}}</p>
+        </div>
+        <ng-container *ngIf="status == 'loading'">
+          <div class="spinner"></div>
+        </ng-container>
       </div>
     </form>
   </div>
