@@ -122,30 +122,32 @@ export class AutenticationServiceService {
   // post para realizar cambio de password
   changePassword(value: LoginModel) {
     console.log('cambio password', value);
-    // envio el value ($password) en el header
-    return this.http
-      .post(
-        `${this.apiUrl}/user/update`,
-        {
-          fistName: '',
-        },
-        {
-          context: checkToken(),
-          headers: {
-            $password: value.password,
-          },
-        }
-      )
-      .pipe(
-        tap((response) => {
-          console.log(response);
 
-          return response;
-        }),
-        // si es distinto devuelvo un error
-        catchError((error) => {
-          return throwError(error.error.message || 'Server error');
-        })
+    // envío el value ($password) en el header
+    const headers = {
+      password: value.toString(),
+    };
+    console.log('header', headers);
+
+    // hago un post enviando el checkToken y el headers
+    return this.http
+      .post(`${this.apiUrl}/user/password-change`, null, {
+        headers: headers,
+        context: checkToken(),
+      })
+      .pipe(
+        // Procesamos la respuesta
+        tap(
+          (response) => {
+            console.log(response);
+            // Navegamos a la página principal
+            // this.router.navigate(['/']);
+          },
+          (error) => {
+            // Manejamos errores aquí
+            console.error('Error en la solicitud:', error);
+          }
+        )
       );
   }
 
