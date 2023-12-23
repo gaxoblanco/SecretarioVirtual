@@ -48,30 +48,30 @@ function openRoute($route, $method, $conexion)
       }
       break;
 
-      // actualiza las tablas de expedientes y movimientos
-    case 'dispatch/update':
-      require_once './scrapper/users_data.php';
-      require_once './scrapper/up_user_exp.php';
-      require_once './scrapper/write_mail.php';
+      //   // actualiza las tablas de expedientes y movimientos
+      // case 'dispatch/update':
+      //   require_once './scrapper/users_data.php';
+      //   require_once './scrapper/up_user_exp.php';
+      //   require_once './scrapper/write_mail.php';
 
-      //obtengo un array de usuarios con sus expedientes y los movimientos asociados
-      $tablesUpdater = new users_data($conexion);
-      $oldTableUserExp = $tablesUpdater->getExpedients();
+      //   //obtengo un array de usuarios con sus expedientes y los movimientos asociados
+      //   $tablesUpdater = new users_data($conexion);
+      //   $oldTableUserExp = $tablesUpdater->getUsers();
 
-      // echo json_encode($oldTableUserExp);
+      //   // echo json_encode($oldTableUserExp);
 
-      // compara las tablas y actualiza los expedientes y movimientos
-      $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-      $newsBy = $upUserExp->getExpedient();
+      //   // compara las tablas y actualiza los expedientes y movimientos
+      //   $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
+      //   $newsBy = $upUserExp->getExpedient();
 
-      echo json_encode($newsBy);
+      //   echo json_encode($newsBy);
 
-      // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
-      $writeMail = new write_mail($conexion, $newsBy);
-      $writeMail->write();
+      //   // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
+      //   $writeMail = new write_mail($conexion, $newsBy);
+      //   $writeMail->write();
 
-      // echo json_encode($writeMail->write());
-      break;
+      //   // echo json_encode($writeMail->write());
+      //   break;
 
     default:
       // Ruta no encontrada

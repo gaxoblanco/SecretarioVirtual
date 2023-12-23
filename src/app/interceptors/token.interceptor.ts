@@ -38,15 +38,13 @@ export class TokenInterceptor implements HttpInterceptor {
 
     if (token) {
       // console.log('interceptor token', token);
-
-      const newHeaders = new HttpHeaders()
-        // Authorization
-        .set('Authorization', `Bearer ${token.token}`)
-        .set('token', token.token)
-        .set('userId', token.id);
-
+      // Clonar la solicitud original y agregar el token a los encabezados existentes
       const authRequest = request.clone({
-        headers: newHeaders,
+        setHeaders: {
+          Authorization: `Bearer ${token.token}`,
+          token: token.token,
+          userId: token.id,
+        },
       });
       // console.log('authRequest', authRequest.headers);
       return next.handle(authRequest);

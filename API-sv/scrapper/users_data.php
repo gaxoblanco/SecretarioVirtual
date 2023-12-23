@@ -59,9 +59,6 @@ class users_data
   // crea la funcion haveMovings() que recibe expedients y consulta por sus movimientos en la tabla user_exp_move
   public function haveMovings(&$expedients)
   {
-    // Traigo el array con los usuarios y sus expedientes
-    // $expedients = $this->getExpedients();
-
     try {
       // Obtener los movimientos del expediente de la tabla user_exp_move asociados al id_exp obtenido en $expedients[expedients] y consultar por cada expediente cargado en el array
 

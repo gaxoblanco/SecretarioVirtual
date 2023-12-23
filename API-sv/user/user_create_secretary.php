@@ -60,7 +60,7 @@ class user_create_secretary
 
       if ($count > 0) {
         // Devolver mensaje de error en json
-        http_response_code(400);
+        http_response_code(202);
         echo json_encode('El correo electrónico ya existe');
         return;
       }
@@ -69,18 +69,25 @@ class user_create_secretary
 
 
       // Insertar el nuevo secretario en la tabla secretarylist
-      $query = $this->conexion->prepare('INSERT INTO secretaries (firstName, Semail, Spass, id_users)
+      try {
+        $query = $this->conexion->prepare('INSERT INTO secretaries (firstName, Semail, Spass, id_users)
                             VALUES (:firstName, :Semail, :Spass, :id_user)');
-      $query->execute([
-        ':firstName' => $this->firstName,
-        ':Semail' => $this->Semail,
-        ':Spass' => $hashedSpass,
-        ':id_user' => $this->id_user
-      ]);
+        $query->execute([
+          ':firstName' => $this->firstName,
+          ':Semail' => $this->Semail,
+          ':Spass' => $hashedSpass,
+          ':id_user' => $this->id_user
+        ]);
 
-      //devuelve mensaje de éxito en json
-      http_response_code(200);
-      echo json_encode('Secretario creado correctamente');
+        //devuelve mensaje de éxito en json
+        http_response_code(200);
+        echo json_encode('Secretario creado correctamente');
+      } catch (PDOException $e) {
+        // Devolver mensaje de error en json
+        http_response_code(500);
+        echo json_encode('Error al crear el secretario: ' . $e->getMessage());
+        return;
+      }
     } catch (PDOException $e) {
       // Devolver mensaje de error en json
       http_response_code(500);

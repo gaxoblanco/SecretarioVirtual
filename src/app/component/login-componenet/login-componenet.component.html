@@ -1,5 +1,5 @@
 
-<div class="conextion-container">
+<div>
   <form [formGroup]="form" (ngSubmit)="LogCheckin($event)">
     <h4 class="mb-4">Ingresá a tu cuenta</h4>
     <div class="form-group">
@@ -45,13 +45,4 @@
     </div>
     <button type="submit" class="btn card-link mb-4" >Ingresa </button>
   </form>
-
-  <div class="createUser-container">
-    <h5 class="mb-3">¿No tenés cuenta?</h5>
-    <button
-      type="submit"
-      class="btn button-blue"
-      [routerLink]="['/register']"
-      >Creá tu cuenta</button>
-  </div>
 </div>
