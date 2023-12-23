@@ -30,18 +30,17 @@ class up_user_exp
 
       // Divide los expedientes en bloques
       $expedientChunks = array_chunk($user['expedients'], $limit);
+      //---- array constructor
+      // Verificamos si el usuario ya está en $this->newsBy y obtengo la posicion en el array
+      $userIndex = findUserIndex($user['id_user'], $this->newsBy);
 
-      // Itera por cada bloque de expedientes
       foreach ($expedientChunks as $expedientBlock) {
-
-        // Itera por el array expedients
+        // imprimo el array con que estamos trabajando
+        // echo 'limit';
+        // echo "expedientBlock: <pre>" . print_r($expedientBlock, true) . "</pre>";
         foreach ($expedientBlock as &$expedient) {
 
-          //---- array constructor
-          // Verificamos si el usuario ya está en $this->newsBy
-          $userIndex = findUserIndex($user['id_user'], $this->newsBy);
-
-          // si dependencia == null
+          // si tipo_lista == null
           if ($expedient['tipo_lista'] == null) {
             // echo "el expediente del usuario: " . $user['id_user'] . " no TENIA dependencia: " . $expedient['numero_exp'] . '/' . $expedient['anio_exp'] . " - id_exp " . $expedient['id_exp'] . " : ";
 
@@ -54,7 +53,7 @@ class up_user_exp
             if ($ifExisted) {
 
               if ($userIndex === null) {
-                // el usuario aun no esta en la lista de newsBy, lo cargo juinto con el expediente
+                // el usuario aun no esta en la lista de newsBy, lo cargo junto con el expediente
                 $this->newsBy[] = [
                   'id_user' => $user['id_user'], // Agregamos el id del usuario
                   'name' => isset($user['name']) ? $user['name'] : '',
@@ -73,20 +72,24 @@ class up_user_exp
               // cambio el nombre de anio_expediente por anio_exp
               $ifExisted[0]['anio_exp'] = $ifExisted[0]['anio_expediente'];
               $this->newsBy[$userIndex]['expedients'][] = $ifExisted[0];
+
+              // alamaceno el indice del expediente en el array newsBy
+              $expedientIndex = count($this->newsBy[$userIndex]['expedients']) - 1; // El índice del expediente que acabamos de agregar
+
             } else {
               // si no existe, devuelve mensaje " expediente no encontrado"
-              echo "El expediente del usuario " . $user['id_user'] . " no se encontró en la tabla expedientes. <br>";
+              // echo "El expediente del usuario " . $user['id_user'] . " no se encontró en la tabla expedientes. <br>";
             }
           }
 
-          // si existe el expediente (dependencia != null) - obtengo el id del expediente
+          // si existe el expediente (tipo_lista != null) - obtengo el id del expediente
           require_once './up-exp/id_expedient.php';
           $idExpediente = getIdExpediente($expedient['numero_exp'], $expedient['anio_exp'], $expedient['dependencia'], $this->conexion);
           // echo "idExpediente" . $idExpediente;
 
           // controlo que $idExpediente existe en la tabla expedientes
           if (!$idExpediente) {
-            echo "El expediente del usuario " . $user['id_user'] . " no se encontró en la tabla expedientes. <br>";
+            // echo "El expediente del usuario " . $user['id_user'] . " no se encontró en la tabla expedientes. <br>";
           }
 
           //---- Movimientos del Expediente ----
@@ -95,7 +98,7 @@ class up_user_exp
           $ExpMoving = getExpedientsMoves($idExpediente, $this->conexion);
           // controlo que $ExpMoving no sea null es decir que tenemos al menos 1 movimiento
           if (!$ExpMoving) {
-            echo "El expediente " . $idExpediente . " no tiene movimientos.<br>";
+            // echo "El expediente " . $idExpediente . " no tiene movimientos.<br>";
           }
 
           // obtengo los movimientos del expediente en la tabla user_exp_move, buscando por el $expedient['id_exp']
@@ -103,7 +106,7 @@ class up_user_exp
           $userExpMoving = getMovimientos($expedient['id_exp'], $this->conexion);
           // controlo que $userExpMoving que tenga al menos 1 movimiento
           if (!$userExpMoving) {
-            echo "El expediente del usuario " . $user['id_user'] . " no tiene movimientos. <br>";
+            echo "El expediente " . $expedient['id_exp'] . " no tiene movimientos. <br>";
           }
 
           // echo "UserExpMoving: <pre>" . print_r($userExpMoving, true) . "</pre>";
@@ -112,8 +115,8 @@ class up_user_exp
 
           // comparo el numero de elementos de $ExpMoving con $userExpMoving, si $ExpMoving tiene mas elementos que $userExpMoving, obtengo los movimientos que no estan en $userExpMoving
           if (is_array($ExpMoving) && is_array($userExpMoving) && count($ExpMoving) > count($userExpMoving)) {
-            // obtengo los movimientos que no estan en $userExpMoving
-            $newMoves = array_diff($ExpMoving, $userExpMoving);
+            // Obtén los nuevos elementos que están en $ExpMoving pero no en $userExpMoving
+            $newMoves = array_slice($ExpMoving, $countUserExpMoving);
             var_dump($newMoves);
 
             // actualiza la tabla user_exp_move con los movimientos que no estan en $userExpMoving y el id_exp = $expedient['id_exp']
@@ -122,7 +125,7 @@ class up_user_exp
 
             // en el array newsBy, consulto si el usuario ya esta en el array
             if ($userIndex === null) {
-              // el usuario aun no esta en la lista de newsBy, lo cargo juinto con el expediente
+              // el usuario aun no esta en la lista de newsBy, lo cargo junto con el expediente
               $this->newsBy[] = [
                 'id_user' => $user['id_user'], // Agregamos el id del usuario
                 'name' => isset($user['name']) ? $user['name'] : '',
@@ -134,7 +137,7 @@ class up_user_exp
             // en el array newsBy, consulto si el expediente ya esta en el array
             $expedientIndex = findExpedientIndex($this->newsBy[$userIndex]['expedients'], $expedient['id_exp']);
             if ($expedientIndex === null) {
-              // el expediente aun no esta en la lista de newsBy, lo cargo juinto con el usuario
+              // el expediente aun no esta en la lista de newsBy, lo cargo junto con el usuario
               $this->newsBy[$userIndex]['expedients'][] = [
                 'id_exp' => $expedient['id_exp'], // Agregamos el id del expediente
                 'numero_exp' => $expedient['numero_exp'],
@@ -143,17 +146,20 @@ class up_user_exp
                 'reservado' => $expedient['reservado'],
                 'dependencia' => $expedient['dependencia'],
                 'tipo_lista' => $expedient['tipo_lista'],
-                'movimientos' => [] // Inicializamos el array de movimientos
               ];
               $expedientIndex = count($this->newsBy[$userIndex]['expedients']) - 1; // El índice del expediente que acabamos de agregar
             }
 
             // en el array newsBy, en el indice del user, en el indice expedients, agrego el array de movimientos
-            $this->newsBy[$userIndex]['expedients'][$expedientIndex]['movimientos'] = $newMoves;
+            $this->newsBy[$userIndex]['expedients'][$expedientIndex]['movimientos'][] = $newMoves;
           }
         }
       }
     }
+    echo '---';
+    // imprimo el array newsBy actualizado en este bloque
+    // echo "Bloques - newsBy: <pre>" . print_r($this->newsBy, true) . "</pre>";
+    echo '---';
     // echo json_encode($this->newsBy);
     return $this->newsBy;
   }
