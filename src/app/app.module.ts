@@ -33,6 +33,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmPasswordComponent } from './component/atoms/confirm-password/confirm-password.component';
+import { RecoverPasswordComponent } from './component/atoms/recover-password/recover-password.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { ConfirmPasswordComponent } from './component/atoms/confirm-password/con
     HttpClientModule,
     BrowserAnimationsModule,
     ConfirmPasswordComponent,
+    RecoverPasswordComponent,
   ],
 })
 export class AppModule {}
