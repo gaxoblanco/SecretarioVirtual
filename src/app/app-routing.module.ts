@@ -11,6 +11,7 @@ import { UserScreenComponent } from './screen/user-screen/user-screen.component'
 import { JusticeComponent } from './screen/justice/justice.component';
 
 import { AuthGuard } from './guards/auth.guard';
+import { ResetPasswordComponent } from '@screen/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeScreenComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   // {path: 'resetpw', component: ResetPwScreenComponent},
   { path: 'subcribe', component: SubcribeScreenComponent },
   { path: 'juzgado', component: JusticeComponent },
+  { path: 'reset-password/:token/:email', component: ResetPasswordComponent },
 ];
 
 @NgModule({
