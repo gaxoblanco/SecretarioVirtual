@@ -69,7 +69,7 @@ export class UserScreenComponent implements OnInit {
     // obengo el numero de expedientes -- falta actualizar para hacer una sola solicitud al inicio de la webApp
     this.fileSer.getFiles().subscribe((files) => {});
     this.fileSer.getFiles$().subscribe((response) => {
-      console.log('getFiles$', response);
+      // console.log('getFiles$', response);
 
       this.NumberFile = response.length;
     });

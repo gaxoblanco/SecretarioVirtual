@@ -28,7 +28,6 @@ const routes: Routes = [
   { path: 'usuario', component: UserScreenComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginScreenComponent },
   { path: 'register', component: RegisterScreenComponent },
-  // {path: 'resetpw', component: ResetPwScreenComponent},
   { path: 'subcribe', component: SubcribeScreenComponent },
   { path: 'juzgado', component: JusticeComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

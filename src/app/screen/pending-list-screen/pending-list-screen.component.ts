@@ -96,7 +96,7 @@ export class PendingListScreenComponent implements OnInit {
       });
       this.FileSer.getFiles().subscribe((files) => {
         this.fileList = files;
-        console.log('files-com', files[0]);
+        // console.log('files-com', files[0]);
       });
     }, 500);
   }

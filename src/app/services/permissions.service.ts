@@ -27,11 +27,11 @@ export class PermissionsService {
       name: 'Login',
       acess: true,
     },
-    {
-      route: '/juzgado',
-      name: 'email juzgado',
-      acess: true,
-    },
+    // {
+    //   route: '/juzgado',
+    //   name: 'email juzgado',
+    //   acess: true,
+    // },
     {
       route: '/agregarExpediente',
       name: 'Agregar',

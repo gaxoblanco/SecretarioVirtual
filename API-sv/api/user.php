@@ -46,7 +46,7 @@ function userRoot($route, $method, $conexion)
 
       // user/password-chenge
     case 'user/password-change':
-      require_once './user/password/user_password_change.php';
+      require_once './password/user_password_change.php';
       if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);

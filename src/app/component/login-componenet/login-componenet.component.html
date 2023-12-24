@@ -46,7 +46,7 @@
         </a>
       <!-- </button> -->
       </div>
-      <button type="submit" class="btn card-link mb-4" >Ingresa </button>
+      <button type="submit" class="btn card-link mb-4" [disabled]="!form.valid">Ingresa </button>
     </form>
   </div>
   <div *ngIf="recoverState">

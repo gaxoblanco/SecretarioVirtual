@@ -80,7 +80,7 @@ export class FilesService {
       })
       .pipe(
         tap((response) => {
-          console.log('files', response);
+          // console.log('files', response);
           if (response != null) {
             this.files$.next(response);
             this.upDependencia();
@@ -99,7 +99,7 @@ export class FilesService {
       );
       file.dependencia = dependencia?.nombre || '';
     });
-    console.log('newDependencia', files);
+    // console.log('newDependencia', files);
 
     this.files$.next(files);
   }
