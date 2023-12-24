@@ -1,48 +1,64 @@
 
 <div>
-  <form [formGroup]="form" (ngSubmit)="LogCheckin($event)">
-    <h4 class="mb-4">Ingresá a tu cuenta</h4>
-    <div class="form-group">
-      <label for="InputEmail1" class="mb-2">Email </label>
-      <input
-        formControlName="email"
-        type="email"
-        class="form-control mb-4"
-        id="InputEmail1"
-        aria-describedby="emailHelp"
-        placeholder="Ingrese su email"
-        [ngClass]="{
-          'is-invalid':Email?.errors && Email?.touched,
-          'is-valid': !Email?.errors && Email?.touched}">
-      <div *ngIf="Email?.errors && Email?.touched">
-        <p *ngIf="Email?.hasError('required')" class="text-danger">
-          El Email es requerido
-        </p>
-        <p *ngIf="Email?.hasError('email')" class="text-danger">
-          El Email esta mal
-        </p>
+  <div *ngIf="!recoverState">
+    <form [formGroup]="form" (ngSubmit)="LogCheckin($event)">
+      <h4 class="mb-4">Ingresá a tu cuenta</h4>
+      <div class="form-group">
+        <label for="InputEmail1" class="mb-2">Email </label>
+        <input
+          formControlName="email"
+          type="email"
+          class="form-control mb-4"
+          id="InputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="Ingrese su email"
+          [ngClass]="{
+            'is-invalid':Email?.errors && Email?.touched,
+            'is-valid': !Email?.errors && Email?.touched}">
+        <div *ngIf="Email?.errors && Email?.touched">
+          <p *ngIf="Email?.hasError('required')" class="text-danger">
+            El Email es requerido
+          </p>
+          <p *ngIf="Email?.hasError('email')" class="text-danger">
+            El Email esta mal
+          </p>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="InputPassword" class="mb-2">Contraseña </label>
-      <input
-        formControlName="password"
-        type="password"
-        class="form-control mb-4"
-        id="InputPassword"
-        placeholder="Contraseña">
-    </div>
-    <ng-container *ngIf="status === 'failed'">
-      <p class="text-danger">El usuario o la contraseña son incorrectos</p>
-    </ng-container>
-    <ng-container *ngIf="status == 'loading'">
-      <div class="spinner"></div>
-    </ng-container>
-    <div class="form-group mb-4">
-      <a [routerLink]="['/resetpw']" class="">
-        ¿Olvidaste tu contraseña?
-      </a>
-    </div>
-    <button type="submit" class="btn card-link mb-4" >Ingresa </button>
-  </form>
+      <div class="form-group">
+        <label for="InputPassword" class="mb-2">Contraseña </label>
+        <input
+          formControlName="password"
+          type="password"
+          class="form-control mb-4"
+          id="InputPassword"
+          placeholder="Contraseña">
+      </div>
+      <ng-container *ngIf="status === 'failed'">
+        <p class="text-danger">El usuario o la contraseña son incorrectos</p>
+      </ng-container>
+      <ng-container *ngIf="status == 'loading'">
+        <div class="spinner"></div>
+      </ng-container>
+      <div class="form-group mb-4">
+        <!-- <button type="button"(onClick)="changeState()"> -->
+        <a (click)="changeState()" class="">
+          ¿Olvidaste tu contraseña?
+        </a>
+      <!-- </button> -->
+      </div>
+      <button type="submit" class="btn card-link mb-4" >Ingresa </button>
+    </form>
+  </div>
+  <div *ngIf="recoverState">
+    <!-- le paso recoverState para lo cambie al terminar -->
+    <app-recover-password></app-recover-password>
+  </div>
+  <div class="createUser-container">
+    <h5 class="mb-3">¿No tenés cuenta?</h5>
+    <button
+      type="submit"
+      class="btn button-blue"
+      [routerLink]="['/register']"
+      >Creá tu cuenta</button>
+  </div>
 </div>

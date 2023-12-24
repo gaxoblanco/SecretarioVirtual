@@ -22,7 +22,13 @@ export class PasswordService {
     return this.http.post(`${this.apiUrl}/user/password-restart`, data).pipe(
       //proceso el tipo de respuesta
       tap((response) => {
-        console.log('respuesta', response);
+        // console.log('respuesta', response);
+        //proceso la respeusta, si es http 202 quiere decir que salio todo bien pero no existe el correo
+        if (response === 'email no existe') {
+          return response;
+        } else {
+          return true;
+        }
       }),
       catchError((error) => {
         console.log('error', error);

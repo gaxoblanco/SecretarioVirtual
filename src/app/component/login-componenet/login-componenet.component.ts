@@ -17,6 +17,9 @@ import { Router } from '@angular/router';
 export class LoginComponenetComponent implements OnInit {
   form: UntypedFormGroup;
   status: RequestStatus = 'init'; // funciona como una maquina de state
+  // state para recuperar el password
+  recoverState: boolean = false;
+  email: string = '';
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -50,7 +53,14 @@ export class LoginComponenetComponent implements OnInit {
       error: (error) => {
         this.status = 'failed';
         console.log(error);
+        this.email = log.email;
       },
     });
+  }
+
+  // funcion para cambiar el estado de la pantalla
+  changeState() {
+    this.recoverState = !this.recoverState;
+    this.status = 'init';
   }
 }

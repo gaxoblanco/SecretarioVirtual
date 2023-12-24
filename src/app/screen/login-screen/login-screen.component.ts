@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-screen.component.scss'],
 })
 export class LoginScreenComponent implements OnInit {
+  // state para recuperar el password
+  recoverState: boolean = false;
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,15 +1,10 @@
 
 <div class="conextion-container">
-  <app-login-componenet></app-login-componenet>
-  <app-recover-password></app-recover-password>
+    <app-login-componenet></app-login-componenet>
+  <!-- <div *ngIf="recoverState">
+    <app-recover-password></app-recover-password>
+  </div> -->
   <!-- <a href="http://localhost:4200/reset-password?token=$2y$10$2/c0IdyshE7P/hCXT6Ns1OAs/oapaLkpi/sisNdo03ugcMVAOBXzq&email=gass@limit.com">RESTART</a> -->
-  <div class="createUser-container">
-    <h5 class="mb-3">¿No tenés cuenta?</h5>
-    <button
-      type="submit"
-      class="btn button-blue"
-      [routerLink]="['/register']"
-      >Creá tu cuenta</button>
-  </div>
+
 </div>
 
