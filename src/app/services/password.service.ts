@@ -30,4 +30,22 @@ export class PasswordService {
       })
     );
   }
+
+  // funcion para enviar la nueva contraseña
+  resetPassword(correo: string, token: string, password: string) {
+    const data = { email: correo, token: token, password: password };
+    console.log('data', data);
+
+    //post a user/password-restart
+    return this.http.post(`${this.apiUrl}/user/password-reset`, data).pipe(
+      //proceso el tipo de respuesta
+      tap((response) => {
+        console.log('respuesta', response);
+      }),
+      catchError((error) => {
+        console.log('error', error);
+        return error;
+      })
+    );
+  }
 }

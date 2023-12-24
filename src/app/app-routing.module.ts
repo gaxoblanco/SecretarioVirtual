@@ -31,7 +31,7 @@ const routes: Routes = [
   // {path: 'resetpw', component: ResetPwScreenComponent},
   { path: 'subcribe', component: SubcribeScreenComponent },
   { path: 'juzgado', component: JusticeComponent },
-  { path: 'reset-password/:token/:email', component: ResetPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
 ];
 
 @NgModule({
