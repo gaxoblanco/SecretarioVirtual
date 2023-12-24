@@ -22,7 +22,8 @@ $publicRoutes = [
   'user/create',
   'user/login',
   'dispatch/update', // actualiza las tablas de expedientes y envia mails
-  // Otras rutas públicas
+  'user/password-restart',
+  'user/password-reset'
 ];
 
 // consulto si la ruta esta en el grupo publicRoutes con un for

@@ -48,35 +48,60 @@ function openRoute($route, $method, $conexion)
       }
       break;
 
-      //   // actualiza las tablas de expedientes y movimientos
-      // case 'dispatch/update':
-      //   require_once './scrapper/users_data.php';
-      //   require_once './scrapper/up_user_exp.php';
-      //   require_once './scrapper/write_mail.php';
+      // restart password - user/password-restart
+    case 'user/password-restart':
+      require_once './password/restart_password.php';
+      if ($method === 'POST') {
+        // Obtener el email del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
+        $data = json_decode(file_get_contents('php://input'), true);
+        $email = $data['email'];
 
-      //   //obtengo un array de usuarios con sus expedientes y los movimientos asociados
-      //   $tablesUpdater = new users_data($conexion);
-      //   $oldTableUserExp = $tablesUpdater->getUsers();
+        // Verificar que la variable $conexion sea un objeto PDO válido
+        if ($conexion instanceof PDO) {
+          // Crear una instancia de la clase user_password_restart
+          $userPasswordRestart = new user_password_restart($conexion, $email);
+          $userPasswordRestart->passwordRestart();
+        } else {
+          // No se pudo conectar a la base de datos
+          echo json_encode(['message' => 'Error connecting to database']);
+        }
+      } else {
+        // Método no permitido para esta ruta
+        http_response_code(405);
+        echo json_encode(['message' => 'Method Not Allowed']);
+      }
+      break;
 
-      //   // echo json_encode($oldTableUserExp);
+      // /user/password-reset
+    case 'user/password-reset':
+      require_once './password/save_new.php';
+      if ($method === 'POST') {
+        // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
+        $data = json_decode(file_get_contents('php://input'), true);
+        $token = $data['token'];
+        $email = $data['email'];
+        $password = $data['password'];
 
-      //   // compara las tablas y actualiza los expedientes y movimientos
-      //   $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-      //   $newsBy = $upUserExp->getExpedient();
-
-      //   echo json_encode($newsBy);
-
-      //   // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
-      //   $writeMail = new write_mail($conexion, $newsBy);
-      //   $writeMail->write();
-
-      //   // echo json_encode($writeMail->write());
-      //   break;
+        // Verificar que la variable $conexion sea un objeto PDO válido
+        if ($conexion instanceof PDO) {
+          // Crear una instancia de la clase user_password_restart
+          $saveNewPass = new save_new_pass($conexion, $email, $token, $password);
+          $saveNewPass->restart_password();
+        } else {
+          // No se pudo conectar a la base de datos
+          echo json_encode(['message' => 'Error connecting to database']);
+        }
+      } else {
+        // Método no permitido para esta ruta
+        http_response_code(405);
+        echo json_encode(['message' => 'Method Not Allowed']);
+      }
+      break;
 
     default:
       // Ruta no encontrada
       http_response_code(404);
-      echo json_encode(['message' => 'Not Found openRoute']);
+      echo json_encode(['message' => 'Not Found openRoute' . $route]);
       break;
   }
 }
