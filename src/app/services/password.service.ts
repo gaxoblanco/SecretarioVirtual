@@ -41,9 +41,7 @@ export class PasswordService {
     const data = { email: correo, token: token, password: password };
     console.log('data', data);
 
-    //post a user/password-restart
     return this.http.post(`${this.apiUrl}/user/password-reset`, data).pipe(
-      //proceso el tipo de respuesta
       tap((response) => {
         console.log('respuesta', response);
       }),

@@ -54,21 +54,22 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Obtener el token y el correo electrónico desde la URL
-    // this.route.params.subscribe((params) => {
-    //   this.token = params['token'];
-    //   this.email = params['email'];
-    // });
+    this.route.params.subscribe((params) => {
+      this.token = decodeURIComponent(params['token']);
+      this.email = decodeURIComponent(params['email']);
 
-    // // Verificar que el token y el correo electrónico no estén vacíos
-    // if (this.token == '' || this.email == '') {
-    //   console.log('Token o correo electrónico vacíos');
-    //   return; // Agrega un return para salir de la función si el token o el correo electrónico están vacíos
-    // }
+      console.log('Token', this.token, 'Correo electrónico', this.email);
+    });
+  }
 
-    // this.cdr.detectChanges();
+  cleanToken(rawToken: string): string {
+    // Eliminar el prefijo ':token='
+    return rawToken.replace(':token=', '');
+  }
 
-    console.log('Token', this.token, 'Correo electrónico', this.email);
+  cleanEmail(rawEmail: string): string {
+    // Eliminar el prefijo ':email='
+    return rawEmail.replace(':email=', '');
   }
 
   onSubmit() {

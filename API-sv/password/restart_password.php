@@ -19,7 +19,7 @@ class user_password_restart
   public function passwordRestart()
   {
     // genero un has para el token
-    $token_hash = password_hash($this->token, PASSWORD_DEFAULT);
+    $token_hash = bin2hex(random_bytes(32));
 
     try {
       try {
@@ -34,6 +34,12 @@ class user_password_restart
         echo json_encode(['message' => 'Error en el user-email']);
       }
 
+      // Verificar que el correo electrónico exista en la base de datos
+      // require_once './user/email_user.php';
+      // $email_user = new email_user($this->conexion, $this->email);
+      // $user = $email_user->email_user();
+
+      // echo json_encode($user);
       //$user existe y tiene el id_user
       if ($user) {
         try {
@@ -43,14 +49,21 @@ class user_password_restart
           $stmt->bindParam(':token', $token_hash);
           $stmt->bindParam(':token_expiration', $this->token_expiration);
           $stmt->bindParam(':id_user', $user['id_user']);
+
+          // valido que $stmt->execute() se ejecuto correctamente
+          if (!$stmt->execute()) {
+            http_response_code(400);
+            echo json_encode(['message' => 'Error en el token']);
+            return;
+          }
           $stmt->execute();
 
-          // envio el correo electronico con el token
-          // echo json_encode('http://localhost:4200/reset-password?token=' . $token_hash . '&email=' . $this->email);
+          // tomar el nombre del id_user -- falta hacer la consulta
+          $name = 'usuario';
 
           // envio el correo electronico con el token
           require_once 'email_restart.php';
-          $email = new email_restart($this->conexion, $this->email, $token_hash);
+          $email = new email_restart($this->conexion, $this->email, $token_hash, $name);
           $email->write_restart();
         } catch (PDOException $e) {
           echo json_encode('Error en el token');
@@ -83,10 +96,15 @@ class user_password_restart
             // envio el correo electronico con el token
             // echo json_encode('http://localhost:4200/reset-password?token=' . $token_hash . '&email=' . $this->email);
 
+            // nomnbre del secretario
+            $secretaryName = "usuario";
             // envio el correo electronico con el token
             require_once './email_restart.php';
-            $email = new email_restart($this->conexion, $this->email, $token_hash);
+            $email = new email_restart($this->conexion, $this->email, $token_hash, $secretaryName);
             $email->write_restart();
+
+            // http_response_code(200);
+            // echo json_encode('Se envio el correo electronico');
           } catch (PDOException $e) {
             echo json_encode('Error en el token de secretaries');
           }
