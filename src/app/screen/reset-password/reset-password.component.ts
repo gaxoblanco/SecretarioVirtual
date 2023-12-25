@@ -25,6 +25,7 @@ export class ResetPasswordComponent implements OnInit {
   token: string | undefined;
   resetPassword: UntypedFormGroup;
   status: RequestStatus = 'init';
+  message: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -84,7 +85,7 @@ export class ResetPasswordComponent implements OnInit {
     // Verificar que las contraseñas coincidan
     if (password == '' || password !== repeatPassword) {
       this.status = 'failed';
-      console.log('Las contraseñas no coinciden');
+      this.message = 'Las contraseñas no coinciden';
       return; // Agrega un return para salir de la función si las contraseñas no coinciden
     }
     console.log('Contraseñas coincidentes', repeatPassword);
@@ -96,11 +97,16 @@ export class ResetPasswordComponent implements OnInit {
         (response) => {
           console.log('Contraseña restablecida con éxito', response);
           // Redirigir a la página de inicio de sesión u otra página
-          this.router.navigate(['/login']);
+          setTimeout(() => {
+            this.status = 'success';
+            this.message = 'Contraseña restablecida con éxito';
+          }, 600);
         },
         (error) => {
           console.error('Error al restablecer la contraseña', error);
           // Manejar el error, mostrar un mensaje al usuario, etc.
+          this.status = 'failed';
+          this.message = 'Error al restablecer la contraseña';
         }
       );
   }

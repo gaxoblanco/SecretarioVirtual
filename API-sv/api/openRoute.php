@@ -84,7 +84,7 @@ function openRoute($route, $method, $conexion)
 
         // Verificar que la variable $conexion sea un objeto PDO válido
         if ($conexion instanceof PDO) {
-          // Crear una instancia de la clase user_password_restart
+          // Crear una instancia de la clase save_new_pass
           $saveNewPass = new save_new_pass($conexion, $email, $token, $password);
           $saveNewPass->restart_password();
         } else {
@@ -97,7 +97,6 @@ function openRoute($route, $method, $conexion)
         echo json_encode(['message' => 'Method Not Allowed']);
       }
       break;
-
     default:
       // Ruta no encontrada
       http_response_code(404);
