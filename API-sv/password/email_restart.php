@@ -1,68 +1,76 @@
 <?php
+require_once './vendor/autoload.php';
+
+// incluir las bibliotecas PHPMailer y Swift Mailer
+require("class.phpmailer.php");
 require("class.smtp.php");
+
+
 
 class email_restart
 {
-    private $conexion;
-    private $email;
-    private $token;
-    // Agrega la configuración SMTP aquí
-    private $smtpServer = 'c2361340.ferozo.com';
-    private $smtpPort = 465;
-    private $smtpUsername = 'expedientes@secretariovirtual.ar';
-    private $smtpPassword = 'S3cretari@';
+  private $conexion;
+  private $email;
+  private $token;
+  // Agrega la configuración SMTP aquí
+  private $smtpServer = 'c2361340.ferozo.com';
+  private $smtpPort = 465;
+  private $smtpUsername = 'expedientes@secretariovirtual.ar';
+  private $smtpPassword = 'S3cretari@';
 
-    public function email_contructor($conexion, $email, $token)
-    {
-        $this->conexion = $conexion;
-        $this->email = $email;
-        $this->token = $token;
+  public function __construct($conexion, $email, $token)
+  {
+    $this->conexion = $conexion;
+    $this->email = $email;
+    $this->token = $token;
+  }
+
+  private function buildEmailMessage()
+  {
+    $resetLink = 'http://secretariovirtual.ar/restablecer-contrasena?token=' . $this->token . '&email=' . $this->email;
+    $message = 'Hola, para restablecer tu contraseña, haz clic en el siguiente enlace: <a href="' . $resetLink . '">' . $resetLink . '</a>';
+    return $message;
+  }
+
+  public function write_restart()
+  {
+    // Crear un array temporal para almacenar el resultado final
+    $mail = new PHPMailer(true);
+
+    // valido que $email tenga un formato de email valido
+    if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+      http_response_code(400);
+      echo "El email no es valido" . $this->email;
+      return;
     }
 
-    private function buildEmailMessage()
-    {
-        $resetLink = 'http://tudominio.com/restablecer-contrasena?token=' . $this->token . '&email=' . $this->email;
-        $message = 'Hola, para restablecer tu contraseña, haz clic en el siguiente enlace: <a href="' . $resetLink . '">' . $resetLink . '</a>';
-        return $message;
+    try {
+      //configuracion del servidor SMTP
+      $mail->SMTPDebug = 0; // desactiva la depuración de la salida
+      $mail->isSMTP();
+      $mail->Host = $this->smtpServer;
+      $mail->SMTPAuth = true;
+      $mail->Username = $this->smtpUsername;
+      $mail->Password = $this->smtpPassword;
+      $mail->SMTPSecure = 'ssl';
+      $mail->Port = $this->smtpPort;
+
+      //configuracion del mensaje
+      $mail->setFrom($this->smtpUsername, 'Secretario Virtual');
+      $mail->addAddress($this->email);
+      $mail->addReplyTo($this->smtpUsername, 'Secretario Virtual');
+      $mail->isHTML(true);
+
+      $mail->Subject = 'Restablecer contraseña';
+      $mail->Body = $this->buildEmailMessage();
+      $mail->AltBody = 'Este es el cuerpo en texto plano para clientes de correo no HTML';
+
+      $mail->send();
+
+      http_response_code(200);
+      echo json_encode('envio correctamente');
+    } catch (Exception $e) {
+      echo "Error al enviar el correo: " . $e->getMessage();
     }
-
-    public function write_restart()
-    {
-
-        $subject = 'Recuperación de Contraseña';
-        $message = $this->buildEmailMessage();
-        $headers = "From: " . $this->smtpUsername . "\r\n" .
-            "X-Mailer: PHP/" . phpversion();
-
-        // Configuración adicional para utilizar SMTP
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
-
-        // Configura la conexión SMTP
-        $transport = new Swift_SmtpTransport($this->smtpServer, $this->smtpPort, 'ssl');
-        $transport->setUsername($this->smtpUsername);
-        $transport->setPassword($this->smtpPassword);
-
-
-        // Crea el objeto Swift_Mailer
-        $mailer = new Swift_Mailer($transport);
-        // Crea el mensaje
-        $messageObj = (new Swift_Message($subject))
-            ->setFrom(['expedientes@secretariovirtual.ar' => 'Secretario Virtual'])
-            ->setTo($this->email)
-            ->setCc($headers)
-            ->setBody($message, 'text/html');
-
-        // Envía el mensaje
-
-
-        try {
-            $result = $mailer->send($messageObj);
-            echo "email enviado";
-            return $result;
-        } catch (Exception $e) {
-            echo "Error al enviar el correo: " . $e->getMessage();
-            return false;
-        }
-    }
+  }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { PasswordService } from '@services/password.service';
 import {
   FormControl,
@@ -28,7 +29,8 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private passwordService: PasswordService
+    private passwordService: PasswordService,
+    private cdr: ChangeDetectorRef
   ) {
     // creo el formulario dinamico con ngForm resetPassword
     this.resetPassword = new FormGroup(
@@ -42,16 +44,31 @@ export class ResetPasswordComponent implements OnInit {
           Validators.minLength(6),
         ]),
       },
-      [StrengthValidatorService.MatchValidator('password', 'repeatPassword')]
+      {
+        validators: StrengthValidatorService.MatchValidator(
+          'password',
+          'repeatPassword'
+        ),
+      }
     );
   }
 
   ngOnInit() {
     // Obtener el token y el correo electrónico desde la URL
-    this.route.queryParams.subscribe((params) => {
-      this.token = params['token'];
-      this.email = params['email'];
-    });
+    // this.route.params.subscribe((params) => {
+    //   this.token = params['token'];
+    //   this.email = params['email'];
+    // });
+
+    // // Verificar que el token y el correo electrónico no estén vacíos
+    // if (this.token == '' || this.email == '') {
+    //   console.log('Token o correo electrónico vacíos');
+    //   return; // Agrega un return para salir de la función si el token o el correo electrónico están vacíos
+    // }
+
+    // this.cdr.detectChanges();
+
+    console.log('Token', this.token, 'Correo electrónico', this.email);
   }
 
   onSubmit() {

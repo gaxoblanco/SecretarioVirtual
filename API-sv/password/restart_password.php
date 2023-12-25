@@ -30,6 +30,7 @@ class user_password_restart
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
       } catch (PDOException $e) {
+        http_response_code(500);
         echo json_encode(['message' => 'Error en el user-email']);
       }
 
@@ -45,9 +46,14 @@ class user_password_restart
           $stmt->execute();
 
           // envio el correo electronico con el token
-          echo json_encode('http://localhost:4200/reset-password?token=' . $token_hash . '&email=' . $this->email);
+          // echo json_encode('http://localhost:4200/reset-password?token=' . $token_hash . '&email=' . $this->email);
+
+          // envio el correo electronico con el token
+          require_once 'email_restart.php';
+          $email = new email_restart($this->conexion, $this->email, $token_hash);
+          $email->write_restart();
         } catch (PDOException $e) {
-          echo json_encode(['message' => 'Error en el token']);
+          echo json_encode('Error en el token');
         }
       } else {
         // Inicializa $secretary fuera del bloque try
@@ -75,12 +81,18 @@ class user_password_restart
             $stmt->execute();
 
             // envio el correo electronico con el token
-            echo json_encode('http://localhost:4200/reset-password?token=' . $token_hash . '&email=' . $this->email);
+            // echo json_encode('http://localhost:4200/reset-password?token=' . $token_hash . '&email=' . $this->email);
+
+            // envio el correo electronico con el token
+            require_once './email_restart.php';
+            $email = new email_restart($this->conexion, $this->email, $token_hash);
+            $email->write_restart();
           } catch (PDOException $e) {
-            echo json_encode(['message' => 'Error en el token de secretaries']);
+            echo json_encode('Error en el token de secretaries');
           }
         } else {
-          echo json_encode(['message' => 'email no existe']);
+          http_response_code(202);
+          echo json_encode("email no existe");
           return;
         }
       }

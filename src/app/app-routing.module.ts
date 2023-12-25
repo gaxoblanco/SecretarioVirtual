@@ -30,7 +30,9 @@ const routes: Routes = [
   { path: 'register', component: RegisterScreenComponent },
   { path: 'subcribe', component: SubcribeScreenComponent },
   { path: 'juzgado', component: JusticeComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
+  // { path: 'reset-password', component: ResetPasswordComponent },
+  // reset-password/:token/:email
+  { path: 'reset-password/:token/:email', component: ResetPasswordComponent },
 ];
 
 @NgModule({
