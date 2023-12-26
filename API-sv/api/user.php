@@ -67,6 +67,7 @@ function userRoot($route, $method, $conexion)
         echo json_encode(['message' => 'Method Not /user/password-change']);
       }
       break;
+
     default:
       // Ruta no encontrada
       http_response_code(404);

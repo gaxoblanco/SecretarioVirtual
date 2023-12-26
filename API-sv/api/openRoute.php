@@ -97,6 +97,7 @@ function openRoute($route, $method, $conexion)
         echo json_encode(['message' => 'Method Not Allowed']);
       }
       break;
+
     default:
       // Ruta no encontrada
       http_response_code(404);

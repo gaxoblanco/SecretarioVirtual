@@ -31,10 +31,11 @@ class up_user_exp
         $userIndex = findUserIndex($user['id_user'], $this->newsBy);
 
 
-
+        // echo "userIndex: " . $userIndex . "<br>";
+        echo "expedient: " . var_dump($expedient['tipo_lista']) . "<br->";
         // si tipo_lista == null
         if ($expedient['tipo_lista'] == null) {
-          // echo "el expediente del usuario: " . $user['id_user'] . " no TENIA dependencia: " . $expedient['numero_exp'] . '/' . $expedient['anio_exp'] . " - id_exp " . $expedient['id_exp'] . " : ";
+          // echo "el expediente del usuario: " . $user['id_user'] . " no tiene tipo_lista <br>";
 
           require_once './up-exp/exists_exp.php';
           // llamar a la funcion existsExp que recibe el numero_exp, anio_exp y dependencia
@@ -89,8 +90,8 @@ class up_user_exp
         require_once './up-exp/exists_move.php';
         $ExpMoving = getExpedientsMoves($idExpediente, $this->conexion);
         // controlo que $ExpMoving no sea null es decir que tenemos al menos 1 movimiento
-        if (!$ExpMoving) {
-          // echo "El expediente " . $idExpediente . " no tiene movimientos.<br>";
+        if (!$ExpMoving) { // me esta devolviendo 1
+          // echo "El ExpMoving " . $idExpediente . " no tiene movimientos.<br>";
         }
 
         // obtengo los movimientos del expediente en la tabla user_exp_move, buscando por el $expedient['id_exp']
@@ -101,16 +102,12 @@ class up_user_exp
           echo "El expediente " . $expedient['id_exp'] . " no tiene movimientos. <br>";
         }
 
-        // echo "UserExpMoving: <pre>" . print_r($userExpMoving, true) . "</pre>";
-        // echo " ---------- ";
-        // echo "ExpMoving: <pre>" . print_r($ExpMoving, true) . "</pre>";
-
         // comparo el numero de elementos de $ExpMoving con $userExpMoving, si $ExpMoving tiene mas elementos que $userExpMoving, obtengo los movimientos que no estan en $userExpMoving
-        if ((is_array($ExpMoving) && is_array($userExpMoving)) && (count($ExpMoving) > count($userExpMoving))) {
+        if (is_array($ExpMoving) && is_array($userExpMoving) && count($ExpMoving) > count($userExpMoving)) {
           // Obtén los nuevos elementos que están en $ExpMoving pero no en $userExpMoving
-          $newMoves = array_diff($ExpMoving, $userExpMoving);
+          $newMoves = array_diff_assoc($ExpMoving, $userExpMoving);
+          echo "ExpMoving-->: <pre>" . print_r($newMoves, true) . "</pre>";
 
-          var_dump($newMoves);
 
           // actualiza la tabla user_exp_move con los movimientos que no estan en $userExpMoving y el id_exp = $expedient['id_exp']
           require_once './up-exp/new_move.php';
@@ -149,10 +146,6 @@ class up_user_exp
         }
       }
     }
-    echo '---';
-    // imprimo el array newsBy actualizado en este bloque
-    echo "Bloques - newsBy: <pre>" . print_r($this->newsBy, true) . "</pre>";
-    echo '---';
     // echo json_encode($this->newsBy);
     return $this->newsBy;
   }

@@ -7,11 +7,17 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 require_once 'config.php';
 
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, email, password, token, userId, idExp, caseNumber, caseYear, dependencia, secreataryId, oldSemail, newSemail, Spass, firstName, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+require_once 'config.php';
+
 // Comprueba el método de solicitud y la ruta para determinar la acción
 $request = $_SERVER['REQUEST_URI'];
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
-  die();
+  header("HTTP/1.1 200 OK");
+  exit();
 }
 
 // crea $route =  elemento que sigue a API-sv en $request y borra lo que sigue
@@ -26,13 +32,6 @@ $publicRoutes = [
   'user/password-reset'
 ];
 
-// consulto si la ruta esta en el grupo publicRoutes con un for
-// for ($i = 0; $i < count($publicRoutes); $i++) {
-//   if ($route == $publicRoutes[$i]) {
-//     require_once 'api/openRoute.php';
-//     openRoute($route, $method, $conexion);
-//   }
-// }
 
 // consulto si la ruta NO esta en el grupo publicRoutes
 if (!in_array($route, $publicRoutes)) {
@@ -53,7 +52,7 @@ if (!in_array($route, $publicRoutes)) {
     array_shift($root);
   }
 
-  // derivo la solicitud a la rama correspondiente
+  // envio la solicitud a la rama correspondiente
   switch ($root[0]) {
     case 'user':
       if ($root[1] == 'secretary') {

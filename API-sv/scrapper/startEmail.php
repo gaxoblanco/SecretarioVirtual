@@ -24,6 +24,11 @@ do {
   $oldTableUserExp = $tablesUpdater->userExpedients($offset, $limit);
 
   // echo json_encode($oldTableUserExp);
+  // valido que el array no este vacio
+  if (empty($oldTableUserExp)) {
+    echo "No hay usuarios con expedientes\n";
+    break;
+  }
 
   // compara las tablas y actualiza los expedientes y movimientos
   $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
@@ -31,11 +36,17 @@ do {
 
   echo json_encode("correos para...\n");
 
+  // valido que el array no este vacio
+  if (empty($newsBy)) {
+    echo "No hay correos para enviar\n";
+    break;
+  }
+
   // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
   $writeMail = new write_mail($conexion, $newsBy);
   $writeMail->write();
-  // echo json_encode($writeMail->write());
+  echo json_encode("correo enviado al grupo\n");
 
   // Incrementar el offset para el siguiente bloque
   $offset += $limit;
-} while (!empty($oldTableUserExp)); // cuando ya no hayan usuarios en la tabla users, termina el bucle
+} while (!empty($oldTableUserExp));

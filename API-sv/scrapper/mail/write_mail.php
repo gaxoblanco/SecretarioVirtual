@@ -38,7 +38,7 @@ class write_mail
     // Llama a la funcion createHeader y le pasa el array result como parametro
     $this->createHeader($result);
 
-    echo count($result);
+    // echo count($result);
     return $result;
   }
 
@@ -62,9 +62,17 @@ class write_mail
   private function createHeader($result)
   {
     foreach ($result as $news) {
+      // valido que el $news['email'] sea valido
+      if (empty($news['email']) && !filter_var($news['email'], FILTER_VALIDATE_EMAIL)) {
+        echo "El email " . $news['email'] . " no es valido";
+        continue;
+      }
+
       $email = $news['email'];
       $secretaries = $news['secretaries'];
       $this->sendMail($email, $secretaries, $news);
+
+      // echo json_encode($secretaries);
     }
     echo "header creado";
   }
@@ -95,7 +103,7 @@ class write_mail
     // Envía el mensaje
     try {
       $result = $mailer->send($messageObj);
-      echo "Mail enviado";
+      echo "email enviado";
       return $result;
     } catch (Exception $e) {
       echo "Error al enviar el correo: " . $e->getMessage();
@@ -108,8 +116,25 @@ class write_mail
   {
     $headers = [];
 
+
     foreach ($secretaries as $secretary) {
+      // valido que el $secretary['Semail'] sea valido
+      if (empty($secretary['Semail']) && !filter_var($secretary['Semail'], FILTER_VALIDATE_EMAIL)) {
+        echo "El email " . $secretary['Semail'] . " no es valido";
+        continue;
+      }
       $headers[] = $secretary['Semail'];
+    }
+
+    // Hacer una copia de $headers para iterar
+    $headersCopy = $headers;
+
+    // Iterar sobre la copia
+    foreach ($headersCopy as $key => $email) {
+      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        // Eliminar el correo electrónico no válido de $headers
+        unset($headers[$key]);
+      }
     }
 
     echo "con copia creado";
@@ -126,6 +151,9 @@ class write_mail
     $message .= "<p>Se le notifica que los siguientes expedientes tuvieron movimientos:</p>";
 
     foreach ($news['expedients'] as $expedient) {
+
+
+
       $message .= "<div style='height: 4px; background-color: #37bbed; margin: 30px; border-radius: 10px;'>";
       $message .= "</div>";
       $message .= "<div style='max-width: 80%; border: 1px solid #a0bdcf; padding: 10px; margin: 0 auto; border-top: 20px solid #37bbed; border-radius: 12px;'>";
@@ -140,10 +168,11 @@ class write_mail
 
 
       //si $expedient['movimientos'] escribo el expediente aun no tiene movimientos
-      if (isset($expedient['movimientos'])) { //si $expedient['movimientos'] esta vacio
+      if (!empty($expData['movimientos'])) { //si $expedient['movimientos'] esta vacio
         $message .= "<div style='border: 1px solid #a0bdcf; padding: 10px; margin: 10px; border-top: 10px solid #37bbed;'>";
         $message .= "<h5 style='font-weight: bold; font-size:14px;'>El expediente aun no tiene movimientos</h5>";
         $message .= "</div>";
+      } else {
 
         foreach ($expedient['movimientos'] as $movimiento) {
           $message .= "<div style='border: 1px solid #a0bdcf; margin: 10px; border-radius: 12px;'>";
@@ -155,20 +184,17 @@ class write_mail
           $message .= "</div>";
 
           $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Texto: " .
-            "<p style='margin: 8px; margin-left: 12px;>" . $movimiento['texto'] . "</p>" . "</h5>";
+            "<p style='padding: 0px 10px;'>" . $movimiento['texto'] . "</p>" . "</h5>";
           $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Título: " .
-            "<p style='margin: 8px; margin-left: 12px;>" . $movimiento['titulo'] . "</p>" . "</h5>";
+            "<p style='padding: 0px 10px;'>" . $movimiento['titulo'] . "</p>" . "</h5>";
           $message .= "<h5 style='margin: 10px; font-weight: bold; font-size:14px;'>Despacho: " .
-            "<p style='margin: 8px; margin-left: 12px;>" . $movimiento['despacho'] . "</p>" . "</h5>";
+            "<p style='padding: 0px 10px;'>" . $movimiento['despacho'] . "</p>" . "</h5>";
           $message .= "</div>";
         }
       }
-
       $message .= "</div>";
     }
     $message .= "</body></html>";
-
-    echo "body creado";
 
     return $message;
   }

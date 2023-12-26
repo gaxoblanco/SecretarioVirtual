@@ -43,7 +43,6 @@ class email_restart
     $message .= "<a href='" . $resetLink . "'>secretariovirtual.ar/restablecer</a>";
     $message .= "<p style='color:#090909;'>Si no solicitaste restablecer tu contraseña, puedes ignorar este correo.</p>";
     $message .= "</div>";
-    $message .= "<a href='" . $resetLink . "'>" . $resetLink . "</a>";
     $message .= "</body></html>";
 
     return $message;
