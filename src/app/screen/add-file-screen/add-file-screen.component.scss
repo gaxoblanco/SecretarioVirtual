@@ -44,6 +44,9 @@ input, select{
       }
     }
   }
+  legend {
+    font-size: 1rem;
+  }
   .disabled{
     background-color: #ed3737d5;
     cursor: default;

@@ -16,6 +16,21 @@ body{
   border: none;
   background-color: #1BBB1F;
   border: 3px solid transparent;
+  display: grid;
+  .button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  &:hover {
+    border: 3px solid #1BBB1F;
+    .button {
+      // si se hacer hover sobre el boton
+        font-weight: 600;
+    }
+  }
 }
 .button-delete{
   text-decoration: none;
@@ -36,7 +51,21 @@ body{
   border: none;
   background-color: #37BBED;
   border: 3px solid transparent;
-  font-weight: 600;
+  font-weight: 400;
+  .button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  &:hover {
+    border: 3px solid #37BBED;
+    .button {
+      // si se hacer hover sobre el boton
+        font-weight: 600;
+    }
+  }
 }
 
 

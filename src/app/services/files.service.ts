@@ -86,6 +86,11 @@ export class FilesService {
             this.upDependencia();
           }
           return response;
+        }),
+        catchError((error) => {
+          console.error('Error en la solicitud HTTP:', error);
+          // Puedes realizar acciones adicionales según tus necesidades, como notificar al usuario.
+          throw error; // Propaga el error para que otros puedan manejarlo.
         })
       );
   }

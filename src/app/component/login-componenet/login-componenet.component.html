@@ -41,7 +41,7 @@
       </ng-container>
       <div class="form-group mb-4">
         <!-- <button type="button"(onClick)="changeState()"> -->
-        <a (click)="changeState()" class="">
+        <a (click)="changeState()" aria-label="Restablecer contraseña olvidada">
           ¿Olvidaste tu contraseña?
         </a>
       <!-- </button> -->
@@ -55,10 +55,13 @@
   </div>
   <div class="createUser-container">
     <h5 class="mb-3">¿No tenés cuenta?</h5>
-    <button
+    <a
       type="submit"
-      class="btn button-blue"
+      class="btn button-blue button--create"
       [routerLink]="['/register']"
-      >Creá tu cuenta</button>
+      aria-label="Crear una cuenta nueva"
+      >
+      <button class="button">Creá tu cuenta</button>
+    </a>
   </div>
 </div>

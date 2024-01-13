@@ -1,13 +1,15 @@
 <section class="container">
   <article class="mb-4">
-    <div class="card bg-dark text-white card-img">
+    <figure class="card bg-dark text-white card-img">
       <img src="https://i.imgur.com/AYHi0WX.png" class="card-img" alt="Demo">
-      <button class="card-link" [routerLink]="['/login']">Login</button>
+      <a [routerLink]="['/login']" class="card-link" aria-label="Ir a la página de inicio de sesión">
+        <button class="button">Login</button>
+      </a>
       <div class="card-img-overlay card-text-container">
         <h4 class="card-title">La tecnología llegó a tu despacho</h4>
         <p class="card-text">Somos un servicio listo para ayudarte a dar el siguiente gran paso en tu carrera profesional</p>
       </div>
-    </div>
+    </figure>
   </article>
 
   <article class="mb-4">

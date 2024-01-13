@@ -2,10 +2,6 @@
 // Habilitar CORS
 header('Access-Control-Allow-Origin: https://secretariovirtual.ar/');
 header('Access-Control-Allow-Credentials: true');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, email, password, token, userId, idExp, caseNumber, caseYear, dependencia, secreataryId, oldSemail, newSemail, Spass, firstName");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Allow: GET, POST, OPTIONS, PUT, DELETE");
-require_once 'config.php';
 
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, email, password, token, userId, idExp, caseNumber, caseYear, dependencia, secreataryId, oldSemail, newSemail, Spass, firstName, Authorization");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -44,6 +40,14 @@ if (!in_array($route, $publicRoutes)) {
   $token = $_SERVER['HTTP_TOKEN'];
 
   verifyToken($conexion, $token);
+  // si la respuesta es false muestro el mensaje de error
+  if (!verifyToken($conexion, $token)) {
+    http_response_code(401);
+    echo json_encode(['message' => 'Token no valido']);
+    exit;
+  }
+
+  //
 
   //ahora limpio $route de todo lo que sigue a un \/ para saber a que ruta maestra corresponde
   $root = explode('/', $route);
@@ -54,6 +58,10 @@ if (!in_array($route, $publicRoutes)) {
 
   // envio la solicitud a la rama correspondiente
   switch ($root[0]) {
+      // valido que token exista en la base de datos
+
+
+
     case 'user':
       if ($root[1] == 'secretary') {
         require_once 'api/secretary.php';
