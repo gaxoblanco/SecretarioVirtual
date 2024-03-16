@@ -72,10 +72,6 @@ export class PendingListScreenComponent implements OnInit {
       }
       // console.log('files-com', files[0]);
     });
-    // this.FileSer.getFiles$().subscribe((files) => {
-    //   this.fileList = files;
-    //   console.log('files-com', files[0]);
-    // });
   }
 
   deleteFile(id: any) {

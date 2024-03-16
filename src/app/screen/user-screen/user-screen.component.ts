@@ -74,6 +74,9 @@ export class UserScreenComponent implements OnInit {
       this.NumberFile = response.length;
     });
 
+    // decodifico el email
+    this.user$.email = this.userServ.encodeToHtml(this.user$.email);
+
     // si el numero maximo de secretarios == num_secretary desactivo al add secretary
     setTimeout(() => {
       if (this.list$.length < this.user$.subscription.num_secretary) {

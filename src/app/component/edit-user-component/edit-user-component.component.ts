@@ -48,6 +48,10 @@ export class EditUserComponentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // decodifico el email
+    this.userScreen.user$.email = this.userServ.encodeToHtml(
+      this.userScreen.user$.email
+    );
     this.userServ.getUser$().subscribe((user) => {
       this.user$ = user;
       console.log('userrrr', user);

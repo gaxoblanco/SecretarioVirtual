@@ -37,27 +37,30 @@
       </div>
     </form>
   </div>
-  <table class="table">
-    <caption>Lista de Expedientes recién cargados</caption>
-    <thead class="thead-container">
-      <tr class="table--tr">
-        <th scope="col" class="table--th l">
-          N°Exp
-        </th>
-        <th scope="col" class="table--th">
-          Año
-        </th>
-        <th scope="col" class="table--th r">
-          Dependencia
-        </th>
-      </tr>
-    </thead>
-    <tbody class="add_file-tbody">
-        <tr class="add_file-tr" *ngFor="let fileList of newFileList" @fadeInOut>
-          <td class="add_file-td"> {{fileList.numero_exp}}</td>
-          <td class="add_file-td--r"> {{fileList.anio_exp}}</td>
-          <td class="add_file-td--r"> {{fileList.dependencia}}</td>
+
+    <table class="table">
+      <caption>Lista de Expedientes recién cargados</caption>
+      <thead class="thead-container">
+        <tr class="table--tr">
+          <th scope="col" class="table--th l">
+            N°Exp
+          </th>
+          <th scope="col" class="table--th">
+            Año
+          </th>
+          <th scope="col" class="table--th r">
+            Dependencia
+          </th>
         </tr>
-    </tbody>
-  </table>
+      </thead>
+      <div class="table-container">
+      <tbody class="add_file-tbody">
+          <tr class="add_file-tr" *ngFor="let fileList of newFileList" @fadeInOut>
+            <td class="add_file-td"> {{fileList.numero_exp}}</td>
+            <td class="add_file-td--r"> {{fileList.anio_exp}}</td>
+            <td class="add_file-td--r"> {{fileList.dependencia}}</td>
+          </tr>
+      </tbody>
+    </div>
+    </table>
 </article>

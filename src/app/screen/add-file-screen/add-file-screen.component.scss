@@ -13,7 +13,6 @@ input, select{
 }
 .container{
   display: grid;
-  align-items: baseline;
   align-content: center;
 }
 .add-container-form{
@@ -55,6 +54,11 @@ input, select{
     background-color: #1BBB1F;
   }
 
+}
+
+.table-container {
+  max-height: 360px; /* Altura máxima para activar el desplazamiento */
+  overflow-y: auto; /* Desplazamiento vertical automático */
 }
 
 @media (min-width: 500){

@@ -86,7 +86,7 @@ class write_mail
       ->setFrom(['expedientes@secretariovirtual.ar' => 'Secretario Virtual'])
       ->setTo([$email])
       ->setCc($headers)
-      ->setBody($message, 'text/html');
+      ->setBody($message, 'index.html');
 
     // Envía el mensaje
     try {

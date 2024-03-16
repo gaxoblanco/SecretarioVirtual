@@ -167,4 +167,11 @@ export class UserServiceService {
   getUser$(): Observable<User> {
     return this.user$.asObservable();
   }
+
+  // encodeEmail
+  encodeToHtml(str: string): string {
+    return str.replace(/./g, function (s) {
+      return '&#' + s.charCodeAt(0) + ';';
+    });
+  }
 }

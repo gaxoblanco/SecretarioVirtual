@@ -21,7 +21,7 @@
           <!-- con una ternaria muestro el spinn hasta que user.firstName es != ''-->
           <ng-container *ngIf="user$.firstName !== ''">
             <p>{{user$.firstName}} {{user$.lastName}}</p>
-            <p>{{user$.email}}</p>
+            <p [innerHTML]="user$.email"></p>
             <p>********</p>
           </ng-container>
           <ng-container *ngIf="user$.firstName === ''">

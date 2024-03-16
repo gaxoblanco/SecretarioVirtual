@@ -1,13 +1,13 @@
 export interface Additional {
-  id?: Number;
-  firstName: String;
-  Semail: String;
-  secreataryId?: String;
+  id?: number;
+  firstName: string;
+  Semail: string;
+  secreataryId?: string;
   data?: any;
 }
 
 export interface newAdditionalDTO extends Omit<Additional, 'id'> {}
 
 export interface UpAdditionalDTO extends newAdditionalDTO {
-  id?: Number;
+  id?: number;
 }
