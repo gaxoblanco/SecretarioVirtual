@@ -17,6 +17,29 @@ function dispatchRoot($route, $method, $conexion)
       }
       break;
 
+      // dispatch get by id
+    case 'dispatch/getById':
+      require_once './dispatch/get_dispatchById.php';
+      if ($method === 'POST') {
+        // Obtener el id_exp del cuerpo de la solicitud
+        $data = json_decode(file_get_contents('php://input'), true);
+        $idExp = $data['idExp'];
+        // Verificar si el id_exp está presente y es válido
+        if (isset($idExp)) {
+          $getDispatch = new get_dispatch($conexion, $idExp);
+          $getDispatch->getDispatchById();
+        } else {
+          // No se proporcionó un id_exp válido en el cuerpo de la solicitud
+          http_response_code(400); // Bad Request
+          echo json_encode(['message' => 'Se requiere un id_exp válido en el cuerpo de la solicitud']);
+        }
+      } else {
+        // Método no permitido para esta ruta
+        http_response_code(405);
+        echo json_encode(['message' => 'Method Not Allowed']);
+      }
+      break;
+
       //dispatch moves
     case 'dispatch/moves':
       require_once './dispatch/get_moves.php';

@@ -1,0 +1,54 @@
+.expedients {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0 0 6px 6px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.exp--title{
+  background-color: #37BBED;
+  border-radius: 6px 6px 0 0;
+  padding: 0.4rem 1rem;
+  color: white;
+}
+
+.data{
+  h4 {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 0.6rem;
+  }
+}
+
+.move-container {
+  margin-top: 10px;
+}
+
+.move {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  &-title {
+    margin: 1rem 0 0.6rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+}
+
+.movimiento h4 {
+  font-weight: bold;
+  color: #666;
+}
+
+.detail{
+  display: grid;
+  grid-gap: 0.6rem;
+  &--text {
+    margin-left: 1rem;
+  }
+}
+

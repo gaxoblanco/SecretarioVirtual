@@ -1,1 +1,66 @@
-<p>history-exp works!</p>
+<div class="container" *ngIf="expData">
+  <h1 class="exp--title">
+    Expediente: {{ expData.numero_exp ? expData.numero_exp : 0 }} /
+    {{ expData.anio_exp ? expData.anio_exp : 0 }}
+  </h1>
+  <div class="expedients">
+    <!-- Iteración sobre cada expediente -->
+    <div class="exp">
+      <div class="datos">
+        <h3 class="data-inline">
+          Carátula:
+          <p class="{{ expData.caratula != null ? '' : 'disabled-gray' }}">
+            {{
+              expData.caratula != null ? expData.caratula : "- sin asignar -"
+            }}
+          </p>
+        </h3>
+        <h3 class="data-inline">
+          Reservado:
+          <p class="{{ expData.reservado != null ? '' : 'disabled-gray' }}">
+            {{
+              expData.reservado != null ? expData.reservado : "- sin asignar -"
+            }}
+          </p>
+        </h3>
+        <h3 class="data-inline">
+          Dependencia:
+          <p>{{ expData.dependencia }}</p>
+        </h3>
+        <h3 class="data-inline">
+          Tipo de lista:
+          <p class="{{ expData.tipo_lista != null ? '' : 'disabled-gray' }}">
+            {{
+              expData.tipo_lista != null
+                ? expData.tipo_lista
+                : "- sin asignar -"
+            }}
+          </p>
+        </h3>
+      </div>
+      <h3 class="move-title">
+        Movimientos:
+        <h4 *ngIf="expData.moves.length == 0">Sin movimientos</h4>
+      </h3>
+      <div class="move-container" *ngIf="expData.moves.length > 0">
+        <!-- Iteración sobre cada movimiento del expediente -->
+        <div class="move" *ngFor="let move of expData.moves">
+          <div class="data">
+            <h4>Fecha de movimiento: {{ move.fecha_movimiento }}</h4>
+            <h4>Estado: {{ move.estado }}</h4>
+          </div>
+          <div class="detail">
+            <h4>{{ move.texto != "" ? "Texto:" : "" }}</h4>
+            <p class="detail--text" [innerHTML]="move.texto"></p>
+            <div class="data-inline">
+              <h4>Título:</h4>
+              <p>{{ move.titulo }}</p>
+            </div>
+            <!-- Verificar si el despacho está presente -->
+            <h4 *ngIf="move.despacho">Despacho: {{ move.despacho }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

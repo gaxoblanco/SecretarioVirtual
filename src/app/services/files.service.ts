@@ -8,7 +8,6 @@ import { AppRoutingModule } from '../app-routing.module';
 import { TokenService } from './token.service';
 import { checkToken } from '../interceptors/token.interceptor';
 import { dependencias, Dependencia } from '@models/dependencias';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +27,6 @@ export class FilesService {
   ) {}
 
   addFiles(data: NewFile) {
-    // Obtengo el token y id
-    const token = this.tokenService.getToken();
-    // console.log(data);
-
     return this.http
       .post(`${this.apiUrl}/dispatch/create`, data, { context: checkToken() })
       .pipe(
@@ -71,7 +66,6 @@ export class FilesService {
         }),
         catchError((error) => {
           console.error('Error en la solicitud HTTP:', error);
-          // Puedes realizar acciones adicionales según tus necesidades, como notificar al usuario.
           throw error; // Propaga el error para que otros puedan manejarlo.
         })
       );
@@ -80,20 +74,26 @@ export class FilesService {
   // funcion para buscar expediente por id
   getFilById(idExp: object): Observable<FileModel> {
     // hago la consulta a dispatch/getById y le envio el id del expediente
-    console.log('idExp', idExp);
-
     return this.http
       .post<any>(`${this.apiUrl}/dispatch/getById`, idExp, {
         context: checkToken(),
       })
       .pipe(
         tap((response) => {
-          console.log('file', response);
+          // consulto si el campo dependencia existe en el objeto
+          if (response.dependencia) {
+            // si existe busco el nombre de la dependencia
+            const dependencia = dependencias.find(
+              (dependencia) => dependencia.id === response.dependencia
+            );
+            response.dependencia = dependencia?.nombre || '';
+          }
+          console.log('expById --', response);
+
           return response;
         }),
         catchError((error) => {
           console.error('Error en la solicitud HTTP:', error);
-          // Puedes realizar acciones adicionales según tus necesidades, como notificar al usuario.
           throw error; // Propaga el error para que otros puedan manejarlo.
         })
       );
@@ -134,7 +134,6 @@ export class FilesService {
       file.dependencia = dependencia?.nombre || '';
     });
     // console.log('newDependencia', files);
-
     this.files$.next(files);
   }
 
@@ -145,7 +144,7 @@ export class FilesService {
   // delete file by id -- falta mejorar para usar delete
   deleteFiles(id: number) {
     const dispatchId = { idExp: id };
-    console.log('dispatchId', dispatchId);
+    // console.log('dispatchId', dispatchId);
 
     return this.http
       .post(`${this.apiUrl}/dispatch/delete`, dispatchId, {
