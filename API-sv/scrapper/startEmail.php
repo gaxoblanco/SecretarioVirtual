@@ -1,4 +1,9 @@
 <?php
+// This script is in charge of processing the step-by-step for sending the emails
+// 1 - Get the users with pagination
+// 2 - Compare the tables and update the expedients and movements
+// 3 - Create the emails from the $newsBy, array of users with expedient that had changes
+// 4 - Send the emails to the group
 
 // Incluir la clase users_data
 require_once 'users_data.php';
@@ -19,7 +24,7 @@ $offset = 0;
 $limit = 50; // Número de usuarios por bloque
 
 do {
-  //obtengo un array de usuarios con sus expedientes y los movimientos asociados
+  //1 obtengo un array de usuarios con sus expedientes y los movimientos asociados
   $tablesUpdater = new users_data($conexion);
   $oldTableUserExp = $tablesUpdater->userExpedients($offset, $limit);
 
@@ -30,9 +35,9 @@ do {
     break;
   }
 
-  // compara las tablas y actualiza los expedientes y movimientos
+  // 2 compara las tablas y actualiza los expedientes y movimientos
   $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-  $newsBy = $upUserExp->getExpedient($offset, $limit);
+  $newsBy = $upUserExp->getExpedient($offset, $limit); // $newsBy is an array of users with expedient that had changes
 
   echo json_encode("correos para...\n");
 
@@ -42,7 +47,7 @@ do {
     break;
   }
 
-  // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
+  // 3 crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
   $writeMail = new write_mail($conexion, $newsBy);
   $writeMail->write();
   echo json_encode("correo enviado al grupo\n");

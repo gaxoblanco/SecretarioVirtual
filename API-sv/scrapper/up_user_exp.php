@@ -1,12 +1,16 @@
 <?php
 //  teniendo los datos de todos los usuarios  // es decir toda la db de los expedientes que desean los usuarios
-//  tablas:
-//  1- user_expedients: id_exp 	id_lista_despacho 	numero_exp 	id_user 	anio_exp 	caratula 	reservado 	dependencia 	tipo_lista
-//  2- user_exp_move:  id_move 	fecha_movimiento 	estado 	titulo 	texto 	despacho 	id_exp
-//  3- expedientes:  id_expediente 	id_lista_despacho 	numero_expediente 	anio_expediente 	caratula 	reservado 	dependencia 	tipo_lista
-//  4- movimientos:  id_expediente 	id_lista_despacho 	numero_expediente 	anio_expediente
+// 1 - compare the tables and update the expedients and movements
+// 2 - Save the expedients data in the newsBy index
+// 3 - clear and prepare the data to be saved
+// 4 - Take the id_expediente and save the movements
+// 5 - Take the discrepancies in the movements tables and save in $newMoves array
+// 6 - Update the user_exp_move table
+// 7 - Add the array newsMoves to the array newsBy
 
 require_once './up-exp/find_index.php';
+require_once './up-exp/exists_exp.php';
+
 class up_user_exp
 {
   private $conexion;
@@ -20,10 +24,9 @@ class up_user_exp
     $this->newsBy = [];
   }
 
-  // consulta en la tabla expedientes, por cada expediente que tenga el campo dependencia == null, por un expediente que tenga numero_expediente == numero_exp y anio_expediente == anio_exp
-  // si no existe, vevuelve mensaje " expediente no encontrado"
   public function getExpedient($offset, $limit)
   {
+    // 1 - Compare the tables
     foreach ($this->users as &$user) {
       foreach ($user['expedients'] as &$expedient) {
         //---- array constructor
@@ -37,11 +40,11 @@ class up_user_exp
         if ($expedient['tipo_lista'] == null) {
           // echo "el expediente del usuario: " . $user['id_user'] . " no tiene tipo_lista <br>";
 
-          require_once './up-exp/exists_exp.php';
-          // llamar a la funcion existsExp que recibe el numero_exp, anio_exp y dependencia
+          // Valido si el expediente existe en la tabla expedientes
           $ifExisted = existsExp($expedient['numero_exp'], $expedient['anio_exp'], $user['id_user'], $expedient['id_exp'], $expedient['dependencia'], $this->conexion);
           // echo "existsExp data: " . var_dump($ifExisted) . " : ";
 
+          // 2 - Save the expedients data
           // Si $ifExisted devuelve datos los guardamos en el indice expdients del newsBy
           if ($ifExisted) {
 
@@ -55,7 +58,7 @@ class up_user_exp
               ];
               $userIndex = count($this->newsBy) - 1; // El índice del usuario que acabamos de agregar
             }
-            // de actualizar la tabla para que concidan los nombres se resuelven las lineas de codigos de abajo.
+            // 3 - clear and prepare the data to be saved
             // borro el "id_expediente" del newsBy->expedients // id_expediente viene de la tabla expedients
             unset($ifExisted[0]['id_expediente']);
             // inserta el id_exp = $expedient['id_exp']
@@ -75,6 +78,7 @@ class up_user_exp
           }
         }
 
+        // 4 - Take the id_expediente
         // si existe el expediente (tipo_lista != null) - obtengo el id del expediente
         require_once './up-exp/id_expedient.php';
         $idExpediente = getIdExpediente($expedient['numero_exp'], $expedient['anio_exp'], $expedient['dependencia'], $this->conexion);
@@ -85,12 +89,13 @@ class up_user_exp
           // echo "El expediente del usuario " . $user['id_user'] . " no se encontró en la tabla expedientes. <br>";
         }
 
+        // 4 - Take the de movements
         //---- Movimientos del Expediente ----
         // obtengo los movimientos del expediente en la tabla movimientos
         require_once './up-exp/exists_move.php';
         $ExpMoving = getExpedientsMoves($idExpediente, $this->conexion);
         // controlo que $ExpMoving no sea null es decir que tenemos al menos 1 movimiento
-        if (!$ExpMoving) { // me esta devolviendo 1
+        if (!$ExpMoving) {
           // echo "El ExpMoving " . $idExpediente . " no tiene movimientos.<br>";
         }
 
@@ -102,6 +107,7 @@ class up_user_exp
           echo "El expediente " . $expedient['id_exp'] . " no tiene movimientos. <br>";
         }
 
+        // 5 - Take the discrepancies in the movements tables
         // comparo el numero de elementos de $ExpMoving con $userExpMoving, si $ExpMoving tiene mas elementos que $userExpMoving, obtengo los movimientos que no estan en $userExpMoving
         if (is_array($ExpMoving) && is_array($userExpMoving) && count($ExpMoving) > count($userExpMoving)) {
           // Obtén los nuevos elementos que están en $ExpMoving pero no en $userExpMoving
@@ -109,10 +115,12 @@ class up_user_exp
           echo "ExpMoving-->: <pre>" . print_r($newMoves, true) . "</pre>";
 
 
+          // 6 Update the user_exp_move table
           // actualiza la tabla user_exp_move con los movimientos que no estan en $userExpMoving y el id_exp = $expedient['id_exp']
           require_once './up-exp/new_move.php';
           newMove($newMoves, $expedient['id_exp'], $this->conexion);
 
+          // 7 - Add the array newsMoves to the array newsBy
           // en el array newsBy, consulto si el usuario ya esta en el array
           if ($userIndex === null) {
             // el usuario aun no esta en la lista de newsBy, lo cargo junto con el expediente
@@ -142,7 +150,11 @@ class up_user_exp
           }
 
           // en el array newsBy, en el indice del user, en el indice expedients, agrego el array de movimientos
-          $this->newsBy[$userIndex]['expedients'][$expedientIndex]['movimientos'] = $newMoves;
+          // $this->newsBy[$userIndex]['expedients'][$expedientIndex]['movimientos'] = $newMoves;
+
+          //----- Service upgrade in progress -----
+          // En el array newsBy, en el indice del user, en el indice expedients, agrego el ultimo movimiento
+          $this->newsBy[$userIndex]['expedients'][$expedientIndex]['movimientos'][] = end($newMoves);
         }
       }
     }

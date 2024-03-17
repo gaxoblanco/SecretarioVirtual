@@ -10,7 +10,7 @@ class get_dispatch
   public function __construct($conexion, $userId)
   {
     $this->conexion = $conexion;
-    $this->userId = $userId;
+    $this->userId = 26;
   }
 
   public function getDispatches()
@@ -36,5 +36,7 @@ class get_dispatch
       http_response_code(500);  // Error interno del servidor
       echo json_encode(['error' => 'Error al obtener los expedientes: ' . $e->getMessage()]);
     }
+    //devuelvo por consola el array de expedientes
+    echo json_encode($dispatches);
   }
 }

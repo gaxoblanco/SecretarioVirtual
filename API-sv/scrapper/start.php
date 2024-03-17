@@ -1,4 +1,5 @@
 <?php
+// this script is in charge of updating the db with the public data
 
 // Incluir la clase scrapper
 require_once 'scrapper.php';
@@ -26,21 +27,3 @@ $scrapper = new TipoListaProcessor($pjf, $conexion);
 $scrapper->startScript(); // Ejecutar el scrapper
 
 echo "Scrapper finalizado\n";
-
-// //obtengo un array de usuarios con sus expedientes y los movimientos asociados
-// $tablesUpdater = new users_data($conexion);
-// $oldTableUserExp = $tablesUpdater->getExpedients();
-
-// echo "Actualizando base de datos...\n";
-
-// // compara las tablas y actualiza los expedientes y movimientos
-// $upUserExp = new up_user_exp($conexion, $oldTableUserExp);
-// $newsBy = $upUserExp->getExpedient();
-
-// echo "Base de datos actualizada\n";
-
-// // crear los correos apartir del array de usuario con expediente que tuvieron cambios write_mail
-// $writeMail = new write_mail($conexion, $newsBy);
-// $writeBy = $writeMail->write();
-
-// echo "Correos enviados: ";
