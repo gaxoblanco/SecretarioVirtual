@@ -68,9 +68,9 @@ export class PendingListScreenComponent implements OnInit {
         // si es un array lo guardo en fileList
         this.fileList = files;
       } else {
-        console.log('files', files);
+        console.log('sin expedientes');
       }
-      // console.log('files-com', files[0]);
+      console.log('files', files);
     });
   }
 
@@ -197,5 +197,10 @@ export class PendingListScreenComponent implements OnInit {
 
   hideDeleteMessage() {
     this.showDeleteMessageFlag = false;
+  }
+
+  // fucion para actualizar el idExpWorking
+  expWorking(id: number) {
+    this.FileSer.selectFile(id);
   }
 }

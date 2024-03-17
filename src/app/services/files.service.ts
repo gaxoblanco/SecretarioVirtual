@@ -17,6 +17,8 @@ export class FilesService {
   files$ = new BehaviorSubject<FileModel[]>([]);
   // url de API
   apiUrl = environment.API_URL;
+  // observable - data del expediente seleccionado/buscado
+  fileSelected$ = new BehaviorSubject<any>(null);
 
   constructor(
     private routerModul: AppRoutingModule,
@@ -24,10 +26,6 @@ export class FilesService {
     private router: Router,
     private tokenService: TokenService
   ) {}
-
-  // getAllFiles():Observable<FileModel[]>{
-
-  // }
 
   addFiles(data: NewFile) {
     // Obtengo el token y id
@@ -57,22 +55,6 @@ export class FilesService {
       );
   }
 
-  // sabiendo que dispatch/get devuelve:
-  // {
-  //   "0": 200,
-  //   "dispatches": [
-  //       {
-  //           "id_exp": 3,
-  //           "id_lista_despacho": 15754,
-  //           "numero_exp": 948,
-  //           "anio_exp": 19,
-  //           "caratula": "ALCALA, Francisco Rene C/ VENICA, Diamela Luisa S/ Juicio Ejecutivo",
-  //           "reservado": 0,
-  //           "dependencia": "7441513",
-  //           "tipo_lista": "1",
-  //           "id_user": 2
-  //       },
-
   getFiles(): Observable<FileModel[]> {
     return this.http
       .get<any[]>(`${this.apiUrl}/dispatch/get`, {
@@ -95,6 +77,53 @@ export class FilesService {
       );
   }
 
+  // funcion para buscar expediente por id
+  getFilById(idExp: object): Observable<FileModel> {
+    // hago la consulta a dispatch/getById y le envio el id del expediente
+    console.log('idExp', idExp);
+
+    return this.http
+      .post<any>(`${this.apiUrl}/dispatch/getById`, idExp, {
+        context: checkToken(),
+      })
+      .pipe(
+        tap((response) => {
+          console.log('file', response);
+          return response;
+        }),
+        catchError((error) => {
+          console.error('Error en la solicitud HTTP:', error);
+          // Puedes realizar acciones adicionales según tus necesidades, como notificar al usuario.
+          throw error; // Propaga el error para que otros puedan manejarlo.
+        })
+      );
+  }
+
+  // // funcion para buscar expediente por numero y anio
+  // searchFiles(number: string, year: string): Observable<FileModel[]> {
+  //   // hago la consulta a ...dispatch/searchNumberAnio enviando el token y los parametros con el numero y anio
+  //   return this.http
+  //     .get<any[]>(`${this.apiUrl}/dispatch/searchNumberAnio`, {
+  //       context: checkToken(),
+  //       params: { caseNumber: number, caseYear: year },
+  //     })
+  //     .pipe(
+  //       tap((response) => {
+  //         console.log('files', response);
+  //         if (response != null) {
+  //           this.files$.next(response);
+  //           this.upDependencia();
+  //         }
+  //         return response;
+  //       }),
+  //       catchError((error) => {
+  //         console.error('Error en la solicitud HTTP:', error);
+  //         // Puedes realizar acciones adicionales según tus necesidades, como notificar al usuario.
+  //         throw error; // Propaga el error para que otros puedan manejarlo.
+  //       })
+  //     );
+  // }
+
   // funcion para actualizar el valor de dependencia numero a nombre
   upDependencia() {
     const files = this.files$.getValue();
@@ -115,7 +144,7 @@ export class FilesService {
 
   // delete file by id -- falta mejorar para usar delete
   deleteFiles(id: number) {
-    const dispatchId = { dispatchId: id };
+    const dispatchId = { idExp: id };
     console.log('dispatchId', dispatchId);
 
     return this.http
@@ -137,5 +166,15 @@ export class FilesService {
           return throwError(response);
         })
       );
+  }
+
+  // funcion para actualizar el fileSelected$
+  selectFile(file: number) {
+    this.fileSelected$.next(file);
+  }
+
+  // funcion para obtener el fileSelected$
+  getFileSelected$() {
+    return this.fileSelected$.asObservable();
   }
 }

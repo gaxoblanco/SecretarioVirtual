@@ -100,7 +100,7 @@ export class UserServiceService {
 
   addNewAdditional(addEmail: UpAdditionalDTO) {
     // solicitud post a la API
-    console.log('addEmail', addEmail);
+    // console.log('addEmail', addEmail);
 
     return this.http
       .post<any>(`${this.apiUrl}/user/secretary/create`, addEmail, {
