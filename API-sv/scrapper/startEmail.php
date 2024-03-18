@@ -12,7 +12,7 @@ require_once 'users_data.php';
 require_once 'up_user_exp.php';
 
 // Incluir la clase write_mail
-require_once './email/write_mail.php';
+require_once 'write_mail.php';
 
 // Importar el cliente SQL
 require_once 'db.php';

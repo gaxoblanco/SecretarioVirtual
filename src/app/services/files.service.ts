@@ -58,6 +58,7 @@ export class FilesService {
       .pipe(
         tap((response) => {
           // console.log('files', response);
+          console.log('Response from API:', response);
           if (response != null) {
             this.files$.next(response);
             this.upDependencia();

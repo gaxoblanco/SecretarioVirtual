@@ -1,66 +1,126 @@
-<div >
+<div>
   <!-- confirm a new password -->
-  <span *ngIf="statePassword" class="background-new-user changePassword" [class.active]="statePassword">
-    <app-confirm-password
-    (cancelChange)="cancelChange()">
+  <span
+    *ngIf="statePassword"
+    class="background-new-user changePassword"
+    [class.active]="statePassword"
+  >
+    <app-confirm-password (cancelChange)="cancelChange()">
     </app-confirm-password>
   </span>
   <!-- end confirm a new password -->
   <div class="background-new-user">
+    <div class="card new-user-container mb-4">
+      <figure>
+        <img
+          src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png"
+          class="card-img-top"
+          alt="Imagen ilustrativa de usuario"
+        />
+      </figure>
+      <div class="card-body">
+        <h3 class="mb-4">The Boss</h3>
+        <!-- spinner -->
+        <ng-container *ngIf="status === 'loading'">
+          <div class="spinner"></div>
+        </ng-container>
+        <!-- spinner -->
+        <ng-container *ngIf="status !== 'loading'">
+          <form
+            class="row row-cols-1 row-cols-md-3 g-4"
+            [formGroup]="userDTO"
+            (ngSubmit)="editUser()"
+          >
+            <div class="form-group mb-2">
+              <label for="name">Nombre</label>
+              <input
+                formControlName="firstName"
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="{{ user$.firstName }}"
+              />
+            </div>
 
-  <div class="card new-user-container mb-4" >
-    <figure>
-      <img src="https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_960_720.png" class="card-img-top" alt="Imagen ilustrativa de usuario">
-    </figure>
-    <div class="card-body">
-      <h3 class=" mb-4">The Boss</h3>
-      <!-- spinner -->
-      <ng-container *ngIf="status === 'loading'">
-        <div class="spinner"></div>
-      </ng-container>
-      <!-- spinner -->
-      <ng-container *ngIf="status !== 'loading'">
-        <form class="row row-cols-1 row-cols-md-3 g-4" [formGroup]="userDTO" (ngSubmit)="editUser()">
-          <div class="form-group mb-2 ">
-            <label for="name">Nombre</label>
-            <input formControlName="firstName" type="text" class="form-control" id="name" placeholder="{{user$.firstName}}">
-          </div>
+            <div class="form-group mb-2">
+              <label for="Surname">Apellido</label>
+              <input
+                formControlName="lastName"
+                type="text"
+                class="form-control"
+                id="lastName"
+                placeholder="{{ user$.lastName }}"
+              />
+            </div>
 
-          <div class="form-group mb-2">
-            <label for="Surname">Apellido</label>
-            <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="{{user$.lastName}}">
-          </div>
+            <div class="form-group mb-2">
+              <label for="exampleInputEmail1">Email</label>
+              <input
+                formControlName="email"
+                type="email"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                placeholder="{{ user$.email }}"
+              />
+            </div>
 
-          <div class="form-group mb-2">
-            <label for="exampleInputEmail1">Email</label>
-            <input formControlName="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="{{user$.email}}">
-          </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Contraseña</label>
+              <button
+                class="form-control inputStyle"
+                (click)="changePassword()"
+              >
+                Cambiar contraseña
+              </button>
+            </div>
 
-          <div class="form-group ">
-            <label for="exampleInputPassword1">Contraseña</label>
-            <button class="form-control inputStyle" (click)="changePassword()">Cambiar contraseña</button>
-          </div>
-
-          <div class="form-group mb-2">
-            <label>Subcripcion</label>
-            <select formControlName="subscribe" id="subscribe" class="form-control inputStyle">
-              <option selected>{{user$.subscription['name']}}</option>
-              <option value="1">Gratis</option>
-              <option value="2">Basico</option>
-              <option value="3">Premium</option>
-            </select>
-          </div>
-          <div class="button-container">
-            <button type="submit" class="btn card-link mb-4" aria-label="confirmar cambios del usuario">Confirmar</button>
-          </div>
-        </form>
-      </ng-container>
-  </div>
-  <button class="cancel-container" (click)="cancelClick()" aria-label="cerrar la edición de usuario">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-    </svg>
-  </button>
+            <div class="form-group mb-2">
+              <label>Subcripcion</label>
+              <select
+                formControlName="subscribe"
+                id="subscribe"
+                class="form-control inputStyle"
+              >
+                <option selected>{{ user$.subscription["name"] }}</option>
+                <option value="1">Gratis</option>
+                <option value="2">Basico</option>
+                <option value="3">Premium</option>
+              </select>
+            </div>
+            <div class="button-container">
+              <button
+                type="submit"
+                class="btn card-link mb-4"
+                aria-label="confirmar cambios del usuario"
+              >
+                Confirmar
+              </button>
+            </div>
+          </form>
+        </ng-container>
+      </div>
+      <button
+        class="cancel-container"
+        (click)="cancelClick()"
+        aria-label="cerrar la edición de usuario"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-x-circle"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+          />
+          <path
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 </div>

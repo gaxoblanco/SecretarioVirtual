@@ -28,7 +28,6 @@ export class UserComponenetComponent implements OnInit {
 
   ngOnInit(): void {
     this.userServ.list;
-    this.additional.Semail = this.userServ.encodeToHtml(this.additional.Semail);
   }
   editionEmail() {
     if (this.editEmail == false) {

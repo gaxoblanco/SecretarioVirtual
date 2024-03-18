@@ -25,7 +25,13 @@
         </h3>
         <h3 class="data-inline">
           Dependencia:
-          <p>{{ expData.dependencia }}</p>
+          <p>
+            {{
+              expData.dependencia != null
+                ? expData.dependencia
+                : "- sin asignar -"
+            }}
+          </p>
         </h3>
         <h3 class="data-inline">
           Tipo de lista:

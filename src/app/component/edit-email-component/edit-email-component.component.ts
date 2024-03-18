@@ -47,7 +47,7 @@ export class EditEmailComponentComponent implements OnInit {
     this.placeOlder.email = this.userComp.additional.Semail;
     this.oldSemail = this.userComp.additional.Semail;
     this.secreataryId = this.userComp.additional.secreataryId;
-    // console.log(this.userComp.additional);
+    console.log('this.userComp.additional', this.userComp.additional);
   }
 
   cancelClick() {
