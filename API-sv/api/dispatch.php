@@ -91,13 +91,13 @@ function dispatchRoot($route, $method, $conexion)
       // dispatch delete
     case 'dispatch/delete':
       require_once './dispatch/delete_dispatch.php';
-      if ($method === 'DELETE') {
+      if ($method === 'POST') {
         // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
         $data = json_decode(file_get_contents('php://input'), true);
 
         // Obtener los datos para eliminar el expediente
         $userId = $_SERVER['HTTP_USERID'];
-        $dispatchId = $data['idExp']; // Cambiado de 'dispatchId' a 'idExp'
+        $dispatchId = $data['dispatchId'];
 
         $deleteDispatch = new delete_dispatch($conexion, $userId, $dispatchId);
         $deleteDispatch->deleteDispatchFromList();

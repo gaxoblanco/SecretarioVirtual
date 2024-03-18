@@ -143,28 +143,29 @@ export class FilesService {
 
   // delete file by id -- falta mejorar para usar delete
   deleteFiles(id: number) {
-    const dispatchId = { idExp: id };
-    // console.log('dispatchId', dispatchId);
+    const dispatchId = { dispatchId: id };
+    console.log('dispatchId', dispatchId);
 
     return this.http
-      .delete(`${this.apiUrl}/dispatch/delete`, {
-        body: dispatchId,
+      .post(`${this.apiUrl}/dispatch/delete`, dispatchId, {
         context: checkToken(),
       })
       .pipe(
+        // proceso la respuesta
         tap((response) => {
+          // si la respuesta es Expediente eliminado con exito. devuelvo un true
           if (response === 'Expediente eliminado con exito.') {
             return true;
           }
+          // si la respuesta es "El expediente no existe." devuelvo false
           if (response === 'El expediente no existe.') {
-            console.log('El expediente no existe.', response);
             return false;
           }
+          // si es distinto devuelvo un error
           return throwError(response);
         })
       );
   }
-
   // funcion para actualizar el fileSelected$
   selectFile(file: number) {
     this.fileSelected$.next(file);

@@ -17,7 +17,7 @@ class get_dispatch
   {
     try {
       // Obtener los expedientes del usuario de la tabla dispatchlist
-      $query = $this->conexion->prepare('SELECT * FROM user_expedients WHERE id_user = :id_user ORDER BY anio_exp DESC');
+      $query = $this->conexion->prepare('SELECT * FROM user_expedients WHERE id_user = :id_user ORDER BY anio_exp DESC LIMIT 10');
       $query->execute([':id_user' => $this->userId]);
       $dispatches = $query->fetchAll(PDO::FETCH_ASSOC);
 
