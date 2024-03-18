@@ -2,40 +2,80 @@
   <div class="mb-5 title-page">
     <h1>Expedientes en Curso.</h1>
     <p>
-      En esta sección encuentras tus expedientes que aún están en trámite.<br>
-      En el caso de desear saber el estado de alguno en especial puede utilizar el buscador
+      En esta sección encuentras tus expedientes que aún están en trámite.<br />
+      En el caso de desear saber el estado de alguno en especial puede utilizar
+      el buscador
     </p>
   </div>
 
   <div class="input-group search">
-    <form class="form" [formGroup]="searchFile" aria-labelledby="buscar entre tus expedientes">
-        <input
+    <form
+      class="form"
+      [formGroup]="searchFile"
+      aria-labelledby="buscar entre tus expedientes"
+    >
+      <input
         type="text"
         class="form-control"
         placeholder="00000/00"
         formControlName="searchNumber"
         name="searchNumber"
+      />
+      <button
+        class="input-group-text"
+        id="basic-addon2"
+        (click)="filterFil()"
+        *ngIf="!isFilter"
+        aria-label="Buscar"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-search"
+          viewBox="0 0 16 16"
         >
-      <button class="input-group-text" id="basic-addon2" (click)="filterFil()" *ngIf="!isFilter" aria-label="Buscar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+          />
         </svg>
       </button>
 
       <!-- cancelar el filtrado -->
-      <button class="input-group-text" (click)="clearFil()" *ngIf="isFilter" aria-label="limpiar buscador">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+      <button
+        class="input-group-text"
+        (click)="clearFil()"
+        *ngIf="isFilter"
+        aria-label="limpiar buscador"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-x-lg"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+          />
         </svg>
       </button>
-      <div class="search-error" *ngIf="searchFile.controls['searchNumber'].invalid" @errorAnimation>
+      <div
+        class="search-error"
+        *ngIf="searchFile.controls['searchNumber'].invalid"
+        @errorAnimation
+      >
         Por favor, introduce solo numeros
       </div>
     </form>
   </div>
 
   <table class="table">
-    <caption>Listado de Expedientes</caption>
+    <caption>
+      Listado de Expedientes
+    </caption>
     <thead class="thead-container">
       <tr class="table--tr">
         <th scope="col" class="table--th l w-m">
@@ -44,18 +84,38 @@
             class="arrow-button"
             [class.active]="filsArrowDownStyle"
             (click)="filsArrowDown()"
-            aria-label="Ordenar de forma descendente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            aria-label="Ordenar de forma descendente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-down-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+              />
             </svg>
           </button>
           <button
             class="arrow-button"
             [class.active]="filsArrowUpStyle"
             (click)="filsArrowUp()"
-            aria-label="Ordenar de forma ascendente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-              <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+            aria-label="Ordenar de forma ascendente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-up-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+              />
             </svg>
           </button>
         </th>
@@ -65,18 +125,38 @@
             class="arrow-button"
             [class.active]="coursArrowDownStyle"
             (click)="coursArrowDown()"
-            aria-label="Ordenar de forma descendente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            aria-label="Ordenar de forma descendente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-down-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+              />
             </svg>
           </button>
           <button
             class="arrow-button"
             [class.active]="coursArrowUpStyle"
             (click)="coursArrowUp()"
-            aria-label="Ordenar de forma ascendente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-              <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+            aria-label="Ordenar de forma ascendente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-up-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+              />
             </svg>
           </button>
         </th>
@@ -86,18 +166,38 @@
             class="arrow-button"
             [class.active]="coursArrowDownStyle"
             (click)="coursArrowDown()"
-            aria-label="Ordenar de forma descendente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
-              <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+            aria-label="Ordenar de forma descendente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-down-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"
+              />
             </svg>
           </button>
           <button
             class="arrow-button"
             [class.active]="coursArrowUpStyle"
             (click)="coursArrowUp()"
-            aria-label="Ordenar de forma ascendente">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
-              <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
+            aria-label="Ordenar de forma ascendente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-up-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"
+              />
             </svg>
           </button>
         </th>
@@ -125,23 +225,50 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let fileList of (fileFilter.length > 0? fileFilter : fileList)"
+        *ngFor="let fileList of fileFilter.length > 0 ? fileFilter : fileList"
         @fadeInOut
-        [class.delete-message]="status === 'loading' && fileList.id_exp === deletedFileId">
-        <a (click)="expWorking(fileList.id_exp)" class="table-actionable--rows" [routerLink]="['/historial-expediente', fileList.numero_exp, fileList.anio_exp, fileList.dependencia]">
-          <td class="w-m"> {{fileList.numero_exp}}</td>
-          <td class="w-m"> {{fileList.anio_exp}}</td>
-          <td> {{fileList.dependencia ? fileList.dependencia : '-'}}</td>
-          <td> {{fileList.caratula ? fileList.caratula : '-'}}</td>
-          <td class="w-s">
-            <button class="deleteFile" (click)="deleteFile(fileList.id_exp)" aria-label="Eliminar expediente de la lista de seguimientos">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </td>
+        [class.delete-message]="
+          status === 'loading' && fileList.id_exp === deletedFileId
+        "
+      >
+        <a
+          (click)="expWorking(fileList.id_exp)"
+          class="table-actionable--rows"
+          [routerLink]="[
+            '/historial-expediente',
+            fileList.numero_exp,
+            fileList.anio_exp,
+            fileList.dependencia
+          ]"
+        >
+          <td class="w-m">{{ fileList.numero_exp }}</td>
+          <td class="w-m">{{ fileList.anio_exp }}</td>
+          <td>{{ fileList.dependencia ? fileList.dependencia : "-" }}</td>
+          <td>{{ fileList.caratula ? fileList.caratula : "-" }}</td>
         </a>
+        <td class="w-s z-index--button">
+          <button
+            class="deleteFile"
+            (click)="deleteFile(fileList.id_exp)"
+            aria-label="Eliminar expediente de la lista de seguimientos"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-x-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+              />
+              <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+              />
+            </svg>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
