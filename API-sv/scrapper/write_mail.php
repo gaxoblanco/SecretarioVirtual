@@ -7,21 +7,27 @@
 // 4 - Send the email, receive email, with copy array and the news array
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once 'db.php';
 
 class write_mail
 {
   private $conexion;
   private $newsBy;
   // Agrega la configuración SMTP aquí
-  private $smtpServer = 'c2361340.ferozo.com';
-  private $smtpPort = 465;
-  private $smtpUsername = 'expedientes@secretariovirtual.ar';
-  private $smtpPassword = 'S3cretari@';
+  private $smtpServer;
+  private $smtpPort;
+  private $smtpUsername;
+  private $smtpPassword;
 
   public function __construct($conexion, $newsBy)
   {
     $this->conexion = $conexion;
     $this->newsBy = $newsBy;
+    // email credential
+    $this->smtpServer = SMTP_SERVER;
+    $this->smtpPort = SMTP_PORT;
+    $this->smtpUsername = SMTP_USERNAME;
+    $this->smtpPassword = SMTP_PASSWORD;
   }
 
   // por el array $newsBy, recorre cada entrada y agrega el array secretaries
