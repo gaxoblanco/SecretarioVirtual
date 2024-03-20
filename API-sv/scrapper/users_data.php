@@ -1,6 +1,11 @@
 <?php
 // este archivo se encargar de solicitar la lista de expedientes por cada usuario y devuelve cada lista en un array
 
+// 1 - Get the users with pagination
+// 2 - Get expedients from the users, take the expedients with pagination
+// 3 - Get movings from the expedients
+
+
 
 require_once 'db.php';
 
@@ -14,7 +19,7 @@ class users_data
   }
 
   // consulta en la tabla users por el id_user y crea un array con el obj:
-
+  // 1 - Get the users
   public function getUsers($offset, $limit)
   {
     try {
@@ -34,6 +39,7 @@ class users_data
   }
 
   // Consultar por cada usuario en la tabla user_expedients y cargar en $user['expedients'] los expedientes asociados a cada usuario
+  // 2 - Get expedients from the users
   public function userExpedients($offset, $limit)
   {
     $users = $this->getUsers($offset, $limit);
@@ -57,6 +63,7 @@ class users_data
   }
 
   // crea la funcion haveMovings() que recibe expedients y consulta por sus movimientos en la tabla user_exp_move
+  // 3 - Get movings from the expedients
   public function haveMovings(&$expedients)
   {
     try {

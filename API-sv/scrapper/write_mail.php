@@ -1,5 +1,11 @@
 <?php
 
+// This script is in charge of processing the step-by-step for sending the emails
+// 1 - Get the array of mails to send with copy by user
+// 2 - Create the header email with the data from the $result array and user_email
+// 3 - Create the message of the email with the data from the $newsBy array
+// 4 - Send the email, receive email, with copy array and the news array
+
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 class write_mail
@@ -38,6 +44,7 @@ class write_mail
     return $result;
   }
 
+  // 1 - Get the array of mails
   // trae los Semail del secretaries que tenga el id_users = id_user haciendo una consulta SQL a la tabla secretaries
   private function getSecretaries($id_user)
   {
@@ -54,7 +61,7 @@ class write_mail
   }
 
   // crea el mail donde email es el destinatario, y con copia al array de secretaries
-
+  // 2 - Create the header email
   private function createHeader($result)
   {
     foreach ($result as $news) {
@@ -66,6 +73,7 @@ class write_mail
   }
 
   // envia el mail con los datos de la notificacion
+  // 4 - Send the email
   private function sendMail($email, $secretaries, $news)
   {
     $subject = "Notificación de expedientes";
@@ -99,7 +107,7 @@ class write_mail
     }
   }
 
-  // crea los headers del mail siendo $email el destinatario y $secretaries[Semail] los destinatarios en copia
+  // 2 - Proces the with copy array
   private function createHeaders($secretaries)
   {
     $headers = [];
@@ -113,7 +121,7 @@ class write_mail
   }
 
   // crea el mensaje del mail con los datos de la notificacion estructurandolos en cards para que el email se ve mas prolijo al usuario
-
+  // 3 - Create the message of the email
   private function createMessage($news)
   {
     $message = "<html><body>";
