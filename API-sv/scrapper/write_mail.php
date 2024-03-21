@@ -60,6 +60,15 @@ class write_mail
       $query->execute();
       $secretaries = $query->fetchAll(PDO::FETCH_ASSOC);
 
+      // Validar las direcciones de correo electrónico
+      foreach ($secretaries as $key => $secretary) {
+        if (!filter_var($secretary['Semail'], FILTER_VALIDATE_EMAIL)) {
+          // Eliminar la dirección de correo electrónico no válida del array
+          unset($secretaries[$key]);
+          echo "Correo electrónico inválido: " . $secretary['Semail'] . ". Se ha eliminado del array.<br>";
+        }
+      }
+
       return $secretaries;
     } catch (PDOException $e) {
       echo "Error: " . $e->getMessage();
@@ -100,7 +109,7 @@ class write_mail
       ->setFrom(['expedientes@secretariovirtual.ar' => 'Secretario Virtual'])
       ->setTo([$email])
       ->setCc($headers)
-      ->setBody($message, 'index.html');
+      ->setBody($message, 'text/html');
 
     // Envía el mensaje
     try {
@@ -150,12 +159,13 @@ class write_mail
 
 
       //si $expedient['movimientos'] escribo el expediente aun no tiene movimientos
-      if (empty($expedient['movimientos'])) { //si $expedient['movimientos'] esta vacio
+      if (!isset($expedient['movimientos']) || empty($expedient['movimientos'])) { //si $expedient['movimientos'] esta vacio
         $message .= "<div style='border: 1px solid #a0bdcf; padding: 10px; margin: 10px; border-top: 10px solid #37bbed;'>";
         $message .= "<h5 style='font-weight: bold; font-size:14px;'>El expediente aun no tiene movimientos</h5>";
         $message .= "</div>";
       }
 
+      // Modificar para solo trabajar con el ULTIMO movimiento del exp.
       foreach ($expedient['movimientos'] as $movimiento) {
         $message .= "<div style='border: 1px solid #a0bdcf; margin: 10px; border-radius: 12px;'>";
         $message .= "<div style='border-bottom: 1px solid #a0bdcf; padding: 0 10px;'>";

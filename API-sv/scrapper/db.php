@@ -15,8 +15,11 @@ try {
   echo 'Error conectando con la base de datos: ' . $e->getMessage();
 }
 
+// Habilita la salida de depuración detallada
+define('SMTPDebug', 2);
 // email credential
 define('SMTP_SERVER', 'c2361340.ferozo.com');
 define('SMTP_PORT', 465);
 define('SMTP_USERNAME', 'expedientes@secretariovirtual.ar');
 define('SMTP_PASSWORD', 'S3cretari@');
+define('SMTP_SECURE', 'ssl');
