@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { RequestStatus } from '@models/request-status.model';
 import { AutenticationServiceService } from '@services/autentication-service.service';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register-component',
@@ -29,7 +33,8 @@ export class RegisterComponentComponent implements OnInit {
         id_subscription: ['', Validators.required],
       },
       {
-        validators: this.passwordMatchValidator, // Agrega un validador personalizado para las contraseñas
+        // Usar bind para mantener el contexto del componente y tener la funcion por separado
+        validators: this.passwordMatchValidator.bind(this),
       }
     );
   }
@@ -37,36 +42,39 @@ export class RegisterComponentComponent implements OnInit {
   ngOnInit(): void {}
 
   create() {
+    console.log('submit');
     if (this.form.valid) {
       this.status = 'loading';
       const user = this.form.value;
-      this.authService.register(user).subscribe({
-        next: () => {
+      console.log('formulario correcto, solicito creacion');
+      this.authService.register(user).subscribe((success) => {
+        if (success) {
+          console.log('Usuario creado con éxito--', success);
           this.status = 'success';
+          // Redirige al usuario a la página de inicio de sesión
           this.router.navigate(['/login']);
-        },
-        error: (error: any) => {
+        } else {
+          console.log('Error al crear usuario--', success);
           this.status = 'failed';
-          console.log(error);
-        },
+        }
       });
     } else {
       // Marca todos los campos del formulario como tocados para mostrar los mensajes de error
       this.markFormGroupTouched(this.form);
       // Lleva el scroll al inicio de la página
       window.scrollTo({ top: 0, behavior: 'smooth' });
+      console.log('formulario invalido por algun motivo', this.form.errors);
     }
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('password2')?.value;
+  passwordMatchValidator(control: AbstractControl) {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('password2')?.value;
 
     if (password !== confirmPassword) {
-      form.get('password2')?.setErrors({ mismatch: true });
+      control.get('password2')?.setErrors({ mismatch: true });
     } else {
-      password;
-      form.get('password2')?.setErrors({ required: false });
+      control.get('password2')?.setErrors(null);
     }
   }
 

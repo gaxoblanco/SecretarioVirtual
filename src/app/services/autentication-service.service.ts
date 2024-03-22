@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  of,
+  tap,
+  throwError,
+} from 'rxjs';
 import { LoginModel, User } from '@models/login-model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppRoutingModule } from '../app-routing.module';
@@ -91,36 +99,37 @@ export class AutenticationServiceService {
     return this.http
       .post<ResponseLogin>(`${this.apiUrl}/user/login`, null, { headers })
       .pipe(
-        // Procesamos la respuesta
-        tap(
-          (response) => {
-            console.log(response);
-
-            // Guardamos el response.token y response.id en una cookie
-            this.tokenService.saveToken(response);
-            // Actualizamos las rutas
-            this.permissions.updatePermissions();
-            // Cambiamos el estado del login
-            this.LogState = true;
-            // Navegamos a la página principal
-            this.router.navigate(['/login']);
-          },
-          (error) => {
-            // Manejamos errores aquí
-            console.error('Error en la solicitud:', error);
-          }
-        )
+        map((response: any) => {
+          console.log('Usuario creado:', response);
+          return true;
+        }),
+        catchError((error: any) => {
+          console.log('Error al crear usuario:', error);
+          return of(false); // Devuelve un observable booleano con valor false
+        })
       );
   }
 
   register(value: any) {
     //envio el formulario de registro en un post
     // console.log('envio registro', value);
-    return this.http
-      .post(`${this.apiUrl}/user/create`, value)
-      .pipe
+    return this.http.post(`${this.apiUrl}/user/create`, value).pipe(
       //proceso la respuesta
-      ();
+      map(
+        (response: any) => {
+          console.log('creando', response == 'Usuario creado correctamente');
+          if (response.status === 200) {
+            return (response = true);
+          }
+
+          return (response = false);
+        },
+        catchError((error: any): Observable<any> => {
+          console.log('Error al crear usuario:', error);
+          return of(false); // Return an Observable with value false in case of error
+        })
+      )
+    );
   }
 
   // post para realizar cambio de password
