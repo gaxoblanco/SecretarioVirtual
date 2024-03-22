@@ -8,6 +8,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { TokenService } from './token.service';
 import { checkToken } from '../interceptors/token.interceptor';
 import { dependencias, Dependencia } from '@models/dependencias';
+import { ExpData } from '@models/expData';
 
 @Injectable({
   providedIn: 'root',
@@ -73,7 +74,7 @@ export class FilesService {
   }
 
   // funcion para buscar expediente por id
-  getFilById(idExp: object): Observable<FileModel> {
+  getFilById(idExp: object): Observable<ExpData> {
     // hago la consulta a dispatch/getById y le envio el id del expediente
     return this.http
       .post<any>(`${this.apiUrl}/dispatch/getById`, idExp, {

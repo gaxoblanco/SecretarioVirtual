@@ -3,6 +3,9 @@
   width: 100%; /* Ajusta el ancho según tus necesidades */
   border-collapse: collapse;
   overflow: hidden;
+  td {
+    border-bottom: 1px solid #dee2e6;
+  }
   .thead-container{
     border: none;
   }
@@ -46,10 +49,12 @@
   .add_file-td {
     /* Agrega un estilo para las celdas si es necesario */
     padding: 8px; /* Ajusta el espaciado interno según tus necesidades */
-    border: 1px solid #ddd; /* Añade un borde a las celdas si es necesario */
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
   }
   .add_file-td--r {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid #dee2e6;
+    padding: 0 0.6rem;
   }
   //butons arrow para ordenar la tabla
   .arrow-button{

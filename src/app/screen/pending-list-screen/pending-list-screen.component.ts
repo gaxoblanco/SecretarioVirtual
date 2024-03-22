@@ -100,7 +100,7 @@ export class PendingListScreenComponent implements OnInit {
         this.fileList = files;
         // console.log('files-com', files[0]);
       });
-    }, 1000);
+    }, 300);
   }
   filterFil() {
     let filNumber = this.searchFile.value;

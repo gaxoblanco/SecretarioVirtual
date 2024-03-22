@@ -21,7 +21,7 @@ import { NewUserComponentComponent } from './component/new-user-component/new-us
 import { EditUserComponentComponent } from './component/edit-user-component/edit-user-component.component';
 import { EditEmailComponentComponent } from './component/edit-email-component/edit-email-component.component';
 import { LoginComponenetComponent } from './component/login-componenet/login-componenet.component';
-import { RegisterComponenetComponent } from './component/register-componenet/register-componenet.component';
+import { RegisterComponentComponent } from './component/register-component/register-component.component';
 import { LoginScreenComponent } from './screen/login-screen/login-screen.component';
 import { RegisterScreenComponent } from './screen/register-screen/register-screen.component';
 import { ResetPwScreenComponent } from './screen/reset-pw-screen/reset-pw-screen.component';
@@ -54,7 +54,7 @@ import { RecoverPasswordComponent } from './component/atoms/recover-password/rec
     EditUserComponentComponent,
     EditEmailComponentComponent,
     LoginComponenetComponent,
-    RegisterComponenetComponent,
+    RegisterComponentComponent,
     LoginScreenComponent,
     RegisterScreenComponent,
     ResetPwScreenComponent,
@@ -72,6 +72,7 @@ import { RecoverPasswordComponent } from './component/atoms/recover-password/rec
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ConfirmPasswordComponent,

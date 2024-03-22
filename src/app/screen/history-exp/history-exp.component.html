@@ -70,3 +70,10 @@
     </div>
   </div>
 </div>
+
+<!-- Mostrar mensaje de error cuando expData no está disponible -->
+<div class="container" *ngIf="!expData">
+  <h2 class="exp--title">
+    <p>No se pudo obtener la información del expediente.</p>
+  </h2>
+</div>

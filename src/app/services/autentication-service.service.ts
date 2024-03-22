@@ -116,7 +116,11 @@ export class AutenticationServiceService {
   register(value: any) {
     //envio el formulario de registro en un post
     // console.log('envio registro', value);
-    return this.http.post(`${this.apiUrl}/user/create`, value).pipe();
+    return this.http
+      .post(`${this.apiUrl}/user/create`, value)
+      .pipe
+      //proceso la respuesta
+      ();
   }
 
   // post para realizar cambio de password
