@@ -1,7 +1,6 @@
-
 <div>
   <div *ngIf="!recoverState">
-    <form [formGroup]="form" (ngSubmit)="LogCheckin($event)">
+    <form [formGroup]="formLogin" (ngSubmit)="LogCheckin($event)">
       <h4 class="mb-4">Ingresá a tu cuenta</h4>
       <div class="form-group">
         <label for="InputEmail1" class="mb-2">Email </label>
@@ -13,8 +12,10 @@
           aria-describedby="emailHelp"
           placeholder="Ingrese su email"
           [ngClass]="{
-            'is-invalid':Email?.errors && Email?.touched,
-            'is-valid': !Email?.errors && Email?.touched}">
+            'is-invalid': Email?.errors && Email?.touched,
+            'is-valid': !Email?.errors && Email?.touched
+          }"
+        />
         <div *ngIf="Email?.errors && Email?.touched">
           <p *ngIf="Email?.hasError('required')" class="text-danger">
             El Email es requerido
@@ -31,7 +32,8 @@
           type="password"
           class="form-control mb-4"
           id="InputPassword"
-          placeholder="Contraseña">
+          placeholder="Contraseña"
+        />
       </div>
       <ng-container *ngIf="status === 'failed'">
         <p class="text-danger">El usuario o la contraseña son incorrectos</p>
@@ -44,9 +46,15 @@
         <a (click)="changeState()" aria-label="Restablecer contraseña olvidada">
           ¿Olvidaste tu contraseña?
         </a>
-      <!-- </button> -->
+        <!-- </button> -->
       </div>
-      <button type="submit" class="btn card-link mb-4" [disabled]="!form.valid">Ingresa </button>
+      <button
+        type="submit"
+        class="btn card-link mb-4"
+        [disabled]="!formLogin.valid"
+      >
+        Ingresa
+      </button>
     </form>
   </div>
   <div *ngIf="recoverState">
@@ -60,7 +68,7 @@
       class="btn button-blue button--create"
       [routerLink]="['/register']"
       aria-label="Crear una cuenta nueva"
-      >
+    >
       <button class="button">Creá tu cuenta</button>
     </a>
   </div>

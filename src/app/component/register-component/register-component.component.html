@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="create()">
+<form [formGroup]="formRegister" (ngSubmit)="create()">
   <div class="form-group col-md-12 mb-4">
     <label for="registerName" class="mb-2">Nombre</label>
     <input
@@ -10,12 +10,13 @@
     />
     <div
       *ngIf="
-        form.get('firstName')?.invalid &&
-        (form.get('firstName')?.dirty || form.get('firstName')?.touched)
+        formRegister.get('firstName')?.invalid &&
+        (formRegister.get('firstName')?.dirty ||
+          formRegister.get('firstName')?.touched)
       "
       class="text-danger"
     >
-      <div *ngIf="form.get('firstName')?.errors?.['required']">
+      <div *ngIf="formRegister.get('firstName')?.errors?.['required']">
         El nombre es requerido
       </div>
     </div>
@@ -32,12 +33,13 @@
     />
     <div
       *ngIf="
-        form.get('lastName')?.invalid &&
-        (form.get('lastName')?.dirty || form.get('lastName')?.touched)
+        formRegister.get('lastName')?.invalid &&
+        (formRegister.get('lastName')?.dirty ||
+          formRegister.get('lastName')?.touched)
       "
       class="text-danger"
     >
-      <div *ngIf="form.get('lastName')?.errors?.['required']">
+      <div *ngIf="formRegister.get('lastName')?.errors?.['required']">
         El apellido es requerido
       </div>
     </div>
@@ -53,15 +55,15 @@
     />
     <div
       *ngIf="
-        form.get('email')?.invalid &&
-        (form.get('email')?.dirty || form.get('email')?.touched)
+        formRegister.get('email')?.invalid &&
+        (formRegister.get('email')?.dirty || formRegister.get('email')?.touched)
       "
       class="text-danger"
     >
-      <div *ngIf="form.get('email')?.errors?.['required']">
+      <div *ngIf="formRegister.get('email')?.errors?.['required']">
         El email es requerido
       </div>
-      <div *ngIf="form.get('email')?.errors?.['email']">
+      <div *ngIf="formRegister.get('email')?.errors?.['email']">
         El email no es válido
       </div>
     </div>
@@ -78,12 +80,13 @@
     />
     <div
       *ngIf="
-        form.get('password')?.invalid &&
-        (form.get('password')?.dirty || form.get('password')?.touched)
+        formRegister.get('password')?.invalid &&
+        (formRegister.get('password')?.dirty ||
+          formRegister.get('password')?.touched)
       "
       class="text-danger"
     >
-      <div *ngIf="form.get('password')?.errors?.['required']">
+      <div *ngIf="formRegister.get('password')?.errors?.['required']">
         La contraseña es requerida
       </div>
     </div>
@@ -98,12 +101,13 @@
     />
     <div
       *ngIf="
-        form.get('password2')?.invalid &&
-        (form.get('password2')?.dirty || form.get('password2')?.touched)
+        formRegister.get('password2')?.invalid &&
+        (formRegister.get('password2')?.dirty ||
+          formRegister.get('password2')?.touched)
       "
       class="text-danger"
     >
-      <div *ngIf="form.get('password2')?.errors?.['mismatch']">
+      <div *ngIf="formRegister.get('password2')?.errors?.['mismatch']">
         Las contraseñas no coinciden
       </div>
     </div>
@@ -123,13 +127,13 @@
     </select>
     <div
       *ngIf="
-        form.get('id_subscription')?.invalid &&
-        (form.get('id_subscription')?.dirty ||
-          form.get('id_subscription')?.touched)
+        formRegister.get('id_subscription')?.invalid &&
+        (formRegister.get('id_subscription')?.dirty ||
+          formRegister.get('id_subscription')?.touched)
       "
       class="text-danger"
     >
-      <div *ngIf="form.get('id_subscription')?.errors?.['required']">
+      <div *ngIf="formRegister.get('id_subscription')?.errors?.['required']">
         Debes seleccionar un tipo de suscripción
       </div>
     </div>

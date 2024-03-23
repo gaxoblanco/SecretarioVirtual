@@ -8,6 +8,7 @@ import { LoginModel } from '@models/login-model';
 import { RequestStatus } from '@models/request-status.model';
 import { AutenticationServiceService } from '@services/autentication-service.service';
 import { Router } from '@angular/router';
+import { PermissionsService } from '@services/permissions.service';
 
 @Component({
   selector: 'app-login-componenet',
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-componenet.component.scss'],
 })
 export class LoginComponenetComponent implements OnInit {
-  form: UntypedFormGroup;
+  formLogin: UntypedFormGroup;
   status: RequestStatus = 'init'; // funciona como una maquina de state
   // state para recuperar el password
   recoverState: boolean = false;
@@ -24,9 +25,10 @@ export class LoginComponenetComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private autenticacionService: AutenticationServiceService,
+    private permissionsService: PermissionsService,
     private router: Router
   ) {
-    this.form = this.formBuilder.group({
+    this.formLogin = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -34,21 +36,28 @@ export class LoginComponenetComponent implements OnInit {
 
   ngOnInit(): void {}
   get Email() {
-    return this.form.get('email');
+    return this.formLogin.get('email');
   }
 
   get Password() {
-    return this.form.get('password');
+    return this.formLogin.get('password');
   }
 
   LogCheckin(event: Event) {
-    let log: LoginModel = this.form.value;
+    let log: LoginModel = this.formLogin.value;
     event.preventDefault;
     this.status = 'loading';
     this.autenticacionService.login(log).subscribe({
-      next: () => {
-        this.status = 'success';
-        this.router.navigate(['/']);
+      next: (success) => {
+        if (success) {
+          // console.log('Inicio de sesión exitoso');
+          this.status = 'success';
+          this.router.navigate(['/']);
+          this.permissionsService.updatePermissions();
+        } else {
+          console.log('Error al iniciar sesión');
+          this.status = 'failed';
+        }
       },
       error: (error) => {
         this.status = 'failed';

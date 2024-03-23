@@ -16,14 +16,14 @@ import { AutenticationServiceService } from '@services/autentication-service.ser
 })
 export class RegisterComponentComponent implements OnInit {
   status: RequestStatus = 'init';
-  form: FormGroup;
+  formRegister: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AutenticationServiceService
   ) {
-    this.form = this.formBuilder.group(
+    this.formRegister = this.formBuilder.group(
       {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.minLength(6), Validators.required]],
@@ -43,9 +43,9 @@ export class RegisterComponentComponent implements OnInit {
 
   create() {
     console.log('submit');
-    if (this.form.valid) {
+    if (this.formRegister.valid) {
       this.status = 'loading';
-      const user = this.form.value;
+      const user = this.formRegister.value;
       console.log('formulario correcto, solicito creacion');
       this.authService.register(user).subscribe((success) => {
         if (success) {
@@ -60,10 +60,13 @@ export class RegisterComponentComponent implements OnInit {
       });
     } else {
       // Marca todos los campos del formulario como tocados para mostrar los mensajes de error
-      this.markFormGroupTouched(this.form);
+      this.markFormGroupTouched(this.formRegister);
       // Lleva el scroll al inicio de la página
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      console.log('formulario invalido por algun motivo', this.form.errors);
+      console.log(
+        'formulario invalido por algun motivo',
+        this.formRegister.errors
+      );
     }
   }
 

@@ -15,7 +15,7 @@ export class NavigationMenuComponenetComponent implements OnInit {
 
   ngOnInit(): void {
     // this.pages = this.autServ.pageFilter;
-    this.pages = this.autServ.pages;
+    // this.pages = this.autServ.pages;
     // console.log("llama mas veces");
   }
 

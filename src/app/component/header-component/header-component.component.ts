@@ -9,14 +9,9 @@ import { Route } from '../../models/route';
   styleUrls: ['./header-component.component.scss'],
 })
 export class HeaderComponentComponent implements OnInit {
-  // @Input() page: Route={
-  //   route: '',
-  //   name: '',
-  //   acess: false,
-  // };
-  // @Output() addedPage = new EventEmitter<Route>();
-
   pages$: Route[] = []; // el estado inicial obligatorio es un array vacio
+  isLoggedIn = false;
+  pageFilter: Route[] | undefined;
 
   constructor(
     private autServ: AutenticationServiceService,
@@ -33,5 +28,9 @@ export class HeaderComponentComponent implements OnInit {
 
   logout() {
     this.autServ.logout();
+  }
+  updateRoutes(): void {
+    // Actualiza las rutas disponibles según el estado de autenticación
+    this.pages$ = this.isLoggedIn ? this.pageFilter ?? [] : this.pages$;
   }
 }

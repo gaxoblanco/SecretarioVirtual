@@ -24,56 +24,6 @@ import { checkToken } from '../interceptors/token.interceptor';
 })
 export class AutenticationServiceService {
   LogState = false;
-  pageFilter: Route[] = [
-    {
-      route: '/',
-      name: 'Home',
-      acess: true,
-    },
-    {
-      route: '/login',
-      name: 'Login',
-      acess: true,
-    },
-    {
-      route: '/listaExpediente',
-      name: 'Lista',
-      acess: true,
-    },
-  ];
-
-  pages: Route[] = [
-    {
-      route: '/',
-      name: 'Home',
-      acess: true,
-    },
-    {
-      route: '/login',
-      name: 'Login',
-      acess: true,
-    },
-    {
-      route: '/agregarExpediente',
-      name: 'Agregar',
-      acess: true,
-    },
-    {
-      route: '/listaExpediente',
-      name: 'Lista',
-      acess: true,
-    },
-    {
-      route: '/usuario',
-      name: 'Usuario',
-      acess: false,
-    },
-    {
-      route: '/',
-      name: 'Desconectar',
-      acess: true,
-    },
-  ];
 
   constructor(
     private routerModul: AppRoutingModule,
@@ -100,7 +50,9 @@ export class AutenticationServiceService {
       .post<ResponseLogin>(`${this.apiUrl}/user/login`, null, { headers })
       .pipe(
         map((response: any) => {
-          console.log('Usuario creado:', response);
+          console.log('Usuario logeado:', response);
+          // Guarda el token utilizando el TokenService
+          this.tokenService.saveToken(response);
           return true;
         }),
         catchError((error: any) => {
@@ -117,7 +69,7 @@ export class AutenticationServiceService {
       //proceso la respuesta
       map(
         (response: any) => {
-          console.log('creando', response == 'Usuario creado correctamente');
+          // console.log('creando', response == 'Usuario creado correctamente');
           if (response.status === 200) {
             return (response = true);
           }
@@ -162,18 +114,6 @@ export class AutenticationServiceService {
           }
         )
       );
-  }
-
-  filterPages() {
-    // console.log(this.tokenTrue!.token);
-
-    //si token existe  devuelvoel array pages
-    if (this.tokenTrue!.token) {
-      return this.pages;
-    } else {
-      // si no existe devuelvo el array pageFilter
-      return this.pageFilter;
-    }
   }
 
   logout() {

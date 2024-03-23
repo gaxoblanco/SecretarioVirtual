@@ -27,11 +27,6 @@ export class PermissionsService {
       name: 'Login',
       acess: true,
     },
-    // {
-    //   route: '/juzgado',
-    //   name: 'email juzgado',
-    //   acess: true,
-    // },
     {
       route: '/agregarExpediente',
       name: 'Agregar',
@@ -58,8 +53,6 @@ export class PermissionsService {
   updatePermissions() {
     // Obtiene el token.
     const token = this.tokenService.getToken();
-    // Si no hay token, establece los permisos con el array pages todos los elementos con acceso true si existe el token devuelvo todos
-    // los elementos con acceso false.
     if (!token) {
       this.permissionsSubject.next(
         this.pages.filter((page) => page.acess === true)
