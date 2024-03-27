@@ -129,6 +129,12 @@ export class FilesService {
   // funcion para actualizar el valor de dependencia numero a nombre
   upDependencia() {
     const files = this.files$.getValue();
+    //valido que sea un array iterable
+    if (!Array.isArray(files)) {
+      console.error('El valor de files no es un array:', files);
+      return;
+    }
+
     files.forEach((file) => {
       const dependencia = dependencias.find(
         (dependencia) => dependencia.id === file.dependencia

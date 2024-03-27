@@ -16,15 +16,26 @@ class get_dispatch
   public function getDispatches()
   {
     try {
-      // Obtener los expedientes del usuario de la tabla dispatchlist
-      $query = $this->conexion->prepare('SELECT * FROM user_expedients WHERE id_user = :id_user ORDER BY anio_exp DESC');
-      $query->execute([':id_user' => $this->userId]);
-      $dispatches = $query->fetchAll(PDO::FETCH_ASSOC);
+      // Obtener los expedientes del usuario de la tabla user_expedients usando el userId como filtro en la columna id_user
+      $query = "SELECT * FROM user_expedients WHERE id_user = :userId";
+      $stmt = $this->conexion->prepare($query);
+      $stmt->bindParam(':userId', $this->userId, PDO::PARAM_INT);
+      $stmt->execute();
+      $dispatches = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
       // Verificar si $dispatches está vacío
       if (empty($dispatches)) {
         http_response_code(204);  // Sin contenido
         echo json_encode(['message' => 'No hay expedientes para este usuario']);
+        return;
+      }
+
+      //valido que sea un json
+      $jsonDispatches = json_encode($dispatches);
+      if ($jsonDispatches === null) {
+        http_response_code(500);  // Error interno del servidor
+        // echo json_encode(['error' => 'Error al obtener dispatches', 'conexion' => $this->conexion, 'userId' => $this->userId]);
+        var_dump('sorpresa...', $dispatches);
         return;
       }
 
