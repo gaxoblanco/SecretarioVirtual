@@ -6,6 +6,23 @@ function newMove($expMoving, $idExp, $conexion)
   foreach ($expMoving as $move) {
     // echo "move -> <pre>" . var_dump($move) . "</pre>";
 
+    // formateo texto, para limpiar codigo html y paso a utf-8
+    $move['texto'] = htmlspecialchars(strip_tags($move['texto']));
+    $move['texto'] = utf8_encode($move['texto']);
+    // si encuentra la cadena de caracteres: &nbsp; la reemplaza por nada
+    $move['texto'] = str_replace('&nbsp;', '', $move['texto']);
+    // formateo titulo, para limpiar codigo html y paso a utf-8
+    $move['titulo'] = htmlspecialchars(strip_tags($move['titulo']));
+    $move['titulo'] = utf8_encode($move['titulo']);
+    $move['texto'] = str_replace('&nbsp;', '', $move['titulo']);
+    // formateo despacho, para limpiar codigo html y paso a utf-8
+    $move['despacho'] = htmlspecialchars(strip_tags($move['despacho']));
+    $move['despacho'] = utf8_encode($move['despacho']);
+    $move['texto'] = str_replace('&nbsp;', '', $move['despacho']);
+    // formateo estado, para limpiar codigo html y paso a utf-8
+    $move['estado'] = htmlspecialchars(strip_tags($move['estado']));
+    $move['estado'] = utf8_encode($move['estado']);
+
     //valido que el movimiento no exista en la tabla user_exp_move
     try {
       $query = $conexion->prepare('SELECT * FROM user_exp_move WHERE fecha_movimiento = :fecha_movimiento AND estado = :estado AND texto = :texto AND titulo = :titulo AND despacho = :despacho AND id_exp = :id_exp');

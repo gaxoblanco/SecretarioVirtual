@@ -112,7 +112,7 @@ class up_user_exp
         if (is_array($ExpMoving) && is_array($userExpMoving) && count($ExpMoving) > count($userExpMoving)) {
           // Obtén los nuevos elementos que están en $ExpMoving pero no en $userExpMoving
           $newMoves = array_diff_assoc($ExpMoving, $userExpMoving);
-          echo "ExpMoving-->: <pre>" . print_r($newMoves, true) . "</pre>";
+          // echo "ExpMoving-->: <pre>" . print_r($newMoves, true) . "</pre>";
 
 
           // 6 Update the user_exp_move table
