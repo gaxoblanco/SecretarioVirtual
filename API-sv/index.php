@@ -2,7 +2,6 @@
 // Habilitar CORS
 header('Access-Control-Allow-Origin: https://secretariovirtual.ar/');
 header('Access-Control-Allow-Credentials: true');
-
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, email, password, token, userId, idExp, caseNumber, caseYear, dependencia, secreataryId, oldSemail, newSemail, Spass, firstName, Authorization");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
