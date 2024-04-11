@@ -24,7 +24,8 @@ $publicRoutes = [
   'user/login',
   'dispatch/update', // actualiza las tablas de expedientes y envia mails
   'user/password-restart',
-  'user/password-reset'
+  'user/password-reset',
+  'mp/creat-plan',
 ];
 
 

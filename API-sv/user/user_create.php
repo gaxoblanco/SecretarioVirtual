@@ -5,17 +5,17 @@ class user_create
   private $lastName;
   private $email;
   private $password;
-  private $id_subscription;
+  private $mp_data;
   private $conexion;
 
-  public function __construct($conexion, $firstName, $lastName, $email, $password, $id_subscription)
+  public function __construct($conexion, $firstName, $lastName, $email, $password, $mp_data)
   {
     $this->conexion = $conexion;
     $this->firstName = $firstName;
     $this->lastName = $lastName;
     $this->email = $email;
     $this->password = $password;
-    $this->id_subscription = $id_subscription;
+    $this->mp_data = $mp_data;
   }
 
   public function createUser()
@@ -45,6 +45,26 @@ class user_create
       ':password' => $hashedPassword,
       ':id_subscription' => 2
     ]);
+
+    // en la tabla mercado_pago asociando con el usuario guardo el id_subscription en id_subscription
+    try {
+      $query = $this->conexion->prepare('INSERT INTO mercado_pago (user_id, id_subscription, init_point, date_created, last_modified, status) VALUES (:user_id, :id_subscription, :init_point, :date_created, :last_modified, :status)');
+      $query->execute([
+        ':user_id' => $this->conexion->lastInsertId(),
+        ':id_subscription' => $this->mp_data['id'],
+        ':init_point' => $this->mp_data['init_point'],
+        ':date_created' => $this->mp_data['date_created'],
+        ':last_modified' => $this->mp_data['last_modified'],
+        ':status' => $this->mp_data['status']
+      ]);
+    } catch (\Throwable $th) {
+      //devuelve mensaje de error en json
+      echo json_encode([
+        'status' => 500,
+        'message' => 'Error al asociar el plan de suscripción al usuario: ' . $th->getMessage()
+      ]);
+      return;
+    }
 
     //devolver un mensaje de éxito en json
     echo json_encode([

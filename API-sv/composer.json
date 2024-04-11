@@ -1,5 +1,6 @@
 {
   "require": {
-    "swiftmailer/swiftmailer": "^6.3"
+    "swiftmailer/swiftmailer": "^6.3",
+    "mercadopago/dx-php": "^3.0"
   }
 }
