@@ -81,13 +81,10 @@ export class RegisterComponentComponent implements OnInit {
           if (response.status === 200) {
             console.log('Usuario creado con éxito--', response.message);
             this.status = 'success';
-            // Redirige al usuario a la página de inicio de sesión
-            // this.router.navigate(['/login']);
-
             // Redirige al usuario a la URL proporcionada por la API de mercado pago
             window.location.href = response.message;
           } else {
-            console.log('Error al crear usuario--', response.message);
+            // console.log('Error al crear usuario--', response.message);
             this.status = 'failed';
           }
         },

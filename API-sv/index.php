@@ -26,6 +26,7 @@ $publicRoutes = [
   'user/password-restart',
   'user/password-reset',
   'mp/creat-plan',
+  'mp/getById',
 ];
 
 

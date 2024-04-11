@@ -38,7 +38,7 @@ class post_plan
               "currency_id": "ARS"
             },
             "payer_email": "test_user_1579957027@testuser.com",
-            "back_url": "https://www.secretariovirtual.ar/"
+            "back_url": "https://www.secretariovirtual.ar/status"
           }';
 
     // hacemos el POST con curl
