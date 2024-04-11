@@ -66,11 +66,10 @@ class user_create
       return;
     }
 
-    //devolver un mensaje de éxito en json
+    //devolver un mensaje de éxito en json con mp_data['init_point']
     echo json_encode([
       'status' => 200,
-      'message' => 'Usuario creado correctamente'
+      'message' => trim($this->mp_data['init_point'])
     ]);
-    error_log('Mensaje de depuración: Algo sucede aquí', 0);
   }
 }

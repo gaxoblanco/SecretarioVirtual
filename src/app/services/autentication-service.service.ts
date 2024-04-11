@@ -62,27 +62,32 @@ export class AutenticationServiceService {
       );
   }
 
-  register(value: any) {
-    //envio el formulario de registro en un post
-    // console.log('envio registro', value);
-    return this.http.post(`${this.apiUrl}/user/create`, value).pipe(
-      //proceso la respuesta
-      map(
-        (response: any) => {
-          // console.log('creando', response == 'Usuario creado correctamente');
-          if (response.status === 200) {
-            return (response = true);
-          }
-
-          return (response = false);
-        },
-        catchError((error: any): Observable<any> => {
-          console.log('Error al crear usuario:', error);
-          return of(false); // Return an Observable with value false in case of error
-        })
-      )
-    );
+  register(value: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/user/create`, value);
   }
+
+  // register(value: any) {
+  //   //envio el formulario de registro en un post
+  //   // console.log('envio registro', value);
+  //   return this.http.post(`${this.apiUrl}/user/create`, value).pipe(
+  //     //proceso la respuesta
+  //     map(
+  //       (response: any) => {
+  //         // console.log('creando', response == 'Usuario creado correctamente');
+  //         if (response.status === 200) {
+  //           console.log('url ---', response.message);
+  //           return (response = [true, response.message]);
+  //         }
+
+  //         return (response = false);
+  //       },
+  //       catchError((error: any): Observable<any> => {
+  //         console.log('Error al crear usuario:', error);
+  //         return of(false); // Return an Observable with value false in case of error
+  //       })
+  //     )
+  //   );
+  // }
 
   // post para realizar cambio de password
   changePassword(value: LoginModel) {
