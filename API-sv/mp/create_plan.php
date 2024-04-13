@@ -30,7 +30,8 @@ class create_plan
     $response = json_decode($response, true);
     if (array_key_exists('application_id', $response)) {
       // si existe sanitizo los datos y los guardo en la tabla mercado_pago asociando con el usuario
-      $application_id = $response['application_id']; // en este punto asocio mp con el usuario de sv
+      $application_id = $response['application_id'];
+      $id_mp = $response['id']; // en este punto asocio mp con el usuario de sv
       $this->user_id = $_SESSION['user_id'];
       $reason = $response['reason'];
       $date_created = $response['date_created'];
@@ -42,9 +43,10 @@ class create_plan
 
       // preparo la consulta para insertar los datos en la tabla mercado_pago
       try {
-        $sql = "INSERT INTO mercado_pago (application_id, user_id, reason, date_created, last_modified, init_point) VALUES (:application_id, :user_id, :reason, :date_created, :last_modified)";
+        $sql = "INSERT INTO mercado_pago (application_id, id_mp, user_id, reason, date_created, last_modified, init_point) VALUES (:application_id, :id_mp, :user_id, :reason, :date_created, :last_modified)";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':application_id', $application_id);
+        $stmt->bindParam(':id_mp', $id_mp);
         $stmt->bindParam(':user_id', $this->user_id);
         $stmt->bindParam(':reason', $reason);
         $stmt->bindParam(':date_created', $date_created);

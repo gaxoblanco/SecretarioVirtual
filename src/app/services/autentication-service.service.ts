@@ -73,10 +73,10 @@ export class AutenticationServiceService {
   //     //proceso la respuesta
   //     map(
   //       (response: any) => {
-  //         // console.log('creando', response == 'Usuario creado correctamente');
+  //         console.log('creando', response);
   //         if (response.status === 200) {
-  //           console.log('url ---', response.message);
-  //           return (response = [true, response.message]);
+  //           console.log('url ---', response.init_point);
+  //           return response;
   //         }
 
   //         return (response = false);

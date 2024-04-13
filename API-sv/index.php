@@ -25,8 +25,7 @@ $publicRoutes = [
   'dispatch/update', // actualiza las tablas de expedientes y envia mails
   'user/password-restart',
   'user/password-reset',
-  'mp/creat-plan',
-  'mp/getById',
+  // 'mp/creat-plan',
 ];
 
 
@@ -75,6 +74,10 @@ if (!in_array($route, $publicRoutes)) {
     case 'dispatch':
       require_once 'api/dispatch.php';
       dispatchRoot($route, $method, $conexion);
+      break;
+    case 'mp':
+      require_once 'api/mercadoPago.php';
+      mpRoot($route, $method, $conexion);
       break;
       // si no se cumple ninguno muestro el valor de $route
     default:
