@@ -23,6 +23,15 @@ class ExpedienteInsertor
   public function insertarExpediente($id_lista_despacho, $dependencia, $tipo_lista, $numero_expediente, $anio_expediente, $caratula, $reservado, $movimientos)
   {
     try {
+      // Limpio la caratula para que no contenga html ni caracteres especiales
+      $caratula = strip_tags($caratula);
+      $caratula = htmlspecialchars($caratula, ENT_QUOTES);
+      // Limpiar saltos de línea y otros caracteres especiales
+      $search = array("\r\n", "\n", "\r", "\t");
+      $replace = ' '; // Reemplazar por un espacio en blanco
+      $caratula = str_replace($search, $replace, $caratula);
+      // Insertar el expediente en la base de datos
+
       $sql = "INSERT INTO expedientes (id_lista_despacho, dependencia, tipo_lista, numero_expediente, anio_expediente, caratula, reservado) VALUES (:id_lista_despacho, :dependencia, :tipo_lista, :numero_expediente, :anio_expediente, :caratula, :reservado)";
       $stmt = $this->conexion->prepare($sql);
       $stmt->bindParam(':id_lista_despacho', $id_lista_despacho, PDO::PARAM_INT);
@@ -187,6 +196,14 @@ class ListaDespachoProcessor
   // Funcion para insertar el nuevo movimiento
   public function insertarMovimiento($expediente, $estado, $texto, $titulo, $despacho, $fecha_movimiento_formatted)
   {
+    // Limpio los datos antes de guardarlos
+    $texto = strip_tags($texto);
+    $texto = htmlspecialchars($texto, ENT_QUOTES);
+    $titulo = strip_tags($titulo);
+    $titulo = htmlspecialchars($titulo, ENT_QUOTES);
+    $despacho = strip_tags($despacho);
+    $despacho = htmlspecialchars($despacho, ENT_QUOTES);
+
     try {
       $sql = "INSERT INTO movimientos (id_expediente, estado, texto, titulo, despacho, fecha_movimiento) VALUES (:id_expediente, :estado, :texto, :titulo, :despacho, :fecha_movimiento)";
       $stmt = $this->conexion->prepare($sql);
