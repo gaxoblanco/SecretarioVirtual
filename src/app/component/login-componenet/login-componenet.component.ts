@@ -52,7 +52,7 @@ export class LoginComponenetComponent implements OnInit {
         if (success) {
           // console.log('Inicio de sesión exitoso');
           this.status = 'success';
-          this.router.navigate(['/']);
+          this.router.navigate(['/usuario']);
           this.permissionsService.updatePermissions();
         } else {
           console.log('Error al iniciar sesión');

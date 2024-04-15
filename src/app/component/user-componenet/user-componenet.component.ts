@@ -40,7 +40,7 @@ export class UserComponenetComponent implements OnInit {
       secreataryId: this.additional.secreataryId,
       Semail: this.additional.Semail,
     };
-    console.log('data', data);
+    // console.log('data', data);
 
     // A deletAdditional le envia el idUser y el semail
     this.userServ.deletAdditional(data).subscribe((res) => {

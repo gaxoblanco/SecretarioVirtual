@@ -23,7 +23,13 @@ $pjf = new PJF_Listas_Despacho();
 echo "Iniciando scrapper...\n";
 
 // Crear una instancia de la clase scrapper
-$scrapper = new TipoListaProcessor($pjf, $conexion);
-$scrapper->startScript(); // Ejecutar el scrapper
+try {
+  $scrapper = new TipoListaProcessor($pjf, $conexion);
+  $scrapper->startScript(); // Ejecutar el scrapper
+} catch (\Throwable $th) {
+  echo "Error al iniciar el scrapper\n";
+  echo $th->getMessage();
+  exit;
+}
 
 echo "Scrapper finalizado\n";

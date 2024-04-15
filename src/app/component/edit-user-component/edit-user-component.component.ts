@@ -56,10 +56,10 @@ export class EditUserComponentComponent implements OnInit {
       this.user$ = user;
       console.log('userrrr', user);
     });
-    setTimeout(() => {
-      console.log(this.user$);
-    }),
-      500;
+    // setTimeout(() => {
+    //   console.log(this.user$);
+    // }),
+    //   500;
   }
 
   changePassword() {

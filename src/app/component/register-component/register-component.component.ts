@@ -57,6 +57,8 @@ export class RegisterComponentComponent implements OnInit {
           } else {
             this.router.navigate(['/login']);
           }
+
+          // this.router.navigate(['/login']);
           // console.log('url ---', response.message);
         } else {
           console.log('Error al crear usuario--', response);

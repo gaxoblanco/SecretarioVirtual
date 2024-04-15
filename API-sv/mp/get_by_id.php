@@ -4,25 +4,25 @@ require_once './config.php';
 class get_by_id
 {
   private $conexion;
-  private $id_subscription;
+  private $id_mp;
   private $ACCES_TOKEN = 'TEST-5763954744698204-040908-f7c5b76430483ea6f5f3ef24a640493c-1751465896';
   private $id_user;
   // creo la funcion status_by_id para hacer get a https://api.mercadopago.com/preapproval/{id} esperando un json
 
-  public function __construct($conexion, $id_subscription, $id_user)
+  public function __construct($conexion, $id_mp, $id_user)
   {
     $this->conexion = $conexion;
-    $this->id_subscription = $id_subscription;
+    $this->id_mp = $id_mp;
     $this->id_user = $id_user;
   }
 
-  // consulto en la base de datos si el id_user existe y tiene el mismo id_subscription
+  // consulto en la base de datos si el id_user existe y tiene el mismo id_mp
   public function get_by_id()
   {
     try {
-      // Verificar en la tabla mercado_pago que el user_id y el id_subscription coincidan y obtengo los datos
-      $query = $this->conexion->prepare('SELECT COUNT(*) FROM mercado_pago WHERE user_id = :user_id AND id_subscription = :id_subscription');
-      $query->execute([':user_id' => $this->id_user, ':id_subscription' => $this->id_subscription]);
+      // Verificar en la tabla mercado_pago que el user_id y el id_mp coincidan y obtengo los datos
+      $query = $this->conexion->prepare('SELECT COUNT(*) FROM mercado_pago WHERE user_id = :user_id AND id_mp = :id_mp');
+      $query->execute([':user_id' => $this->id_user, ':id_mp' => $this->id_mp]);
       $count = $query->fetchColumn();
 
 
@@ -43,7 +43,7 @@ class get_by_id
     }
 
     // apuntamos a la url: https://api.mercadopago.com/preapproval/{id}
-    $url = 'https://api.mercadopago.com/preapproval/' . $this->id_subscription;
+    $url = 'https://api.mercadopago.com/preapproval/' . $this->id_mp;
     // preparamos el header para enviar un .json con el ACCES_TOKEN de .env
     $header = array(
       'Content-Type: application/json',

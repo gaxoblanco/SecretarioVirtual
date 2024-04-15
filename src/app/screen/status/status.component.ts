@@ -18,20 +18,5 @@ export class StatusComponent {
     private mpServices: MpServicesService
   ) {}
 
-  ngOnInit(): void {
-    // Captura el valor del parámetro de consulta 'preapproval_id'
-    this.route.queryParams.subscribe((params) => {
-      this.preapprovalId = params['preapproval_id'];
-      console.log('Preapproval ID:', this.preapprovalId);
-      // llamo al servicio para realizar la consulta sobre el estado de mi pago
-      //valido que preapprovalId no sea undefined
-      if (this.preapprovalId) {
-        this.mpServices
-          .getPaymentStatus(this.preapprovalId)
-          .subscribe((data) => {
-            console.log('data-', data);
-          });
-      }
-    });
-  }
+  ngOnInit(): void {}
 }

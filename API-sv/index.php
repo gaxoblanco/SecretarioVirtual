@@ -39,9 +39,9 @@ if (!in_array($route, $publicRoutes)) {
   // Obtengo el token del header
   $token = $_SERVER['HTTP_TOKEN'];
 
-  verifyToken($conexion, $token);
+  $isInvalid = verifyToken($conexion, $token, $userId);
   // si la respuesta es false muestro el mensaje de error
-  if (!verifyToken($conexion, $token)) {
+  if (!$isInvalid) {
     http_response_code(401);
     echo json_encode(['message' => 'Token no valido']);
     exit;
