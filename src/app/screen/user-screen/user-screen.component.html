@@ -1,26 +1,38 @@
 <span>
-  <app-new-user-component class="moreEmail-state" [class.active]="moreEmail"></app-new-user-component>
+  <app-new-user-component
+    class="moreEmail-state"
+    [class.active]="moreEmail"
+  ></app-new-user-component>
 </span>
 <span>
-  <app-edit-user-component class="editUser-state" [class.active]="editUser"></app-edit-user-component>
+  <app-edit-user-component
+    class="editUser-state"
+    [class.active]="editUser"
+  ></app-edit-user-component>
 </span>
 
-<section class="container">
-  <div class="card mb-4 suscrip-container">
+<article class="container">
+  <section class="card mb-4 suscrip-container">
+    <span class="subcription" [ngClass]="'subcription--' + suscription"
+      >Suscripción: {{ suscription }}</span
+    >
     <div class="row g-0">
       <div class="sub-text">
-          <h2 class="h3">Suscripción {{user$.subscription["name"]}}</h2>
-          <p class="p">Cuenta con {{user$.subscription["num_secretary"]}} secretarios y {{user$.subscription["num_exp"]}} expedientes</p>
+        <h2 class="h3">Suscripción {{ user$.subscription["name"] }}</h2>
+        <p class="p">
+          Cuenta con {{ user$.subscription["num_secretary"] }} secretarios y
+          {{ user$.subscription["num_exp"] }} expedientes
+        </p>
         <div>
           <h4>N° Expedientes</h4>
           <h4>N° Secretarios</h4>
-          <h5> {{NumberFile}} </h5>
-          <h5> {{list$.length}} </h5>
+          <h5>{{ NumberFile }}</h5>
+          <h5>{{ list$.length }}</h5>
         </div>
         <div class="data-master">
           <!-- con una ternaria muestro el spinn hasta que user.firstName es != ''-->
           <ng-container *ngIf="user$.firstName !== ''">
-            <p>{{user$.firstName}} {{user$.lastName}}</p>
+            <p>{{ user$.firstName }} {{ user$.lastName }}</p>
             <p [innerHTML]="user$.email"></p>
             <p>********</p>
           </ng-container>
@@ -29,41 +41,70 @@
             <div class="spinner"></div>
             <div class="spinner"></div>
           </ng-container>
-          <button class="data-master--button" (click)="edition()" aria-label="abrir panel para editar usuario">Editar</button>
+          <button
+            class="data-master--button"
+            (click)="edition()"
+            aria-label="abrir panel para editar usuario"
+          >
+            Editar
+          </button>
         </div>
       </div>
     </div>
-  </div>
+  </section>
   <div class="row row-cols-1 row-cols-md-3 g-5">
-    <ng-container
-      *ngFor="let additional of list$"
-      >
+    <ng-container *ngFor="let additional of list$">
       <app-user-componenet [additional]="additional"></app-user-componenet>
     </ng-container>
 
     <div class="plus-sign">
-      <button class="plus-sign-button" (click)="more()" [ngClass]="{'active': isActive, 'disabled': !isActive}" aria-label="agregar un secretario">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-          <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      <button
+        class="plus-sign-button"
+        (click)="more()"
+        [ngClass]="{ active: isActive, disabled: !isActive }"
+        aria-label="agregar un secretario"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-plus-circle"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+          />
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
+          />
         </svg>
       </button>
     </div>
   </div>
 
-  <article class="container">
+  <section class="container">
     <div class="user-description">
       <h3>Agregar un correo</h3>
       <p>
-        Para agregar un correo oprime sobre el + y se abrirá una nueva ventana. Ingresa un nombre para que puedas asociarlo a una persona, y el mail que deseas este asociado.</p>
+        Para agregar un correo oprime sobre el + y se abrirá una nueva ventana.
+        Ingresa un nombre para que puedas asociarlo a una persona, y el mail que
+        deseas este asociado.
+      </p>
     </div>
     <div class="user-description">
       <h3>Actualizar un correo</h3>
-      <p>Una vez agregado el nuevo correo, se enviará un mail de para que puedas confirmar que fue registrado correctamente.</p>
+      <p>
+        Una vez agregado el nuevo correo, se enviará un mail de para que puedas
+        confirmar que fue registrado correctamente.
+      </p>
     </div>
     <div class="user-description">
       <h3>Al borrar un correo</h3>
-      <p>Cuando elimines un correo asociado, este se elimina de la pantalla, pero no afecta en nada a los expedientes ya cargados.</p>
+      <p>
+        Cuando elimines un correo asociado, este se elimina de la pantalla, pero
+        no afecta en nada a los expedientes ya cargados.
+      </p>
     </div>
     <!-- <div class="user-description">
       <h3>Como me avisan cuando salio el expediente</h3>
@@ -72,10 +113,13 @@
     <div class="user-description">
       <h3>Contacto en caso de errores o bugs</h3>
       <p>
-        Si encuentras algún error o bug en nuestro servicio web, te agradecemos que nos informes al respecto para que podamos resolverlo lo antes posible. Por favor, envía un correo electrónico a:
-        <a href="mailto:problemas@secretariovirtual.ar">problemas&#64;secretariovirtual.ar</a>
+        Si encuentras algún error o bug en nuestro servicio web, te agradecemos
+        que nos informes al respecto para que podamos resolverlo lo antes
+        posible. Por favor, envía un correo electrónico a:
+        <a href="mailto:problemas@secretariovirtual.ar"
+          >problemas&#64;secretariovirtual.ar</a
+        >
       </p>
     </div>
-  </article>
-
-</section>
+  </section>
+</article>

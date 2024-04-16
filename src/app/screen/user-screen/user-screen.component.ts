@@ -16,6 +16,7 @@ import { FilesService } from '@services/files.service';
 import { UserServiceService } from '@services/user-service.service';
 import { FileModel } from '../../models/file.model';
 import { RequestStatus } from '@models/request-status.model';
+import { subscribeStatus } from '@models/subscribe-status';
 
 @Component({
   selector: 'app-user-screen',
@@ -44,6 +45,7 @@ export class UserScreenComponent implements OnInit {
 
   moreEmail: boolean = false;
   editUser: boolean = false;
+  suscription: subscribeStatus = 'Free';
 
   constructor(
     private fileSer: FilesService,
