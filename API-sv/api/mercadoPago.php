@@ -31,5 +31,25 @@ function mpRoot($route, $method, $conexion)
         echo json_encode(['message' => 'Method Not /mp/updateIdMp']);
       }
       break;
+      // Metodo para obtener el init_point y continuar con el pago
+    case 'mp/getInitPoint':
+      require_once './mp/new-plan/get_init_point.php';
+      if ($method === 'GET') {
+        $userId = $_SERVER['HTTP_USERID'];
+
+        $getInitPoint = new get_init_point($conexion, $userId);
+        $getInitPoint->getInitPoint();
+      } else {
+        // Método no permitido para esta ruta
+        http_response_code(405);
+        echo json_encode(['message' => 'Method Not /mp/getInitPoint']);
+      }
+      break;
+
+    default:
+      // Ruta no encontrada
+      http_response_code(404);
+      echo json_encode(['message' => 'Route Not Found']);
+      break;
   }
 }
