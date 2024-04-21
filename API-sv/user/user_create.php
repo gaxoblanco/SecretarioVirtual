@@ -48,10 +48,10 @@ class user_create
 
     // en la tabla mercado_pago asociando con el usuario guardo el id_subscription en id_subscription
     try {
-      $query = $this->conexion->prepare('INSERT INTO mercado_pago (user_id, id_mp, collector_id, application_id, reason, status, date_created, last_modified, init_point, frequency, frequency_type, transaction_amount, currency_id, repetitions, billing_day, billing_day_proportional) VALUES (:user_id, :id_mp, :collector_id, :application_id, :reason, :status, :date_created, :last_modified, :init_point, :frequency, :frequency_type, :transaction_amount, :currency_id, :repetitions, :billing_day, :billing_day_proportional)');
+      $query = $this->conexion->prepare('INSERT INTO mercado_pago (user_id, preapproval_id, collector_id, application_id, reason, status, date_created, last_modified, init_point, frequency, frequency_type, transaction_amount, currency_id, repetitions, billing_day, billing_day_proportional) VALUES (:user_id, :preapproval_id, :collector_id, :application_id, :reason, :status, :date_created, :last_modified, :init_point, :frequency, :frequency_type, :transaction_amount, :currency_id, :repetitions, :billing_day, :billing_day_proportional)');
       $query->execute([
         ':user_id' => $this->conexion->lastInsertId(),
-        ':id_mp' => $this->mp_data['id'],
+        ':preapproval_id' => $this->mp_data['id'],
         ':collector_id' => $this->mp_data['collector_id'],
         ':application_id' => $this->mp_data['application_id'],
         ':reason' => $this->mp_data['reason'],
