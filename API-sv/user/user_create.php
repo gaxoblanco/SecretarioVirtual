@@ -48,17 +48,27 @@ class user_create
 
     // en la tabla mercado_pago asociando con el usuario guardo el id_subscription en id_subscription
     try {
-      $query = $this->conexion->prepare('INSERT INTO mercado_pago (user_id, id_subscription, init_point, date_created, last_modified, status) VALUES (:user_id, :id_subscription, :init_point, :date_created, :last_modified, :status)');
+      $query = $this->conexion->prepare('INSERT INTO mercado_pago (user_id, id_mp, collector_id, application_id, reason, status, date_created, last_modified, init_point, frequency, frequency_type, transaction_amount, currency_id, repetitions, billing_day, billing_day_proportional) VALUES (:user_id, :id_mp, :collector_id, :application_id, :reason, :status, :date_created, :last_modified, :init_point, :frequency, :frequency_type, :transaction_amount, :currency_id, :repetitions, :billing_day, :billing_day_proportional)');
       $query->execute([
         ':user_id' => $this->conexion->lastInsertId(),
-        ':id_subscription' => $this->mp_data['id'],
-        ':init_point' => $this->mp_data['init_point'],
+        ':id_mp' => $this->mp_data['id'],
+        ':collector_id' => $this->mp_data['collector_id'],
+        ':application_id' => $this->mp_data['application_id'],
+        ':reason' => $this->mp_data['reason'],
+        ':status' => $this->mp_data['status'],
         ':date_created' => $this->mp_data['date_created'],
         ':last_modified' => $this->mp_data['last_modified'],
-        ':status' => $this->mp_data['status']
+        ':init_point' => $this->mp_data['init_point'],
+        ':frequency' => $this->mp_data['auto_recurring']['frequency'],
+        ':frequency_type' => $this->mp_data['auto_recurring']['frequency_type'],
+        ':transaction_amount' => $this->mp_data['auto_recurring']['transaction_amount'],
+        ':currency_id' => $this->mp_data['auto_recurring']['currency_id'],
+        ':repetitions' => $this->mp_data['auto_recurring']['repetitions'],
+        ':billing_day' => $this->mp_data['auto_recurring']['billing_day'],
+        ':billing_day_proportional' => $this->mp_data['auto_recurring']['billing_day_proportional'],
       ]);
     } catch (\Throwable $th) {
-      //devuelve mensaje de error en json
+      // Devuelve mensaje de error en JSON
       echo json_encode([
         'status' => 500,
         'message' => 'Error al asociar el plan de suscripción al usuario: ' . $th->getMessage()
