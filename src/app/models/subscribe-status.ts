@@ -1,1 +1,1 @@
-export type subscribeStatus = 'Free' | 'Pendiente' | 'Activo';
+export type subscribeStatus = 'Free' | 'Pendiente' | 'active';

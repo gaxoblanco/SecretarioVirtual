@@ -26,7 +26,9 @@
       >
     </ng-container>
     <ng-template #noInitPoint>
-      <span class="subcription">{{ user$.mercado_pago?.status }}</span>
+      <span class="subscription" [ngClass]="'subscription--' + subStatus">{{
+        user$.mercado_pago?.status
+      }}</span>
     </ng-template>
     <div class="row g-0">
       <div class="sub-text">

@@ -31,7 +31,7 @@ export class UserScreenComponent implements OnInit {
   NumberFile = 0;
   list$: any[] = [];
   init_point: string | null = null;
-  subStatus: subscribeStatus = 'Activo';
+  subStatus: subscribeStatus = 'active';
   user$: UserGet = {
     email: '',
     password: '',
