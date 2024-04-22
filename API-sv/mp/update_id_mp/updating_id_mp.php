@@ -7,13 +7,13 @@ Script para mantener la tabla mercado_pago actualizada con los datos de la API d
 3. Actualizo la tabla mercado_pago con el id_mp obtenido
 */
 
-class update_id_mp
+class updateing_id_mp
 {
     private $conexion;
     private $list_preapproval;
     private $ACCES_TOKEN = 'TEST-5548694823343472-041412-4dd92592ca1e30d38ecfd4053f041c33-1751465896';
 
-    public function __construct($conexion,)
+    public function __construct($conexion)
     {
         $this->conexion = $conexion;
     }
@@ -54,14 +54,8 @@ class update_id_mp
         foreach ($this->list_preapproval as $preapproval_id) {
             // Utilizo searchData para buscar el preapproval_id en la api de mercado pago
             require_once 'search_data.php';
-            $searchData = new searchData($this->conexion, $this->ACCES_TOKEN);
+            $searchData = new search_data($this->conexion, $this->ACCES_TOKEN);
             $searchData->searchData(50, $preapproval_id['preapproval_id']);
-
-            // imprimo un mensaje de exito para el preapproval_id
-            echo json_encode([
-                'status' => 200,
-                'message' => 'Se actualizó el id_mp del preapproval_id: ' . $preapproval_id['preapproval_id']
-            ]);
         }
     }
 }

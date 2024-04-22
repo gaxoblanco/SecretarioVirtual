@@ -51,9 +51,9 @@ class get_by_id
     // obtengo el preapproval_id del usuario en la tabla mercado_pago
     $this->getIdUser();
 
-    // Utilizo searchData para buscar el preapproval_id en la api de mercado pago
+    // Utilizo search_data para buscar el preapproval_id en la api de mercado pago
     require_once './mp/search_data.php';
-    $searchData = new searchData($this->conexion, $this->ACCES_TOKEN);
+    $searchData = new search_data($this->conexion, $this->ACCES_TOKEN);
     $searchData->searchData(50, $this->preapproval_id);
 
     // Devuelvo el json $searchData

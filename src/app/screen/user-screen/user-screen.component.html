@@ -13,9 +13,21 @@
 
 <article class="container">
   <section class="card mb-4 suscrip-container">
-    <span class="subcription" [ngClass]="'subcription--' + suscription"
+    <!-- <span class="subcription" [ngClass]="'subcription--' + suscription"
       >Suscripción: {{ suscription }}</span
-    >
+    > -->
+    <!-- valido que init_point no sea null -->
+    <ng-container *ngIf="init_point; else noInitPoint">
+      <a
+        class="subscription"
+        [ngClass]="'subscription--' + subStatus"
+        href="{{ init_point }}"
+        >Finalizar suscripción</a
+      >
+    </ng-container>
+    <ng-template #noInitPoint>
+      <span class="subcription">{{ user$.mercado_pago?.status }}</span>
+    </ng-template>
     <div class="row g-0">
       <div class="sub-text">
         <h2 class="h3">Suscripción {{ user$.subscription["name"] }}</h2>
@@ -26,8 +38,8 @@
         <div>
           <h4>N° Expedientes</h4>
           <h4>N° Secretarios</h4>
-          <h5>{{ NumberFile }}</h5>
-          <h5>{{ list$.length }}</h5>
+          <h5>{{ user$.subscription.num_exp }} / {{ NumberFile }}</h5>
+          <h5>{{ user$.subscription.num_secretary }} / {{ list$.length }}</h5>
         </div>
         <div class="data-master">
           <!-- con una ternaria muestro el spinn hasta que user.firstName es != ''-->

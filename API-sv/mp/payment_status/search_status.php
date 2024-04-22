@@ -1,17 +1,6 @@
 <?php
 
-/* El puntero https://api.mercadopago.com/preapproval/{id} no funciona con el preapproval_id, por lo que se debe buscar el id_mp en la api de mercado pago.
- ------------------------------------------------------------------------
-El search hace peticiones a https://api.mercadopago.com/preapproval/search
-Realizo la peticion hasta obtener el id_mp que estoy buscando.
-*/
-
-/*
-    1. Inicializa el paginado paginado usando la API de Mercado Pago
-    2. Actualizo la subcripción en la base de datos con el id_mp
-*/
-
-class search_data
+class search_status
 {
     private $conexion;
     private $ACCES_TOKEN;
@@ -22,13 +11,14 @@ class search_data
         $this->ACCES_TOKEN = $ACCES_TOKEN;
     }
 
-    public function searchData($limit, $preapproval_id)
+    public function searchStatus($limit = 50)
     {
+        echo 'Iniciando actualización de status de pagos' . PHP_EOL;
         // Inicializa el valor de offset en 0
         $offset = 0;
 
         // Realiza la primera solicitud para obtener el valor total de la paginación
-        $url = 'https://api.mercadopago.com/preapproval/search?limit=' . $limit . '&offset=' . $offset;
+        $url = 'https://api.mercadopago.com/v1/payments/search';
         $header = array(
             'Content-Type: application/json',
             'Authorization: Bearer ' . $this->ACCES_TOKEN
@@ -46,6 +36,15 @@ class search_data
             // echo json_encode($response);
             // Obtiene el valor total de la paginación
             $total = $response['paging']['total'];
+
+            // valido que results no sea un array vacio
+            if (empty($response['results'])) {
+                echo json_encode([
+                    'status' => 400,
+                    'message' => 'No hay usuarios suscriptos'
+                ]);
+                return;
+            }
         } catch (\Throwable $th) {
             // Devuelve mensaje de error en JSON
             echo json_encode([
@@ -55,16 +54,16 @@ class search_data
             return; // Termina la ejecución del método si hay un error
         }
 
-        // Calcula el número de iteraciones necesarias
+        // calcula el número de iteraciones necesarias
         $iterations = ceil($total / $limit);
 
-        // Iterate through the necessary iterations
+        // Itero a través de las iteraciones necesarias
         for ($i = 0; $i < $iterations; $i++) {
-            // Update the offset in each iteration
+            // Actualizo el offset en cada iteración
             $offset = $i * $limit;
 
-            // Make the request to retrieve subscribers data
-            $url = 'https://api.mercadopago.com/preapproval/search?limit=' . $limit . '&offset=' . $offset;
+            // Realizo la solicitud para recuperar los datos de los suscriptores
+            $url = 'https://api.mercadopago.com/v1/payments/search?limit=' . $limit . '&offset=' . $offset;
             $header = array(
                 'Content-Type: application/json',
                 'Authorization: Bearer ' . $this->ACCES_TOKEN
@@ -79,26 +78,24 @@ class search_data
                 curl_close($curl);
 
                 $response = json_decode($response, true);
+                // echo json_encode($response);
+                // Obtiene el valor total de la paginación
+                $total = $response['paging']['total'];
             } catch (\Throwable $th) {
-                // Return error message in JSON
+                // Devuelve mensaje de error en JSON
                 echo json_encode([
                     'status' => 500,
-                    'message' => 'Error getting data in for loop: ' . $th->getMessage()
+                    'message' => 'Error obteniendo el total de suscriptos: ' . $th->getMessage()
                 ]);
-                return; // Terminate method execution if there's an error
+                return; // Termina la ejecución del método si hay un error
             }
 
-            // echo json_encode($preapproval_id);
-            // Iterate through the results and check for the matching preapproval_id
-            foreach ($response['results'] as $result) {
-                if ($result['preapproval_plan_id'] == $preapproval_id) {
-                    // echo json_encode($result);
-
-                    // llamo a la funcion para actualizar el id_mp en la base de datos
-                    require_once 'update_id_mp.php';
-                    $updateIdMp = new update_id_mp($this->conexion, $result['id']);
-                    $updateIdMp->updateIdMp($preapproval_id);
-                }
+            // Itero por cada peticion a la API buscando el id = $id_mp y le paso el id_mp a updating_status
+            echo json_encode($response['results']);
+            foreach ($response['results'] as $payment) {
+                include_once 'updating_status.php';
+                $updatingStatus = new update_status($this->conexion);
+                $updatingStatus->updateStatus($id, $status);
             }
         }
     }

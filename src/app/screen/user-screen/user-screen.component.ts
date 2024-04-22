@@ -17,6 +17,7 @@ import { UserServiceService } from '@services/user-service.service';
 import { FileModel } from '../../models/file.model';
 import { RequestStatus } from '@models/request-status.model';
 import { subscribeStatus } from '@models/subscribe-status';
+import { UserGet } from '@models/userGet';
 
 @Component({
   selector: 'app-user-screen',
@@ -29,7 +30,9 @@ export class UserScreenComponent implements OnInit {
   filList: FileModel[] = [];
   NumberFile = 0;
   list$: any[] = [];
-  user$ = {
+  init_point: string | null = null;
+  subStatus: subscribeStatus = 'Activo';
+  user$: UserGet = {
     email: '',
     password: '',
     firstName: '',
@@ -45,7 +48,6 @@ export class UserScreenComponent implements OnInit {
 
   moreEmail: boolean = false;
   editUser: boolean = false;
-  suscription: subscribeStatus = 'Free';
 
   constructor(
     private fileSer: FilesService,
@@ -83,10 +85,15 @@ export class UserScreenComponent implements OnInit {
     setTimeout(() => {
       if (this.list$.length < this.user$.subscription.num_secretary) {
         this.isActive = true;
+        // valido que this.user$.mercado_pago.init_point exista
+        if (this.user$.mercado_pago?.init_point) {
+          this.init_point = this.user$.mercado_pago.init_point;
+          this.subStatus = 'Pendiente';
+        }
       } else {
         this.isActive = false;
       }
-    }, 500);
+    }, 1);
   }
 
   more() {

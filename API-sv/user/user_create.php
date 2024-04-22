@@ -20,31 +20,49 @@ class user_create
 
   public function createUser()
   {
-    // Verificar si el correo electrónico ya existe en la base de datos
-    $query = $this->conexion->prepare('SELECT email FROM users WHERE email = :email');
-    $query->execute([':email' => $this->email]);
-    $existingUser = $query->fetch(PDO::FETCH_ASSOC);
+    try {
+      // Verificar si el correo electrónico ya existe en la base de datos
+      $query = $this->conexion->prepare('SELECT email FROM users WHERE email = :email');
+      $query->execute([':email' => $this->email]);
+      $existingUser = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ($existingUser) {
-      //devuelve mensaje de error en json
+      if ($existingUser) {
+        //devuelve mensaje de error en json
+        echo json_encode([
+          'status' => 400,
+          'message' => 'El correo electrónico ya existe'
+        ]);
+        return;
+      }
+    } catch (\Throwable $th) {
+      // Devuelve mensaje de error en JSON
       echo json_encode([
-        'status' => 400,
-        'message' => 'El correo electrónico ya existe'
+        'status' => 500,
+        'message' => 'Error al verificar si el correo electrónico ya existe: ' . $th->getMessage()
       ]);
       return;
     }
     // Generar el hash de la contraseña
     $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
 
-    // Guardar el nuevo usuario en la db con los datos recibidos del formulario
-    $query = $this->conexion->prepare('INSERT INTO users (firstName, lastName, email, password, id_subscription) VALUES (:firstName, :lastName, :email, :password, :id_subscription)');
-    $query->execute([
-      ':firstName' => $this->firstName,
-      ':lastName' => $this->lastName,
-      ':email' => $this->email,
-      ':password' => $hashedPassword,
-      ':id_subscription' => 2
-    ]);
+    try {
+      // Guardar el nuevo usuario en la db con los datos recibidos del formulario
+      $query = $this->conexion->prepare('INSERT INTO users (firstName, lastName, email, password, id_subscription) VALUES (:firstName, :lastName, :email, :password, :id_subscription)');
+      $query->execute([
+        ':firstName' => $this->firstName,
+        ':lastName' => $this->lastName,
+        ':email' => $this->email,
+        ':password' => $hashedPassword,
+        ':id_subscription' => 2
+      ]);
+    } catch (\Throwable $th) {
+      // Devuelve mensaje de error en JSON
+      echo json_encode([
+        'status' => 500,
+        'message' => 'Error al guardar el nuevo usuario: ' . $th->getMessage()
+      ]);
+      return;
+    }
 
     // en la tabla mercado_pago asociando con el usuario guardo el id_subscription en id_subscription
     try {

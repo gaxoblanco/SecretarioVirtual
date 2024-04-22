@@ -23,7 +23,7 @@ function mpRoot($route, $method, $conexion)
     case 'mp/updateIdMp':
       require_once './mp/update_id_mp/updating_id_mp.php';
       if ($method === 'GET') {
-        $updateIdMp = new update_id_mp($conexion);
+        $updateIdMp = new updateing_id_mp($conexion);
         $updateIdMp->startIdMp();
       } else {
         // Método no permitido para esta ruta
@@ -45,7 +45,18 @@ function mpRoot($route, $method, $conexion)
         echo json_encode(['message' => 'Method Not /mp/getInitPoint']);
       }
       break;
-
+      // Metodo para actualizar el status del pago
+    case 'mp/updateStatus':
+      require_once './mp/payment_status/updating_status.php';
+      if ($method === 'GET') {
+        $updateStatus = new updating_status($conexion);
+        $updateStatus->startStatus();
+      } else {
+        // Método no permitido para esta ruta
+        http_response_code(405);
+        echo json_encode(['message' => 'Method Not /mp/updateStatus']);
+      }
+      break;
     default:
       // Ruta no encontrada
       http_response_code(404);
