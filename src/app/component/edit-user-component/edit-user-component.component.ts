@@ -54,7 +54,7 @@ export class EditUserComponentComponent implements OnInit {
     );
     this.userServ.getUser$().subscribe((user) => {
       this.user$ = user;
-      console.log('userrrr', user);
+      // console.log('userrrr', user);
     });
     // setTimeout(() => {
     //   console.log(this.user$);
