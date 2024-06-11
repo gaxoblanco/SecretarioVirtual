@@ -8,8 +8,11 @@
 // 6 - Update the user_exp_move table
 // 7 - Add the array newsMoves to the array newsBy
 
-require_once './up-exp/find_index.php';
-require_once './up-exp/exists_exp.php';
+// Definir el directorio base de este archivo
+define('UP_USER_EXP_DIR', __DIR__);
+
+require_once UP_USER_EXP_DIR . '/up-exp/find_index.php';
+require_once UP_USER_EXP_DIR . '/up-exp/exists_exp.php';
 
 class up_user_exp
 {

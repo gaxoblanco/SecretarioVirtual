@@ -1,10 +1,10 @@
 {
   "tipos_listas": {
     "1": "Ordinaria",
-    "3": "Rectificatoria",
-    "4": "Ampliatoria",
-    "5": "Con Habilitaci\u00f3n de D\u00edas y Horas",
-    "6": "Inhibidos"
+    "2": "Rectificatoria",
+    "3": "Ampliatoria",
+    "4": "Con Habilitacion de Dias y Horas",
+    "5": "Inhibidos"
   },
   "dependencias": {
     "7441513": "Juzgado de 1\u00c2\u00b0 Instancia en lo Civil y Comercial N\u00c2\u00b0 1",

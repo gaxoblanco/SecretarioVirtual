@@ -1,4 +1,6 @@
 <?php
+// Definir el directorio base del proyecto
+define('BASE_DIR', __DIR__);
 // this script is in charge of updating the db with the public data
 
 // Incluir la clase scrapper
@@ -11,14 +13,15 @@ require_once 'users_data.php';
 require_once 'up_user_exp.php';
 
 // Incluir la clase write_mail
-require_once './mail/write_mail.php';
+require_once 'write_mail.php';
 
 // Importar el cliente SQL
 require_once 'db.php';
 
-require_once '../pjf-listas-despacho/PJF_Listas_Despacho.php';
+require_once BASE_DIR . '/../pjf-listas-despacho/PJF_Listas_Despacho.php';
 // Crear instancia de la clase Listas_Despacho
 $pjf = new PJF_Listas_Despacho();
+
 
 echo "Iniciando scrapper...\n";
 

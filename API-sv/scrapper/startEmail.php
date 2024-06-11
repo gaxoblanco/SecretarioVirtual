@@ -8,7 +8,7 @@
 require_once 'users_data.php';
 
 // Incluir la clase up_user_exp
-require_once 'up_user_exp.php';
+require_once './up_user_exp.php';
 
 // Incluir la clase write_mail
 require_once 'write_mail.php';
