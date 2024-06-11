@@ -74,9 +74,15 @@ class add_dispatch
       // Crear el expediente
       $query = $this->conexion->prepare('INSERT INTO user_expedients (id_lista_despacho, numero_exp, anio_exp, dependencia, id_user) VALUES (NULL, :numero_exp, :anio_exp, :dependencia, :id_user)');
       $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch, ':id_user' => $this->id_user]);
+
+      // enviar el ultimo movivimiento del expediente $caseNumber, $caseYear, $dispatch
+      require_once 'last_move.php';
+      $lastMove = new last_move($this->conexion, $this->id_user, $this->caseNumber, $this->caseYear, $this->dispatch, 'Creacion de expediente');
+      $lastMove->lastMove();
+
       //retorna un json mensaje de exito
-      http_response_code(200);
-      echo json_encode(['message' => 'Expediente creado con exito.']);
+      // http_response_code(200);
+      // echo json_encode(['message' => 'Expediente creado con exito.']);
     } catch (PDOException $e) {
       // Devolver una respuesta JSON de error
       http_response_code(500); // Establece el código de estado HTTP adecuado para un error interno del servidor
