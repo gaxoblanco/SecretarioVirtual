@@ -34,8 +34,6 @@ class get_dispatch
       $jsonDispatches = json_encode($dispatches);
       if ($jsonDispatches === null) {
         http_response_code(500);  // Error interno del servidor
-        // echo json_encode(['error' => 'Error al obtener dispatches', 'conexion' => $this->conexion, 'userId' => $this->userId]);
-        var_dump('sorpresa...', $dispatches);
         return;
       }
 

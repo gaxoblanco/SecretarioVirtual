@@ -81,8 +81,8 @@ class add_dispatch
       $lastMove->lastMove();
 
       //retorna un json mensaje de exito
-      // http_response_code(200);
-      // echo json_encode(['message' => 'Expediente creado con exito.']);
+      http_response_code(200);
+      echo json_encode(['message' => 'Expediente creado con exito.']);
     } catch (PDOException $e) {
       // Devolver una respuesta JSON de error
       http_response_code(500); // Establece el código de estado HTTP adecuado para un error interno del servidor
