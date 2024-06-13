@@ -46,7 +46,7 @@ class write_mail
     // Llama a la funcion createHeader y le pasa el array result como parametro
     $this->createHeader($result);
 
-    echo count($result);
+    // echo count($result);
     return $result;
   }
 
@@ -65,7 +65,7 @@ class write_mail
         if (!filter_var($secretary['Semail'], FILTER_VALIDATE_EMAIL)) {
           // Eliminar la dirección de correo electrónico no válida del array
           unset($secretaries[$key]);
-          echo "Correo electrónico inválido: " . $secretary['Semail'] . ". Se ha eliminado del array.<br>";
+          // echo "Correo electrónico inválido: " . $secretary['Semail'] . ". Se ha eliminado del array.<br>";
         }
       }
 
@@ -84,7 +84,7 @@ class write_mail
       $secretaries = $news['secretaries'];
       $this->sendMail($email, $secretaries, $news);
     }
-    echo "header creado";
+    // echo "header creado";
   }
 
   // envia el mail con los datos de la notificacion
@@ -114,7 +114,7 @@ class write_mail
     // Envía el mensaje
     try {
       $result = $mailer->send($messageObj);
-      echo "Mail enviado";
+      // echo "Mail enviado";
       return $result;
     } catch (Exception $e) {
       echo "Error al enviar el correo: " . $e->getMessage();
@@ -131,7 +131,7 @@ class write_mail
       $headers[] = $secretary['Semail'];
     }
 
-    echo "con copia creado";
+    // echo "con copia creado";
     return $headers;
   }
 

@@ -55,7 +55,7 @@ export class ConfirmPasswordComponent implements OnInit {
 
     this.autServ.changePassword(pass.password).subscribe(
       (response) => {
-        console.log('respuestA', response);
+        // console.log('respuestA', response);
       },
       (error) => {
         console.log('error', error);

@@ -24,7 +24,8 @@ $publicRoutes = [
   'user/login',
   'dispatch/update', // actualiza las tablas de expedientes y envia mails
   'user/password-restart',
-  'user/password-reset'
+  'user/password-reset',
+  // 'mp/creat-plan',
 ];
 
 
@@ -38,9 +39,9 @@ if (!in_array($route, $publicRoutes)) {
   // Obtengo el token del header
   $token = $_SERVER['HTTP_TOKEN'];
 
-  verifyToken($conexion, $token);
+  $isInvalid = verifyToken($conexion, $token, $userId);
   // si la respuesta es false muestro el mensaje de error
-  if (!verifyToken($conexion, $token)) {
+  if (!$isInvalid) {
     http_response_code(401);
     echo json_encode(['message' => 'Token no valido']);
     exit;
@@ -73,6 +74,10 @@ if (!in_array($route, $publicRoutes)) {
     case 'dispatch':
       require_once 'api/dispatch.php';
       dispatchRoot($route, $method, $conexion);
+      break;
+    case 'mp':
+      require_once 'api/mercadoPago.php';
+      mpRoot($route, $method, $conexion);
       break;
       // si no se cumple ninguno muestro el valor de $route
     default:

@@ -1,12 +1,12 @@
 <?php
 // Función para verificar el token
-function verifyToken($conexion, $token)
+function verifyToken($conexion, $token, $userId)
 {
-  $stmt = $conexion->prepare('SELECT * FROM users WHERE token = :token');
-  $stmt->bindParam(':token', $token);
-  $stmt->execute();
-
-  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  $query = $conexion->prepare("SELECT * FROM users WHERE id = :id AND token = :token");
+  $query->bindParam(':id', $userId);
+  $query->bindParam(':token', $token);
+  $query->execute();
+  $user = $query->fetch(PDO::FETCH_ASSOC);
 
   if (!$user) {
     // El token no coincide con ningún usuario

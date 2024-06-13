@@ -35,6 +35,26 @@ article{
 .suscrip-container{
   border: 1px solid #4e84a5;
   border-radius: 16px;
+  .subscription {
+    text-decoration: none;
+    border: none;
+    position: absolute;
+    right: 1.2rem;
+    top: 1.2rem;
+    border-radius: 12px;
+    padding: 4px 12px;
+    color: white;
+    // background-color: #37BBED;
+    &--Free {
+      background-color: #196729;
+    }
+    &--Pendiente {
+      background-color: #30bf4c;
+    }
+    &--active {
+      background-color: #37BBED;
+    }
+  }
   .imgSub{
     height: 200px;
     overflow: hidden;

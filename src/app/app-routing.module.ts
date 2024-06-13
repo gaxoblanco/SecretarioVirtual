@@ -12,6 +12,7 @@ import { JusticeComponent } from './screen/justice/justice.component';
 import { HistoryExpComponent } from './screen/history-exp/history-exp.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ResetPasswordComponent } from '@screen/reset-password/reset-password.component';
+import { StatusComponent } from './screen/status/status.component';
 
 const routes: Routes = [
   { path: '', component: HomeScreenComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
     path: 'historial-expediente/:numero_exp/:anio_exp/:id_juzgado',
     component: HistoryExpComponent,
   },
+  { path: 'status', component: StatusComponent },
   // { path: 'reset-password', component: ResetPasswordComponent },
   // reset-password/:token/:email
   { path: 'reset-password/:token/:email', component: ResetPasswordComponent },

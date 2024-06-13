@@ -28,7 +28,6 @@ class last_move
 
   public function lastMove()
   {
-    echo json_encode(['message' => 'Class LastMove']);
     try {
       // consulto en la tabla expedientes si el expediente ya existe
       $query = $this->conexion->prepare('SELECT * FROM expedientes WHERE numero_expediente = :numero_expediente AND anio_expediente = :anio_expediente AND dependencia = :dependencia');
@@ -61,7 +60,7 @@ class last_move
       echo json_encode('Error al consultar la ultima actualizacion del expediente');
     }
 
-    // envio un correo con el ultimo movimiento del expediente recien cargado y actualizado 
+    // envio un correo con el ultimo movimiento del expediente recien cargado y actualizado
     $this->sendMailLastMove($expediente, $lastMoveUserExp);
 
 
@@ -98,7 +97,7 @@ class last_move
 
   public function upExpAndMove($expediente)
   {
-    echo "expediente ->";
+    // echo "expediente ->";
     try {
       // obtengo el id_exp de la tabla user_expedientes que tenga el $id_user, $caseNumber, $caseYear, $dispatch
       $query = $this->conexion->prepare('SELECT * FROM user_expedients WHERE id_user = :id_user AND numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia');
@@ -213,9 +212,6 @@ class last_move
       ]
     ];
 
-
-    // Imprime el array $newsBy para depuración
-    echo json_encode($newsBy);
     // envio el la informacion al correo
     require_once __DIR__ . '/../scrapper/write_mail.php';
     $writeMail = new write_mail($this->conexion, $newsBy);

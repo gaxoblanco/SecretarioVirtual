@@ -1,18 +1,16 @@
 <header class="mb-4">
   <div class="logo-container">
-    <img src="https://i.imgur.com/bKMuHz9.png" alt="logo">
+    <img src="https://i.imgur.com/bKMuHz9.png" alt="logo" />
   </div>
   <ul class="nav justify-content-end">
-    <li
-      class="nav-item"
-      *ngFor="let page of pages$"
-      [routerLink]="page.route">
+    <li class="nav-item" *ngFor="let page of pages$" [routerLink]="page.route">
       <a
         class="nav-link active"
         aria-current="page"
         (click)="page.name === 'Desconectar' ? logout() : null"
-      > {{page.name}} </a>
+      >
+        {{ page.name }}
+      </a>
     </li>
   </ul>
 </header>
-

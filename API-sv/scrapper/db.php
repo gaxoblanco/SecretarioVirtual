@@ -1,9 +1,9 @@
 <?php
 // Información de conexión de Donweb
 $host = 'localhost'; // localhost
-$nombreDB = 'c2361340_sv'; // c2361340_sv // despachos
-$usuarioDB = 'c2361340_sv'; // c2361340_sv // gaston
-$contrasenaDB = 'reDI80noba'; // reDI80noba // blanco
+$nombreDB = 'despachos'; // c2361340_sv // despachos
+$usuarioDB = 'gaston'; // c2361340_sv // gaston
+$contrasenaDB = 'blanco'; // reDI80noba // blanco
 
 $uri = "mysql:host=$host;dbname=$nombreDB";
 $opciones = array(

@@ -47,14 +47,21 @@ export class RegisterComponentComponent implements OnInit {
       this.status = 'loading';
       const user = this.formRegister.value;
       console.log('formulario correcto, solicito creacion');
-      this.authService.register(user).subscribe((success) => {
-        if (success) {
-          console.log('Usuario creado con éxito--', success);
+      this.authService.register(user).subscribe((response) => {
+        if (response.status == 200) {
+          // console.log('Usuario creado con éxito--', response);
           this.status = 'success';
-          // Redirige al usuario a la página de inicio de sesión
-          this.router.navigate(['/login']);
+          // Redirige al usuario a la página externa de response.message
+          if (response.message) {
+            window.location.href = response.message;
+          } else {
+            this.router.navigate(['/login']);
+          }
+
+          // this.router.navigate(['/login']);
+          // console.log('url ---', response.message);
         } else {
-          console.log('Error al crear usuario--', success);
+          console.log('Error al crear usuario--', response);
           this.status = 'failed';
         }
       });

@@ -74,7 +74,7 @@ class write_mail
 
       // echo json_encode($secretaries);
     }
-    echo "header creado";
+    // echo "header creado";
   }
 
   // envia el mail con los datos de la notificacion
@@ -103,7 +103,7 @@ class write_mail
     // Envía el mensaje
     try {
       $result = $mailer->send($messageObj);
-      echo "email enviado";
+      // echo "email enviado";
       return $result;
     } catch (Exception $e) {
       echo "Error al enviar el correo: " . $e->getMessage();
@@ -137,7 +137,7 @@ class write_mail
       }
     }
 
-    echo "con copia creado";
+    // echo "con copia creado";
     return $headers;
   }
 
