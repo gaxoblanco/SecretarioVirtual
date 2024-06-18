@@ -6,8 +6,6 @@
 // Si existe llamo a la function lastMoveUserExpediente y obtengo los movimientos del expediente
 // Actualizo con function upExpAndMove tanto el expediente como los movimientos en las tablas asociadas al usuario
 
-
-
 class last_move
 {
   private $conexion;
@@ -63,7 +61,6 @@ class last_move
     // envio un correo con el ultimo movimiento del expediente recien cargado y actualizado
     $this->sendMailLastMove($expediente, $lastMoveUserExp);
 
-
     // upExpAndMove
     $this->upExpAndMove($expediente);
   }
@@ -109,6 +106,24 @@ class last_move
       echo json_encode('Error al consultar el expediente del usuario');
     }
 
+    // Función para limpiar y codificar las cadenas de texto
+    function cleanAndEncode($text)
+    {
+      // Convertir a UTF-8 para asegurar que todos los caracteres especiales sean manejados correctamente
+      $text = mb_convert_encoding($text, 'UTF-8', 'auto');
+      // Eliminar etiquetas HTML
+      $text = strip_tags($text);
+      // Reemplazar saltos de línea y tabulaciones con espacios
+      $search = array("\r\n", "\n", "\r", "\t");
+      $replace = ' ';
+      $text = str_replace($search, $replace, $text);
+      // Decodificar entidades HTML
+      $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+      // Convertir caracteres especiales a entidades HTML
+      $text = htmlspecialchars($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+      return $text;
+    }
+
     try {
       //actualizo el expediente en la tabla user_expedientes id_exp	id_lista_despacho	numero_exp	anio_exp	caratula	reservado	dependencia	tipo_lista id_user, con la informacion de $expediente
       $query = $this->conexion->prepare('UPDATE user_expedients SET id_lista_despacho = :id_lista_despacho, caratula = :caratula, reservado = :reservado, tipo_lista = :tipo_lista WHERE id_exp = :id_exp');
@@ -120,8 +135,6 @@ class last_move
     }
 
     try {
-      // echo json_encode($exp);
-
       // con el id_expediente obtengo todos los movimientos del expediente y los actualizo en la tabla user_movimientos
       $query = $this->conexion->prepare('SELECT * FROM movimientos WHERE id_expediente = :id_expediente');
       $query->execute([':id_expediente' => $expediente['id_expediente']]);
@@ -177,7 +190,7 @@ class last_move
       !isset($expedient['numero_expediente']) || !isset($expedient['anio_expediente']) || !isset($expedient['caratula']) || !isset($expedient['reservado']) || !isset($expedient['dependencia']) || !isset($expedient['tipo_lista']) ||
       !isset($lastMovement['fecha_movimiento']) || !isset($lastMovement['estado']) || !isset($lastMovement['texto']) || !isset($lastMovement['titulo']) || !isset($lastMovement['despacho'])
     ) {
-      echo "Error: faltan datos del expediente o del último movimiento.";
+      echo json_decode("Error: faltan datos del expediente o del último movimiento.");
       return;
     }
 
