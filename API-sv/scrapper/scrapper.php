@@ -9,10 +9,7 @@ require_once 'db.php';
 // require_once '../pjf-listas-despacho/PJF_Listas_Despacho.php';
 // // Crear instancia de la clase Listas_Despacho
 // $pjf = new PJF_Listas_Despacho();
-<<<<<<< HEAD
-=======
 
-//----- 3
 class ExpedienteInsertor
 {
   private $conexion;
@@ -290,7 +287,7 @@ class TipoListaProcessor
   {
     $sth = "STH1";
     // valido el valor sth con la funcion sthValue
-    $this->sthValue($id_dependencia);
+    $this->sthValue($id_dependencia, $sth);
     // Funcion para obtener los datos a trabajar
     try {
       $listas_despacho = $this->pjf->getListasDespachoPorRangoFechaYTipo($fecha_inicio, $fecha_fin, $id_dependencia, $id_tipo_lista, $sth);
@@ -303,7 +300,7 @@ class TipoListaProcessor
   }
 
   // valido rutas especiales
-  private function sthValue($dependenciaId)
+  private function sthValue($dependenciaId, &$sth)
   {
     switch ($dependenciaId) {
       case "275555824":
@@ -333,4 +330,3 @@ class TipoListaProcessor
     }
   }
 }
->>>>>>> mercadoPago

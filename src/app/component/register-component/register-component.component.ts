@@ -53,7 +53,8 @@ export class RegisterComponentComponent implements OnInit {
           this.status = 'success';
           // Redirige al usuario a la página externa de response.message
           if (response.message) {
-            window.location.href = response.message;
+            // window.location.href = response.message;
+            this.router.navigate(['/login']);
           } else {
             this.router.navigate(['/login']);
           }

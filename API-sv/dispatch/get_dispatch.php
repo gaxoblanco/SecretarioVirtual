@@ -26,7 +26,6 @@ class get_dispatch
       // Verificar si $dispatches está vacío
       if (empty($dispatches)) {
         http_response_code(204);  // Sin contenido
-        echo json_encode(['message' => 'No hay expedientes para este usuario']);
         return;
       }
 
@@ -39,8 +38,8 @@ class get_dispatch
 
       // Devolver los expedientes como respuesta en formato JSON
       http_response_code(200);
-      echo json_encode($dispatches);
-      return;
+      // echo json_encode($dispatches);
+      return $dispatches;
     } catch (PDOException $e) {
       http_response_code(500);  // Error interno del servidor
       echo json_encode(['error' => 'Error al obtener los expedientes: ' . $e->getMessage()]);

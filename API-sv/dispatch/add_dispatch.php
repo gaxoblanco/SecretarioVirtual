@@ -4,6 +4,7 @@
 // - Si el numero de expedientes es menor al numero de expedientes permitidos, se agrega el expediente a la tabla dispatchlist y se devuelve un mensaje de exito.
 // - Si el numero de expedientes es igual al numero de expedientes permitidos, se devuelve un mensaje de error.
 require_once './subscription.php';
+require_once __DIR__ . '/../dispatch/last-move/last_move.php';
 class add_dispatch
 {
   private $id_user;
@@ -76,13 +77,12 @@ class add_dispatch
       $query->execute([':numero_exp' => $this->caseNumber, ':anio_exp' => $this->caseYear, ':dependencia' => $this->dispatch, ':id_user' => $this->id_user]);
 
       // enviar el ultimo movivimiento del expediente $caseNumber, $caseYear, $dispatch
-      require_once 'last_move.php';
       $lastMove = new last_move($this->conexion, $this->id_user, $this->caseNumber, $this->caseYear, $this->dispatch, 'Creacion de expediente');
       $lastMove->lastMove();
 
       //retorna un json mensaje de exito
-      http_response_code(200);
-      echo json_encode(['message' => 'Expediente creado con exito.']);
+      // http_response_code(200);
+      // echo json_encode(['message' => 'Expediente creado con exito.']);
     } catch (PDOException $e) {
       // Devolver una respuesta JSON de error
       http_response_code(500); // Establece el código de estado HTTP adecuado para un error interno del servidor

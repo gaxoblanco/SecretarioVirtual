@@ -6,6 +6,8 @@
 // Si existe llamo a la function lastMoveUserExpediente y obtengo los movimientos del expediente
 // Actualizo con function upExpAndMove tanto el expediente como los movimientos en las tablas asociadas al usuario
 
+
+
 class last_move
 {
   private $conexion;
@@ -26,16 +28,23 @@ class last_move
 
   public function lastMove()
   {
+    // echo json_encode(['message' => 'Class LastMove']);
     try {
-      // consulto en la tabla expedientes si el expediente ya existe
-      $query = $this->conexion->prepare('SELECT * FROM expedientes WHERE numero_expediente = :numero_expediente AND anio_expediente = :anio_expediente AND dependencia = :dependencia');
-      $query->execute([':numero_expediente' => $this->caseNumber, ':anio_expediente' => $this->caseYear, ':dependencia' => $this->dispatch]);
-      $count = $query->rowCount();
+      try {
+        // consulto en la tabla expedientes si el expediente ya existe
+        $query = $this->conexion->prepare('SELECT * FROM expedientes WHERE numero_expediente = :numero_expediente AND anio_expediente = :anio_expediente AND dependencia = :dependencia');
+        $query->execute([':numero_expediente' => $this->caseNumber, ':anio_expediente' => $this->caseYear, ':dependencia' => $this->dispatch]);
+        $count = $query->rowCount();
+      } catch (\Throwable $th) {
+        // Devolver mensaje de error en json
+        http_response_code(500);
+        echo json_encode('Error al consultar el expediente');
+      }
       // si el expediente no existe en la tabla expedientes
       if ($count == 0) {
         // Devolver mensaje de "error" en json
         http_response_code(200);
-        echo json_encode('El expediente aun no existe, no se envia correo con la ultima actualizacion');
+        // echo json_encode('El expediente aun no existe, no se envia correo con la ultima actualizacion');
         return;
       }
       // si el expediente existe en la tabla expedientes obtengo el id_expediente y se lo envio a la funcion lastMoveUserExpediente
@@ -44,14 +53,14 @@ class last_move
       $lastMoveUserExp = $this->lastMoveUserExpediente($id_expediente);
       // limpio el valor $lastMoveUserExp['texto'] y le quito &amp;nbsp;
       $lastMoveUserExp['texto'] = str_replace('&amp;nbsp;', '', $lastMoveUserExp['texto']);
-
+      // echo json_encode($lastMoveUserExp);
       // valido que sea un obj
-      if (is_object($lastMoveUserExp)) {
-        // Devolver mensaje de "error" en json
-        http_response_code(404);
-        echo json_encode('el ultimo movimiento no se pudo consultar');
-        return;
-      }
+      // if (is_object($lastMoveUserExp)) {
+      //   // Devolver mensaje de "error" en json
+      //   http_response_code(404);
+      //   echo json_encode('el ultimo movimiento no se pudo consultar');
+      //   return;
+      // }
     } catch (\Throwable $th) {
       // Devolver mensaje de error en json
       http_response_code(500);
@@ -60,6 +69,7 @@ class last_move
 
     // envio un correo con el ultimo movimiento del expediente recien cargado y actualizado
     $this->sendMailLastMove($expediente, $lastMoveUserExp);
+
 
     // upExpAndMove
     $this->upExpAndMove($expediente);
@@ -92,9 +102,30 @@ class last_move
     }
   }
 
+  // Función para limpiar y codificar las cadenas de texto
+  function cleanAndEncode($text)
+  {
+    // Convertir a UTF-8 para asegurar que todos los caracteres especiales sean manejados correctamente
+    $text = mb_convert_encoding($text, 'UTF-8', 'auto');
+    // Eliminar etiquetas HTML
+    $text = strip_tags($text);
+    // Reemplazar saltos de línea y tabulaciones con espacios
+    $search = array("\r\n", "\n", "\r", "\t");
+    $replace = ' ';
+    $text = str_replace($search, $replace, $text);
+    // Decodificar entidades HTML
+    $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    // Eliminar cualquier entidad HTML restante
+    $text = preg_replace('/&[^;]+;/', '', $text);
+    // Convertir caracteres especiales a entidades HTML
+    $text = htmlspecialchars($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    return $text;
+  }
+
   public function upExpAndMove($expediente)
   {
     // echo "expediente ->";
+
     try {
       // obtengo el id_exp de la tabla user_expedientes que tenga el $id_user, $caseNumber, $caseYear, $dispatch
       $query = $this->conexion->prepare('SELECT * FROM user_expedients WHERE id_user = :id_user AND numero_exp = :numero_exp AND anio_exp = :anio_exp AND dependencia = :dependencia');
@@ -106,23 +137,9 @@ class last_move
       echo json_encode('Error al consultar el expediente del usuario');
     }
 
-    // Función para limpiar y codificar las cadenas de texto
-    function cleanAndEncode($text)
-    {
-      // Convertir a UTF-8 para asegurar que todos los caracteres especiales sean manejados correctamente
-      $text = mb_convert_encoding($text, 'UTF-8', 'auto');
-      // Eliminar etiquetas HTML
-      $text = strip_tags($text);
-      // Reemplazar saltos de línea y tabulaciones con espacios
-      $search = array("\r\n", "\n", "\r", "\t");
-      $replace = ' ';
-      $text = str_replace($search, $replace, $text);
-      // Decodificar entidades HTML
-      $text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-      // Convertir caracteres especiales a entidades HTML
-      $text = htmlspecialchars($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-      return $text;
-    }
+    // limpio las cadenas de textos antes de acutlizar el exp por si alguno esta mal cargado en la tabla anterior, limpio caratula y reservado
+    $expediente['caratula'] = $this->cleanAndEncode($expediente['caratula']);
+    $expediente['reservado'] = $this->cleanAndEncode($expediente['reservado']);
 
     try {
       //actualizo el expediente en la tabla user_expedientes id_exp	id_lista_despacho	numero_exp	anio_exp	caratula	reservado	dependencia	tipo_lista id_user, con la informacion de $expediente
@@ -135,29 +152,36 @@ class last_move
     }
 
     try {
+      // echo json_encode($exp);
+
       // con el id_expediente obtengo todos los movimientos del expediente y los actualizo en la tabla user_movimientos
       $query = $this->conexion->prepare('SELECT * FROM movimientos WHERE id_expediente = :id_expediente');
       $query->execute([':id_expediente' => $expediente['id_expediente']]);
       $movements = $query->fetchAll();
-
-      // echo json_encode($exp);
-      foreach ($movements as $movement) {
-        try {
-          $query = $this->conexion->prepare('INSERT INTO user_exp_move (id_exp, fecha_movimiento, estado, texto, titulo, despacho) VALUES (:id_exp, :fecha_movimiento, :estado, :texto, :titulo, :despacho)');
-          $query->execute([
-            ':id_exp' => $exp['id_exp'], // Asegúrate de usar el parámetro correcto
-            ':fecha_movimiento' => $movement['fecha_movimiento'], // Añadir los dos puntos aquí
-            ':estado' => $movement['estado'],
-            ':texto' => str_replace('&amp;nbsp;', '', $movement['texto']),
-            ':titulo' => $movement['titulo'],
-            ':despacho' => $movement['despacho']
-          ]);
-        } catch (\Throwable $th) {
-          echo json_encode($th);
-        }
-      }
     } catch (\Throwable $th) {
-      //throw $th;
+      // Devolver mensaje de error en json
+      http_response_code(500);
+      echo json_encode('Error al consultar los movimientos del expediente');
+    }
+    // echo json_encode($exp);
+    foreach ($movements as $movement) {
+      // limpio texto, titutlo y despacho de los movimientos
+      $movement['texto'] = $this->cleanAndEncode($movement['texto']);
+      $movement['titulo'] = $this->cleanAndEncode($movement['titulo']);
+      $movement['despacho'] = $this->cleanAndEncode($movement['despacho']);
+      try {
+        $query = $this->conexion->prepare('INSERT INTO user_exp_move (id_exp, fecha_movimiento, estado, texto, titulo, despacho) VALUES (:id_exp, :fecha_movimiento, :estado, :texto, :titulo, :despacho)');
+        $query->execute([
+          ':id_exp' => $exp['id_exp'], // Asegúrate de usar el parámetro correcto
+          ':fecha_movimiento' => $movement['fecha_movimiento'], // Añadir los dos puntos aquí
+          ':estado' => $movement['estado'],
+          ':texto' => str_replace('&amp;nbsp;', '', $movement['texto']),
+          ':titulo' => $movement['titulo'],
+          ':despacho' => $movement['despacho']
+        ]);
+      } catch (\Throwable $th) {
+        echo json_encode($th);
+      }
     }
   }
 
@@ -169,7 +193,7 @@ class last_move
     $user = $userGet->getUsers();
     // Verifica que $user no sea null
     if ($user === null) {
-      echo "Error: el usuario no fue encontrado.";
+      echo json_decode("Error: el usuario no fue encontrado.");
       return;
     }
 
@@ -177,13 +201,9 @@ class last_move
 
     // Verifica que los índices existan en el array $user
     if (!isset($user['firstName']) || !isset($user['lastName']) || !isset($user['email'])) {
-      echo "Error: faltan datos del usuario.";
+      echo json_decode("Error: faltan datos del usuario.");
       return;
     }
-
-    // Imprime el contenido de $expedient y $lastMovement para depuración
-    // echo json_encode($expedient);
-    // echo json_encode($lastMovement);
 
     // Asegúrate de que los índices en $expedient y $lastMovement existan
     if (
@@ -225,6 +245,9 @@ class last_move
       ]
     ];
 
+
+    // Imprime el array $newsBy para depuración
+    // echo json_encode($newsBy);
     // envio el la informacion al correo
     require_once __DIR__ . '/../scrapper/write_mail.php';
     $writeMail = new write_mail($this->conexion, $newsBy);
