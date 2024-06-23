@@ -52,23 +52,34 @@ class last_move
         $this->expediente = $query->fetch();
         $id_expediente = $this->expediente['id_expediente'];
         $this->lastMoveUserExp = lastMoveUserExpediente($this->conexion, $this->lastMove, $id_expediente);
-        // limpio el valor $lastMoveUserExp['texto'] y le quito &amp;nbsp;
-        $this->lastMoveUserExp['texto'] = str_replace('&amp;nbsp;', '', $this->lastMoveUserExp['texto']);
-        // echo json_encode($lastMoveUserExp);
+        // imprimo lastMoveUserExp
+        // echo json_encode($this->lastMoveUserExp);
       } catch (\Throwable $th) {
         // Devolver mensaje de error en json
         http_response_code(500);
         echo json_encode('Error al consultar el expediente');
       }
-      // upExpAndMove
-      upExpAndMove($this->conexion, $this->id_user, $this->expediente);
+      try {
+        // upExpAndMove
+        upExpAndMove($this->conexion, $this->id_user, $this->expediente);
+      } catch (\Throwable $th) {
+        // Devolver mensaje de error en json
+        http_response_code(500);
+        echo json_encode('Error al actualizar el expediente y enviar el correo con la ultima actualizacion');
+      }
 
-      // envio un correo con el ultimo movimiento del expediente recien cargado y actualizado 
-      sendMailLastMove($this->conexion, $this->id_user, $this->expediente, $this->lastMoveUserExp);
+      try {
+        // envio un correo con el ultimo movimiento del expediente recien cargado y actualizado 
+        sendMailLastMove($this->conexion, $this->id_user, $this->expediente, $this->lastMoveUserExp);
+      } catch (\Throwable $th) {
+        // Devolver mensaje de error en json
+        http_response_code(500);
+        echo json_encode('Error al enviar el correo con la ultima actualizacion');
+      }
 
 
       // Devolver mensaje de "exito" en json
-      http_response_code(200);
+      // http_response_code(200);
       echo json_encode('El expediente fue actualizado y se envio un correo con la ultima actualizacion');
     } catch (\Throwable $th) {
       // Devolver mensaje de error en json

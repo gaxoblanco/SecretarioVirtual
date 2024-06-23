@@ -11,13 +11,21 @@ function lastMoveUserExpediente($conexion, $lastMove, $id_expediente)
         // si el expediente no tiene movimientos
         if ($lastMove == null) {
             // Devolver mensaje de "error" en json
-            http_response_code(200);
-            echo json_encode('El expediente aun no tiene movimientos, no se envia correo con la ultima actualizacion');
+            // http_response_code(200);
+            echo json_encode('El expediente aun no tiene movimientos, para sumar al correo de actualizacion');
             return;
         }
 
-        // retorno todos los datos del ultimo movimiento
-        return $lastMove;
+        // quito el id_movimiento y id_expediente
+        unset($lastMove['id_movimiento']);
+        unset($lastMove['id_expediente']);
+
+        // Retorno todos los datos del ultimo movimiento sin índices numéricos
+        $filteredLastMove = array_filter($lastMove, function ($key) {
+            return !is_numeric($key);
+        }, ARRAY_FILTER_USE_KEY);
+
+        return $filteredLastMove;
     } catch (\Throwable $th) {
         // Devolver mensaje de error en json
         http_response_code(500);

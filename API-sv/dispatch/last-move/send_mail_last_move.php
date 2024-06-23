@@ -1,14 +1,25 @@
 <?php
 
 require_once __DIR__ . '/../../user/user_get.php';
+require_once __DIR__ . '/../../scrapper/write_mail.php';
+require_once __DIR__ . '/../../services/accent_markers.php';
 
 function sendMailLastMove($conexion, $id_user, $expedient, $lastMovement)
 {
+    // Verifica que los datos llegan correctamente 
+    if (!isset($id_user) || !isset($expedient)) {
+        http_response_code(400);
+        echo json_encode("Error: faltan datos.");
+        return;
+    }
     // obtengo la informacion del usuario usando user/user_get.php
     $userGet = new user_get($conexion, $id_user);
-    $user = $userGet->getUsers();
+    $userJson = $userGet->getUsers(); // devuelve un json_encode
+    // Decodifico el JSON a un array asociativo
+    $user = json_decode($userJson, true);
     // Verifica que $user no sea null
     if ($user === null) {
+        http_response_code(400);
         echo json_decode("Error: el usuario no fue encontrado.");
         return;
     }
@@ -17,15 +28,16 @@ function sendMailLastMove($conexion, $id_user, $expedient, $lastMovement)
 
     // Verifica que los índices existan en el array $user
     if (!isset($user['firstName']) || !isset($user['lastName']) || !isset($user['email'])) {
+        http_response_code(400);
         echo json_decode("Error: faltan datos del usuario.");
         return;
     }
 
     // Asegúrate de que los índices en $expedient y $lastMovement existan
     if (
-        !isset($expedient['numero_expediente']) || !isset($expedient['anio_expediente']) || !isset($expedient['caratula']) || !isset($expedient['reservado']) || !isset($expedient['dependencia']) || !isset($expedient['tipo_lista']) ||
-        !isset($lastMovement['fecha_movimiento']) || !isset($lastMovement['estado']) || !isset($lastMovement['texto']) || !isset($lastMovement['titulo']) || !isset($lastMovement['despacho'])
+        !isset($expedient['numero_expediente']) || !isset($expedient['anio_expediente']) || !isset($expedient['caratula']) || !isset($expedient['reservado']) || !isset($expedient['dependencia']) || !isset($expedient['tipo_lista'])
     ) {
+        http_response_code(400);
         echo json_decode("Error: faltan datos del expediente o del último movimiento.");
         return;
     }
@@ -45,27 +57,42 @@ function sendMailLastMove($conexion, $id_user, $expedient, $lastMovement)
                     'reservado' => $expedient['reservado'],
                     'dependencia' => $expedient['dependencia'],
                     'tipo_lista' => $expedient['tipo_lista'],
-                    'movimientos' => [
-                        [
-                            'id_movimiento' => $lastMovement['id_movimiento'], // Asegúrate de tener este valor en $lastMovement
-                            'id_expediente' => $lastMovement['id_expediente'], // Asegúrate de tener este valor en $lastMovement
-                            'fecha_movimiento' => $lastMovement['fecha_movimiento'],
-                            'estado' => $lastMovement['estado'],
-                            'texto' => $lastMovement['texto'],
-                            'titulo' => $lastMovement['titulo'],
-                            'despacho' => $lastMovement['despacho']
-                        ]
-                    ]
+                    'movimientos' => []
                 ]
             ]
         ]
     ];
+    // si $lasMovement es distinto de null lo agrego al $newsBy[expedients][movements]
+    if ($lastMovement !== null) {
+        // Convierto los caracteres especiales con revertAccentMarkers
+        $lastMovement['texto'] = revertAccentMarkers($lastMovement['texto']);
+        $lastMovement['titulo'] = revertAccentMarkers($lastMovement['titulo']);
+        $lastMovement['estado'] = revertAccentMarkers($lastMovement['estado']);
 
+        $newsBy[0]['expedients'][0]['movimientos'] = [
+            [
+                'fecha_movimiento' => $lastMovement['fecha_movimiento'],
+                'estado' => $lastMovement['estado'],
+                'texto' => $lastMovement['texto'],
+                'titulo' => $lastMovement['titulo'],
+                'despacho' => $lastMovement['despacho']
+            ]
+        ];
+    }
+    // echo json_encode($newsBy[0]['expedients'][0]['movements']);
 
-    // Imprime el array $newsBy para depuración
-    // echo json_encode($newsBy);
+    //valido que $newsBy sea un objeto
+    if (!is_array($newsBy)) {
+        http_response_code(400);
+        echo json_encode("Error: no se pudo crear el objeto newsBy.");
+        return;
+    }
     // envio el la informacion al correo
-    require_once __DIR__ . '/../scrapper/write_mail.php';
+    // valido que se importo correctamente
+    if (!class_exists('write_mail')) {
+        echo json_encode("Error: no se pudo importar la clase write_mail.");
+        return;
+    }
     $writeMail = new write_mail($conexion, $newsBy);
     $writeMail->write();
 }
