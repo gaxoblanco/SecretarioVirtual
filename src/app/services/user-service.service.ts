@@ -29,13 +29,8 @@ export class UserServiceService {
   list: any = [
     {
       id: 1,
-      name: 'gaston',
-      email: 'gaston@blanco.com',
-    },
-    {
-      id: 2,
-      name: 'manonitlo',
-      email: 'mano@lito.com',
+      name: '',
+      email: '',
     },
   ];
 

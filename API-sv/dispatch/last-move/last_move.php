@@ -79,7 +79,7 @@ class last_move
 
 
       // Devolver mensaje de "exito" en json
-      // http_response_code(200);
+      http_response_code(200);
       echo json_encode('El expediente fue actualizado y se envio un correo con la ultima actualizacion');
     } catch (\Throwable $th) {
       // Devolver mensaje de error en json

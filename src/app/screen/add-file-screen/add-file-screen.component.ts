@@ -184,6 +184,22 @@ export class AddFileScreenComponent implements OnInit {
             if (this.fileList.length < this.user$.subscription.num_exp) {
               this.isActive = true;
             }
+            // Actulizo el expeidente recien cargado
+            console.log('Llamada para actualziar ');
+            this.fileSer
+              .upDateNewFile(
+                newFile.fileNumber,
+                newFile.yearNumber,
+                newFile.dispatch
+              )
+              .subscribe({
+                next: () => {
+                  console.log('Expediente actualizado se envio correo');
+                },
+                error: (error) => {
+                  console.log('Error:', error);
+                },
+              });
           },
           error: (error) => {
             // Maneja el error aquí
@@ -230,6 +246,14 @@ export class AddFileScreenComponent implements OnInit {
             }
           },
         });
+        // Actulizo el expeidente recien cargado
+        // llamo al servicio
+        console.log('Llamada para actualziar ');
+        this.fileSer.upDateNewFile(
+          newFile.fileNumber,
+          newFile.yearNumber,
+          newFile.dispatch
+        );
       }
     } else if (fileNumber.length != 0) {
       this.status = 'failed';

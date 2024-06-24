@@ -36,6 +36,10 @@ export class FilesService {
           console.log(response);
           // si la respuesta es Expediente creado con exito. devuelvo un true
           if (response === 'Expediente creado con exito.') {
+            console.log('upDateNewFile-->');
+
+            // una vez almacenado el nuevo exp, hago una solicitud para actualizarlo
+            // this.upDateNewFile(data.fileNumber, data.yearNumber, data.dispatch);
             return true;
           }
           // si la respuesta es "El expediente ya existe." devuelvo false
@@ -101,31 +105,6 @@ export class FilesService {
       );
   }
 
-  // // funcion para buscar expediente por numero y anio
-  // searchFiles(number: string, year: string): Observable<FileModel[]> {
-  //   // hago la consulta a ...dispatch/searchNumberAnio enviando el token y los parametros con el numero y anio
-  //   return this.http
-  //     .get<any[]>(`${this.apiUrl}/dispatch/searchNumberAnio`, {
-  //       context: checkToken(),
-  //       params: { caseNumber: number, caseYear: year },
-  //     })
-  //     .pipe(
-  //       tap((response) => {
-  //         console.log('files', response);
-  //         if (response != null) {
-  //           this.files$.next(response);
-  //           this.upDependencia();
-  //         }
-  //         return response;
-  //       }),
-  //       catchError((error) => {
-  //         console.error('Error en la solicitud HTTP:', error);
-  //         // Puedes realizar acciones adicionales según tus necesidades, como notificar al usuario.
-  //         throw error; // Propaga el error para que otros puedan manejarlo.
-  //       })
-  //     );
-  // }
-
   // funcion para actualizar el valor de dependencia numero a nombre
   upDependencia() {
     const files = this.files$.getValue();
@@ -182,5 +161,42 @@ export class FilesService {
   // funcion para obtener el fileSelected$
   getFileSelected$() {
     return this.fileSelected$.asObservable();
+  }
+
+  // actualizo el expediente recien cargado
+  upDateNewFile(caseNumber: number, caseYear: number, dispatch: number) {
+    console.log(
+      'caseNumber',
+      caseNumber,
+      'caseYear',
+      caseYear,
+      'dispatch',
+      dispatch
+    );
+
+    // en el cuerpo de la solicitud envio casaNumber, caseYear y dispatch y en la cabezera el token y id_user
+    return (
+      this.http
+        .post<any>(
+          `${this.apiUrl}/dispatch/updateNewFile`,
+          {
+            fileNumber: caseNumber, // Cambié caseNumber a fileNumber
+            yearNumber: caseYear, // Cambié caseYear a yearNumber
+            dispatch,
+          },
+          { context: checkToken() }
+        )
+        //proceso la respuesta
+        .pipe(
+          tap((response) => {
+            // Imprimo en consola la respuesta del servidor
+            console.log('Respuesta del servidor (updateNewFile):', response);
+          }),
+          catchError((error) => {
+            console.error('Error en updateNewFile:', error);
+            return throwError(error.error.message || 'Server error');
+          })
+        )
+    );
   }
 }

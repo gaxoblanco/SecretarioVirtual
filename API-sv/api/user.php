@@ -8,7 +8,7 @@ function userRoot($route, $method, $conexion)
         // Obtener el id del encabezado de la solicitud
         $id = $_SERVER['HTTP_USERID'];
         $userGetSecretary = new user_get($conexion, $id);
-        $userGetSecretary->getUsers();
+        echo $userGetSecretary->getUsers();
       } else {
         // Método no permitido para esta ruta
         http_response_code(405);
