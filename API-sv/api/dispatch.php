@@ -107,6 +107,27 @@ function dispatchRoot($route, $method, $conexion)
         echo json_encode(['message' => 'Method Not Allowed']);
       }
       break;
+      // /dispatch/updateNewFile
+    case 'dispatch/updateNewFile':
+      require_once './dispatch/last-move/last_move.php';
+      if ($method === 'POST') {
+        // Obtener los datos del cuerpo de la solicitud (por ejemplo, utilizando json_decode())
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        // Obtener los datos para actualizar el expediente
+        $userId = $_SERVER['HTTP_USERID'];
+        $caseNumber = $data['fileNumber'];
+        $caseYear = $data['yearNumber'];
+        $dispatch = $data['dispatch'];
+
+        $updateNewFile = new last_move($conexion, $userId, $caseNumber, $caseYear, $dispatch);
+        $updateNewFile->lastMove();
+      } else {
+        // Método no permitido para esta ruta
+        http_response_code(405);
+        echo json_encode(['message' => 'Method Not Allowed']);
+      }
+      break;
 
     default:
       // Ruta no encontrada

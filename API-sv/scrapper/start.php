@@ -3,7 +3,9 @@
 define('BASE_DIR', __DIR__);
 // this script is in charge of updating the db with the public data
 
-require_once 'scrapper.php';
+// Incluir la clase scrapper
+// require_once 'scrapper.php';
+require_once './steps/step1.php';
 
 // Incluir la clase users_data
 require_once 'users_data.php';
